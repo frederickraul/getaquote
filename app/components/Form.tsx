@@ -1,230 +1,104 @@
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import React from 'react'
-import { useEffect, useMemo, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import toast from 'react-hot-toast';
-import Heading from './Heading';
-import Input from './inputs/Input';
+'use client'
+import React, { useRef, useState } from 'react'
+import useRentModal from '../hooks/useRentModal';
 import Button from './Button';
 import InputUnregistered from './inputs/InputUnregistered';
 
-
-enum STEPS{
-    DESCRIPTION = 1,
-    CATEGORY = 2,
-    ADDRESS = 3,
-    LOCATION = 4,
-    INFO =5,
-    OPERATION =6,
-    COVER =7,
-    LOGO =8,
-    FINISH = 9
-  }
-
-  
 const Form = () => {
-  
-    const router = useRouter();
+  const rentModal = useRentModal();
 
-    const [step, setStep] = useState(STEPS.DESCRIPTION);
-    const [isLoading, setIsLoading] = useState(false);
-
+  const Ref = useRef<null | HTMLDivElement>(null);
+  const [VIN, setVIN] = useState('');
+  const [isVinValid, setisVinValid] = useState(false);
   
-    const {
-      register,
-      handleSubmit,
-      setValue,
-      watch,
-      formState:{
-        errors,
-      },
-      reset
-    } = useForm<FieldValues>({
-      defaultValues:{
-        category: '',
-        address: '',
-        visibleAddress:false,
-        apartment: '',
-        zipcode: '',
-        state: null,
-        city: null,
-        pin: null,
-        phone:'',
-        formattedPhone:'',
-        XYZ: "xyz",
-        guestCount: 1,
-        roomCount: 1,
-        bathroomCount: 1,
-        imageSrc:'',
-        coverSrc:'',
-        price: 1,
-        title: '',
-        description: '',
-        website:'',
+
+  const goForm = () => {
+    Ref.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleVinManage=()=>{
+    rentModal.onOpen();
+    console.log(VIN);
+  }
+
+  const setValue = (value:string)=>{
+    setVIN(value);
+    console.log(value);
+    if(validateVin(value)){
+      setisVinValid(true);
+    }else{
+      setisVinValid(false);
+    }
+
+  }
+
+  function validateVin(vin:string) {
+    return validate(vin);
+  
+  
+    // source: https://en.wikipedia.org/wiki/Vehicle_identification_number#Example_Code
+    // ---------------------------------------------------------------------------------
+    function transliterate(c:string) {
+      return '0123456789.ABCDEFGH..JKLMN.P.R..STUVWXYZ'.indexOf(c) % 10;
+    }
+  
+    function get_check_digit(vin:string) {
+      var map = '0123456789X';
+      var weights = '8765432X098765432';
+      var sum = 0;
+      for (var i = 0; i < 17; ++i)
+        sum += transliterate(vin[i]) * map.indexOf(weights[i]);
+      return map[sum % 11];
+    }
+  
+    function validate(vin:string) {
+        if (vin.length !== 17) return false;
+        return get_check_digit(vin) === vin[8];
       }
-    });
-  
-    const category = watch('category');
-    const location = watch('location');
-    const state = watch('state');
-    const city = watch('city');
-    const pin = watch('pin');
-    const visibleAddress = watch('visibleAddress');
-    const guestCount = watch('guestCount');
-    const roomCount = watch('roomCount');
-    const bathroomCount = watch('bathroomCount');
-    const imageSrc = watch('imageSrc');
-    const coverSrc = watch('coverSrc');
-    const horary = watch('horary');
-    const phone = watch('phone');
-    const formattedPhone = watch('formattedPhone');
-    const website = watch('website');
-    const zipcode = watch('zipcode');
-  
-    
-  //For Regular Inputs
-  const setCustomValue = (id: string, value:any) => {    
-    setValue(id, value, {
-      shouldValidate: true,
-      shouldDirty: true,
-      shouldTouch: true,
-    })
+      // ---------------------------------------------------------------------------------
   }
+  return (
+    <div ref={Ref} className="
+    w-[700px] 
+    lg:w-[800px] 
+    mx-auto 
+    min-h-[200px
+    pt-12
+    pb-20
+    ">
+  <div className='my-10'>
+    <div className='text-5xl font-bold mt-10 sm:mt-20 md:mt-10'>Get A Quote</div>
+  </div>
 
-  //Week Hours
-  const setWeekHours = (itemSelected: any) => {
-    horary.map((item:any)=>{
-        item.open = itemSelected.open;
-        item.close = itemSelected.close;
-        item.fulltime = itemSelected.fulltime;
-        item.closed = itemSelected.closed;
-        setValue('horary',[...horary]);
-    })
-  }
-
-  //Weekend
-  const setAllDaysHours = (itemSelected: any) => {
-    horary.map((item:any)=>{
-      item.open = itemSelected.open;
-      item.close = itemSelected.close;
-      item.fulltime = itemSelected.fulltime;
-      item.closed = itemSelected.closed;
-      setValue('horary',[...horary]);
-    })
-  }
-
-
-  const onBack = () => {
-    setStep((value) => value - 1);
-  }
-
-  const onNext = () => {
-    setStep((value) => value + 1);
-  }
-
-
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    
-    if(step !== STEPS.FINISH){
-      return onNext();
-    }
-    
-    setIsLoading(true);
-    
-    axios.post('/api/listings', data)
-    .then(()=>{
-      toast.success('Listing Created');
-      router.refresh();
-      reset();
-      setStep(STEPS.DESCRIPTION);
-    })
-    .catch(() => {
-      toast.error('Something went wrong.')
-    })
-    .finally(() => {
-      setIsLoading(false);
-    }); 
-  }
-  
-  const actionLabel = useMemo(() => {
-    if(step === STEPS.FINISH){
-      return 'Create';
-    }
-
-    return 'Next';
-  }, [step]);
-
-  const secondaryActionLabel = useMemo(() => {
-    if(step === STEPS.DESCRIPTION){
-      return undefined;
-    }
-
-    return 'Back';
-  }, [step]);
-
-
-// DESCRIPTION STEP
- let bodyContent = (
-    <div className="flex flex-col gap-8">
-
+  <div>
+    <div className="font-bold text-lg">To receive an offer for your car, please fill out the form below. Make sure to include the correct
+      <span className="text-red-500"> Vehicle ID Number (VIN)</span>.
+    </div>
+    <div className='pt-2'>
       <InputUnregistered
-      
         label="Please enter your VIN"
-        disabled={isLoading}
-        onChange={()=>{}}
-       
+        //disabled={isLoading}
+        onChange={(e) => {setValue(e.target.value) }}
         required
       />
-      {/* <Input
-        id="description"
-        label="Description"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      /> */}
+      {isVinValid ?
+      <span className='text-sm text-green-500'>Valid VIN</span>
+      :
+      <span className='text-sm text-red-500'>Invalid VIN</span>
+       }
     </div>
-  )
-
-
-    
-  return (
-    <div>
-    <div>
-         {bodyContent}
-          </div>
-          <div 
-                  className="
-                    flex
-                    flex-row
-                    items-center
-                    gap-4
-                    w-full
-                    mt-5
-                  "
-                >
-                  { secondaryActionLabel &&(
-                    <Button 
-                      full
-                      outline
-                      disabled={isLoading}
-                      label={secondaryActionLabel}
-                      onClick={onBack}
-                    />
-                  )}
-                  
-                     
-                      <Button 
-                      full
-                      disabled={isLoading}
-                      label={actionLabel}
-                      onClick={()=>{}}
-                      //onClick={handleSubmit}
-                      />
-                    
-                </div>
+    <div className='py-4'>
+      <Button
+        full
+        // disabled={isLoading}
+        label='Next'
+        onClick={handleVinManage}
+      //onClick={handleSubmit}
+      />
     </div>
+  </div>
+
+</div>
   )
 }
 

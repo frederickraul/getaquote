@@ -66,47 +66,7 @@ const page = () => {
   return (
     <ClientOnly>
       <Container>
-        <div ref={Ref} className="
-            w-[700px] 
-            lg:w-[800px] 
-            mx-auto 
-            min-h-[200px
-            pt-12
-            pb-20
-            ">
-          <div className='my-10'>
-            <div className='text-5xl font-bold mt-10 sm:mt-20 md:mt-10'>Get A Quote</div>
-          </div>
-
-          <div>
-            <div className="font-bold text-lg">To receive an offer for your car, please fill out the form below. Make sure to include the correct
-              <span className="text-red-500"> Vehicle ID Number (VIN)</span>.
-            </div>
-            <div className='pt-2'>
-              <InputUnregistered
-                label="Please enter your VIN"
-                //disabled={isLoading}
-                onChange={(e) => {setValue(e.target.value) }}
-                required
-              />
-              {isVinValid ?
-              <span className='text-sm text-green-500'>Valid VIN</span>
-              :
-              <span className='text-sm text-red-500'>Invalid VIN</span>
-               }
-            </div>
-            <div className='py-4'>
-              <Button
-                full
-                // disabled={isLoading}
-                label='Next'
-                onClick={handleVinManage}
-              //onClick={handleSubmit}
-              />
-            </div>
-          </div>
-
-        </div>
+ <div></div>
       </Container>
 
       <Container full>
