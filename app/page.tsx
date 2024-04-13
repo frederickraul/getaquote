@@ -8,17 +8,17 @@ import { FaCar, FaClipboardList, FaRegMoneyBillAlt } from "react-icons/fa";
 import Form from './components/Form';
 import useRentModal from '@/app/hooks/useRentModal';
 
-const rentModal = useRentModal();
 
 const page = () => {
+  const rentModal = useRentModal();
 
-  const ref = useRef<null | HTMLDivElement>(null);
+  const Ref = useRef<null | HTMLDivElement>(null);
   const [VIN, setVIN] = useState('');
   const [isVinValid, setisVinValid] = useState(false);
   
 
   const goForm = () => {
-    ref.current?.scrollIntoView({ behavior: 'smooth' });
+    Ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleVinManage=()=>{
@@ -66,7 +66,7 @@ const page = () => {
   return (
     <ClientOnly>
       <Container>
-        <div ref={ref} className="
+        <div ref={Ref} className="
             w-[700px] 
             lg:w-[800px] 
             mx-auto 
