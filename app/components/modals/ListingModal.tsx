@@ -51,7 +51,6 @@ const defaultLocation = {
     "-97.00000000"
   ]
 };
-const rentModal = useRentModal();
 
 const ListingModal = () => {
 
@@ -60,7 +59,7 @@ const ListingModal = () => {
   const {getStatesOfCountry} = useCountries();
 
 
-
+  const rentModal = useRentModal();
   const router = useRouter();
 
   const [step, setStep] = useState(STEPS.DESCRIPTION);
