@@ -1,0 +1,238 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+  
+  //url      = env("DATABASE_LOCAL_URL")
+}
+
+model User {
+  id                  String @id @default(auto()) @map("_id") @db.ObjectId
+  name                String?
+  email               String?   @unique
+  emailVerified       DateTime?
+  image               String?
+  hashedPassword      String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  favoriteListingsIds String[] @db.ObjectId
+  favoriteProductsIds String[] @db.ObjectId
+  ratingListingsIds   String[] @db.ObjectId
+  ratingProductsIds   String[] @db.ObjectId
+
+  accounts Account[]
+  listings Listing[]
+  products Product[]
+
+  ratingProducts RatingProduct[]
+  ratingListings RatingListing[]
+  reservations Reservation[]
+
+  askListings     AskListing[] @relation("customer")
+  respondListings AskListing[] @relation("owner")
+
+  chatUser        Chat[] @relation("user")
+  chatRecipient   Chat[] @relation("recipient")
+
+  messageUser    Message[] @relation("user")
+  messageSender  Message[] @relation("sender")
+
+  senderNotifications     Notification[] @relation("sender")
+  recipientNotifications  Notification[] @relation("recipient")
+  // recipientMessage        Message[] @relation("recipient")
+}
+
+model Account {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String   @db.ObjectId
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.String
+  access_token       String?  @db.String
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.String
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+type Horary {
+    day          String
+    open         String
+    close        String
+    fulltime     Boolean
+    closed       Boolean
+}
+
+model Listing {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  address         String?
+  visibleAddress  Boolean?
+  apartment       String?
+  bathroomCount   Int
+  category        String
+  city            String?
+  cityCode        String?
+  coverSrc        String?
+  createdAt       DateTime @default(now())
+  horary          Horary[]
+  description     String
+  guestCount      Int
+  imageSrc        String
+  locationValue   String
+  website         String?
+  phone           String?
+  formattedPhone  String?
+  pin             String[]
+  zipcode         String?
+  price           Int
+  roomCount       Int
+  state           String?
+  stateCode       String?
+  title           String
+  facebook        String?
+  twitter         String?
+  instagram       String?
+  userId          String   @db.ObjectId
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reservations Reservation[]
+  products Product[]
+  rating RatingListing[]
+  ask AskListing[]
+}
+
+model Product {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String @db.ObjectId
+  listingId   String @db.ObjectId  
+  coverSrc    String?
+  title       String?
+  description String?
+  category    String?
+  portion     String?
+  totalPrice  Int?
+  THC         Int?
+  CBD         Int?
+  stock       Int?
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  rating RatingProduct[]
+  chats Chat[]
+  // messages Message[]
+
+}
+
+model Notification {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  recipientId   String @db.ObjectId //receptor
+  senderId      String @db.ObjectId //receptor
+  itemId        String? 
+  itemName      String?
+  item2Id       String? // Required when the listingId and productId is required
+  UTC           String
+  type          String 
+  content       String  
+  count         Int
+  timestamp     Int
+  status        Int
+  createdAt     DateTime @default(now())
+
+  sender User @relation(fields: [senderId], references: [id], name: "sender")
+  recipient User @relation(fields: [recipientId], references: [id], name: "recipient")
+}
+
+model Chat{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  productId     String @db.ObjectId 
+  userId        String @db.ObjectId // User that initialize the chat
+  recipientId   String @db.ObjectId 
+  createdAt     DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], name: "user")
+  recipient User @relation(fields: [recipientId], references: [id], onDelete: Cascade, name: "recipient")
+  messages Message[]
+}
+
+model Message {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String @db.ObjectId //User that receives the message //Message can delete their owns Messages now
+  senderId      String @db.ObjectId //User that send the message
+  chatId        String @db.ObjectId 
+  content       String
+  createdAt     DateTime @default(now())
+
+  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], name: "user")
+  sender User @relation(fields: [senderId], references: [id], onDelete: Cascade, name: "sender")
+}
+
+model RatingListing {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String @db.ObjectId
+  listingId String @db.ObjectId  
+  title     String
+  body      String
+  rating    Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
+
+model RatingProduct {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String @db.ObjectId
+  productId String @db.ObjectId  
+  title     String
+  body      String
+  rating    Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model AskListing {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  listingId String @db.ObjectId  
+  userId    String @db.ObjectId
+  ownerId   String @db.ObjectId
+  question  String
+  answer    String
+  status    Int
+  createdAt DateTime @default(now())
+
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  
+  user User @relation(fields: [userId], references: [id], name: "customer")
+  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade, name: "owner")
+}
+
+
+
+model Reservation {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String @db.ObjectId
+  listingId String @db.ObjectId  
+  startDate DateTime
+  endDate   DateTime
+  totalPrice Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
