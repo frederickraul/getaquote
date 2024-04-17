@@ -1,19 +1,11 @@
 'use client';
 
-import { User} from '@prisma/client'
 import Container from  '../Container';
 import Logo from './Logo';
-import Search from './Search';
-import { UserMenu } from './UserMenu';
-import Categories from './Categories';
+
 import { SafeUser } from '@/app/types';
-import { IoIosPin } from 'react-icons/io';
 import { useRouter } from 'next/navigation';
-import Notificacion from '../notification';
-import { useCallback, useEffect, useState } from 'react';
-import Messages from '../messages';
-import axios from 'axios';
-import Button from '../Button';
+
 import './styles.css';
 
 interface NavbarProps {
