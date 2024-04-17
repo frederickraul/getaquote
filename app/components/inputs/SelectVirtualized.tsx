@@ -1,7 +1,5 @@
 'use client';
 
-import { hours } from "@/app/const/hours";
-import { Icon } from "leaflet";
 import { IconType } from "react-icons";
 import Select from 'react-select-virtualized';
 
