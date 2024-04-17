@@ -6,7 +6,6 @@ import Heading from '../Heading';
 import { useRouter } from "next/navigation";
 
 import InputUnregistered from '../inputs/InputUnregistered';
-import CustomSelect from "../inputs/Select";
 
 import useCountries from "@/app/hooks/useCountries";
 
@@ -304,12 +303,7 @@ makes
               value={data.year}
              onChange={(value) => {handleSelectChange('year',value) }}
             />
-  
-            {/* <CustomSelect
-              label='Make'
-              required
-              options={makes}
-              onChange={(value) => {handleSelectedMake(value) }} /> */}
+
             <SelectVirtualized
              label='Make'
              required
@@ -455,7 +449,7 @@ makes
 
         <div className="flex flex-col ">
           <div className="flex flex-col gap-3 2xl:gap-4 pr-5 3xl:pr-0">
-            <CustomSelect
+            <SelectVirtualized
               label='Any Parts Missing?'
               required
               options={yearList}
@@ -479,19 +473,19 @@ makes
 
       <div className="flex flex-col ">
         <div className="flex flex-col gap-3 2xl:gap-4 pr-5 3xl:pr-0">
-          <CustomSelect
+          <SelectVirtualized
             label='Does It Have All Wheels?'
             required
             options={yearList}
             onChange={() => { }} />
 
-          <CustomSelect
+          <SelectVirtualized
             label='Does It Have A Battery?'
             required
             options={yearList}
             onChange={() => { }} />
 
-          <CustomSelect
+          <SelectVirtualized
             label='Catalytic Converter?'
             required
             options={yearList}
@@ -518,7 +512,7 @@ makes
             required
             onChange={() => { }}
           />
-        <CustomSelect
+        <SelectVirtualized
             label='State'
             required
             options={getStatesOfCountry('US')}
