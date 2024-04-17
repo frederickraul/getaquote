@@ -1,15 +1,9 @@
 'use client';
 
-import { AiFillCodepenCircle, AiFillEdit, AiFillHeart, AiOutlineCodepenCircle, AiOutlineEdit, AiOutlineHeart } from "react-icons/ai";
 
-import useFavorite from "@/app/hooks/useFavorite";
 import { SafeUser } from "@/app/types";
 
-import ClientOnly from "./ClientOnly";
-import { BiEdit, BiEditAlt, BiPencil, BiSolidEdit, BiSolidEditAlt, BiSolidPencil } from "react-icons/bi";
-import { GiPencil } from "react-icons/gi";
-import { TbPencil } from "react-icons/tb";
-import { MdDelete, MdDeleteForever } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 
 interface HeartButtonProps {
   disable?: boolean;
