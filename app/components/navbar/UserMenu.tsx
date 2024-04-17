@@ -2,7 +2,6 @@
 import {useRef,useEffect } from 'react';
 
  import { AiFillPlusCircle, AiFillStar, AiOutlineMenu, AiOutlinePlus, AiOutlineStar } from 'react-icons/ai';
-import Avatar from '../Avatar';
 
 import { useState,useCallback } from 'react';
 import { signOut } from 'next-auth/react';
@@ -98,7 +97,6 @@ export const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
                 <div className='truncate text-sm font-bold'>{currentUser?.name}</div>
                 <MdKeyboardArrowDown /> 
                 <div className='hidden md:block'>
-                     <Avatar src={currentUser?.image} />
                 </div> 
             </div>
         </div>
@@ -123,7 +121,6 @@ export const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
                         <>
                         <div className='flex flex-row px-5 py-2'>
                             <div className='block'>
-                                <Avatar src={currentUser?.image} />
                             </div> 
                             <div className='ml-2'>
                                 <div className='text-sm font-bold'>{currentUser?.name}</div>
