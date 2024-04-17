@@ -38,7 +38,6 @@ const SelectVirtualized:React.FC<SelectProps> = ({
       <Select
         options={options}
         disabled={disabled}
-        placeholder=""
         value={value}
         onChange={onChange}
         className='selectVirtualized'
