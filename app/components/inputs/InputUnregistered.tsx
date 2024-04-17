@@ -16,6 +16,7 @@ interface InputProps{
   formatPrice?: boolean;
   formatWebsite?: boolean;
   required?: boolean;
+  placeholder?:string;
 }
 
 const InputUnregistered: React.FC<InputProps> = ({
@@ -30,6 +31,7 @@ const InputUnregistered: React.FC<InputProps> = ({
   formatPrice,
   formatWebsite,
   required,
+  placeholder,
 
 }) => {
   return (
@@ -44,7 +46,7 @@ const InputUnregistered: React.FC<InputProps> = ({
       onChange={(value) => onChange(value)}
       checked={checked}
       disabled={disabled}
-      placeholder=" "
+      placeholder={placeholder}
         type={type}
         className={`
         peer

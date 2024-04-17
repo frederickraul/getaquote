@@ -9,10 +9,7 @@ import { signOut } from 'next-auth/react';
 
 import MenuItem from './MenuItem';
 
-import useRegisterModal from '@/app/hooks/useRegisterModal';
-import useLoginModal from '@/app/hooks/useLoginModal';
 
-import useRentModal from '@/app/hooks/useRentModal';
 import { useRouter } from 'next/navigation';
 import GetTheApp from './GetTheApp';
 import { SafeUser } from '@/app/types';
@@ -28,9 +25,7 @@ interface UserMenuProps {
 export const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
     
     const [isOpen, setIsOpen] = useState(false);
-    const registerModal = useRegisterModal();
-    const loginModal = useLoginModal();
-    const rentModal = useRentModal();
+
     const route = useRouter();
 
     const defaultValue = {
@@ -58,16 +53,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
       },[],
     )
 
-    const onRent = useCallback(() => {
-        if(!currentUser){
-            return loginModal.onOpen();
-        }
 
-        rentModal.onOpen();
-
-      },[currentUser, loginModal,rentModal],
-    )
-    
     
 
   return (
@@ -180,16 +166,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
                             icon={MdFormatListBulleted}
                             style='text-neutral-500'
                             /> 
-                        <MenuItem
-                            onClick={()=>{
-                                toggleOpen();
-                                rentModal.onOpen();
-                            }}
-                            icon={AiFillPlusCircle}
-                            style='text-blue-400'
-
-                            label="Add Business"
-                        /> 
+                       
                         <hr />
                         <MenuItem
                             onClick={()=>{toggleOpen();signOut()}}
@@ -201,19 +178,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
                     </>
                     ):(
                         <>
-                        <MenuItem
-                            icon={BiSolidLogIn}
-                            style='text-neutral-500'
-                            onClick={loginModal.onOpen}
-                            label="Login"
-                        /> 
-                        <MenuItem
-                            onClick={registerModal.onOpen}
-                            label="Sign up"
-                            style='text-neutral-500'
-                            icon={BiLogIn}
-
-                        /> 
+                       
                     </>
                     )}
                 </div>

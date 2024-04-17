@@ -160,3 +160,14 @@ body,
 .text-primary-green{
 	color: rgba(3,239,138,1);
 }
+
+/*Virtualize Dropdown */
+
+.selectVirtualized div{
+	padding-left: 5px;
+}
+
+.selectVirtualized input{
+	padding: 12px 0px !important;
+	margin-left: 5px;
+}

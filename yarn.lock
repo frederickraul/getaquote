@@ -6279,7 +6279,7 @@ react-phone-input-2@^2.15.1:
     lodash.startswith "^4.2.1"
     prop-types "^15.7.2"
 
-react-select-virtualized@^5.5.0:
+react-select-virtualized@^5.5.1:
   version "5.5.1"
   resolved "https://registry.npmjs.org/react-select-virtualized/-/react-select-virtualized-5.5.1.tgz"
   integrity sha512-QMvIOBtScLeP8tuX0HNh9SwCxC5H4KPkg27pASw69nVTcsLdIOIUeh/nWAsdRfod0xnAtA7wMo7D3vOMXddwOg==
@@ -6338,7 +6338,7 @@ react-virtualized@^9.22.3, react-virtualized@^9.22.5:
     prop-types "^15.7.2"
     react-lifecycles-compat "^3.0.4"
 
-react-window@^1.8.6, react-window@^1.8.9:
+react-window@^1.8.10, react-window@^1.8.6:
   version "1.8.10"
   resolved "https://registry.npmjs.org/react-window/-/react-window-1.8.10.tgz"
   integrity sha512-Y0Cx+dnU6NLa5/EvoHukUD0BklJ8qITCtVEPY1C/nL8wwoZ0b5aEw8Ff1dOVHw7fCzMt55XfJDd8S8W8LCaUCg==
