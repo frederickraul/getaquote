@@ -5,8 +5,6 @@ import Container from './components/Container'
 import QuoteForm from './components/Form/QuoteForm';
 import getAllMakes from './actions/getAllMakes';
 
-
-
 const Home = async() => {
   const makes = await getAllMakes();
   

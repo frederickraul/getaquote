@@ -11,6 +11,7 @@ interface InputProps{
   label: string;
   type?: string;
   disabled?: boolean;
+  readonly?: boolean;
   small?: boolean;
   optional?: boolean;
   formatPrice?: boolean;
@@ -27,6 +28,7 @@ const InputUnregistered: React.FC<InputProps> = ({
   optional,
   type,
   disabled,
+  readonly,
   small,
   formatPrice,
   formatWebsite,
@@ -37,23 +39,23 @@ const InputUnregistered: React.FC<InputProps> = ({
   return (
     <>
     <div className="w-full relative">
-    <div className="font-bold text-neutral-700 text-lg p-0 mb-1">
+    <div className="font-bold text-neutral-600 text-lg p-0 mb-1">
       {label && label}
       {required && <span className="text-red-500"> * </span>}
     </div>
       <input
-      value={value}
-      onChange={(value) => onChange(value)}
-      checked={checked}
-      disabled={disabled}
-      placeholder={placeholder}
+        value={value}
+        onChange={(value) => onChange(value)}
+        checked={checked}
+        disabled={disabled}
+        readOnly={readonly}
+        placeholder={placeholder}
         type={type}
         className={`
         peer
         w-full
-        pt-6
         font-light
-        bg-white
+        ${readonly ? 'bg-neutral-300':'bg-white'}
         border-2
         rounded-md
         outline-nonde

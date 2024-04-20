@@ -36,6 +36,10 @@ const InputPhone: React.FC<InputProps> = ({
 }) => {
   return (
     <div className="w-full relative">
+    <div className="font-bold text-neutral-600 text-lg p-0 mb-1">
+      {label && label}
+      {required && <span className="text-red-500"> * </span>}
+    </div>
       <PhoneInput
         country={country}
         value={value}
@@ -46,44 +50,25 @@ const InputPhone: React.FC<InputProps> = ({
         placeholder=" "
         inputClass={
           `
+          peer
           w-full
-          bg-white
+          font-light
           border-2
           rounded-md
-          outline-none
+          outline-nonde
           transition
           disabled:opacity-70
           disabled:cursor-not-allowed
-          ${small ? 'text-xs' : 'text-sm 2xl:text-base'}
-          ${small ? 'p-2' : 'p-2 2xl:p-4'}
-          ${small ? 'p-3' : label ? 'pt-4 2xl:pt-6' : 'pt-3'}
+          ${small ? 'text-sm' : 'text-md'}
+          ${small ? 'p-2' : 'p-4'}
+          ${small ? 'p-3' : 'pt-6'}
           ${small ? 'font-light' : 'font-semibold'}
-          `
-        }
+          ${type === "checkbox" ? 'w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600': ''}
+          `}
         containerClass="relative"
         dropdownClass={`${disableDropdown && 'hidden'}`}
       />
-      <label 
-        className={`
-          pl-3
-          absolute
-          text-xs 2xl:text-base
-          duration-150
-          transform
-          -translate-y-3
-          top-4 2xl:top-5
-          z-10
-          origin-[0]
-          peer-placeholder-shown:scale-100
-          peer-placeholder-shown:translate-y-0
-          peer-focus:scale-75
-          peer-focus:-translate-y-3
-           text-zinc-400
-        `}
-      >
-        {label}
-        {optional && <span className="text-zinc-700"> (Optional)</span>}
-      </label>
+
     </div>
   )
 }

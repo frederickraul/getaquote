@@ -10,7 +10,6 @@ export default async function getAllMakesByYear(year:string) {
     const response = await axios.get('https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForManufacturerAndYear/mer?year='+year+'&format=json');
    if(response){
     const makeList =response.data.Results;
-    console.log(makeList);
     // const safeMakes = makeList.map((make) => ({
     //   ...listing,
     //   label: make,

@@ -16,7 +16,6 @@ export default async function getAllMakes() {
       label: make.Make_Name,
     }));
 
-    console.log(safeMakes);
    return safeMakes;
    }
    return null;
