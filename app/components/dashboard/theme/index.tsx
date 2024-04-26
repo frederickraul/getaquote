@@ -24,10 +24,10 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
   const memoizedValue = useMemo(
     () => ({
-      palette: palette(),
-      typography,
-      shadows: shadows(),
-      customShadows: customShadows(),
+      // palette: palette(),
+      // typography,
+      // shadows: shadows(),
+      // customShadows: customShadows(),
       shape: { borderRadius: 8 },
     }),
     []
@@ -35,7 +35,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
   const theme = createTheme(memoizedValue);
 
-  theme.components = overrides(theme);
+  // theme.components = overrides(theme);
 
   return (
     <MUIThemeProvider theme={theme}>
