@@ -8,8 +8,17 @@ import { useTheme } from '@mui/material/styles';
 import { RouterLink } from '../../routes/components';
 
 // ----------------------------------------------------------------------
+interface LogoProps {
+  disabledLink?: boolean;
+  sx?: any;
+  other?: any;
 
-const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
+
+}
+
+const Logo: React.FC<LogoProps> = ({
+  disabledLink,sx,other}) => {
+
   const theme = useTheme();
 
   const PRIMARY_LIGHT = theme.palette.primary.light;
@@ -30,7 +39,6 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
 
   const logo = (
     <Box
-      ref={ref}
       component="div"
       sx={{
         width: 40,
@@ -85,11 +93,8 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
       {logo}
     </div>
   );
-});
+}
 
-Logo.propTypes = {
-  disabledLink: PropTypes.bool,
-  sx: PropTypes.object,
-};
+
 
 export default Logo;

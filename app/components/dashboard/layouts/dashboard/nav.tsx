@@ -28,8 +28,15 @@ import { usePathName } from '../../routes/hooks/usePathName';
 
 // ----------------------------------------------------------------------
 
+interface NavProps {
+  openNav?: any;
+  onCloseNav?: any;
 
-export default function Nav({ openNav, onCloseNav }) {
+
+}
+
+const Nav: React.FC<NavProps> = ({
+  openNav, onCloseNav }) => {
 
 
 
@@ -61,7 +68,7 @@ export default function Nav({ openNav, onCloseNav }) {
         <Typography variant="subtitle2">{account.displayName}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {account.role}
+          {account?.role}
         </Typography>
       </Box>
     </Box>
@@ -169,9 +176,9 @@ Nav.propTypes = {
 
 // ----------------------------------------------------------------------
 
-function NavItem({ item }) {
+function NavItem(element:any) {
   const pathname = usePathName();
-
+  const {item} = element;
   return (
     <ListItemButton
       //component={RouterLink}
@@ -205,3 +212,6 @@ function NavItem({ item }) {
 NavItem.propTypes = {
   item: PropTypes.object,
 };
+
+
+export default Nav;

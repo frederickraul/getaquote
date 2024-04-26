@@ -6,15 +6,22 @@ import Box from '@mui/material/Box';
 import { StyledScrollbar, StyledRootScrollbar } from './styles';
 
 // ----------------------------------------------------------------------
+interface ScrollbarProps{
+  children: React.ReactNode;
+  sx?: any;
+  other?:any;
+}
 
-const Scrollbar = forwardRef(({ children, sx, ...other }, ref) => {
+const Scrollbar: React.FC<ScrollbarProps> = ({
+  children,sx,other}) => {
+
   const userAgent = typeof navigator === 'undefined' ? 'SSR' : navigator.userAgent;
 
   const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
 
   if (mobile) {
     return (
-      <Box ref={ref} sx={{ overflow: 'auto', ...sx }} {...other}>
+      <Box sx={{ overflow: 'auto', ...sx }} {...other}>
         {children}
       </Box>
     );
@@ -24,7 +31,6 @@ const Scrollbar = forwardRef(({ children, sx, ...other }, ref) => {
     <StyledRootScrollbar>
       <StyledScrollbar
         scrollableNodeProps={{
-          ref,
         }}
         clickOnTrack={false}
         sx={sx}
@@ -34,7 +40,7 @@ const Scrollbar = forwardRef(({ children, sx, ...other }, ref) => {
       </StyledScrollbar>
     </StyledRootScrollbar>
   );
-});
+};
 
 Scrollbar.propTypes = {
   children: PropTypes.node,

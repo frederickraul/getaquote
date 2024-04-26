@@ -6,28 +6,28 @@ import { autocompleteClasses } from '@mui/material/Autocomplete';
 
 // ----------------------------------------------------------------------
 
-export const paper = ({ theme, bgcolor, dropdown }) => ({
-  ...bgBlur({
-    blur: 20,
-    opacity: 0.9,
-    color: theme.palette.background.paper,
-    ...(!!bgcolor && {
-      color: bgcolor,
-    }),
-  }),
-  backgroundImage: 'url(/assets/cyan-blur.png), url(/assets/red-blur.png)',
-  backgroundRepeat: 'no-repeat, no-repeat',
-  backgroundPosition: 'top right, left bottom',
-  backgroundSize: '50%, 50%',
-  ...(theme.direction === 'rtl' && {
-    backgroundPosition: 'top left, right bottom',
-  }),
-  ...(dropdown && {
-    padding: theme.spacing(0.5),
-    boxShadow: theme.customShadows.dropdown,
-    borderRadius: theme.shape.borderRadius * 1.25,
-  }),
-});
+// export const paper = ({ theme, bgcolor, dropdown }) => ({
+//   ...bgBlur({
+//     blur: 20,
+//     opacity: 0.9,
+//     color: theme.palette.background.paper,
+//     ...(!!bgcolor && {
+//       color: bgcolor,
+//     }),
+//   }),
+//   backgroundImage: 'url(/assets/cyan-blur.png), url(/assets/red-blur.png)',
+//   backgroundRepeat: 'no-repeat, no-repeat',
+//   backgroundPosition: 'top right, left bottom',
+//   backgroundSize: '50%, 50%',
+//   ...(theme.direction === 'rtl' && {
+//     backgroundPosition: 'top left, right bottom',
+//   }),
+//   ...(dropdown && {
+//     padding: theme.spacing(0.5),
+//     boxShadow: theme.customShadows.dropdown,
+//     borderRadius: theme.shape.borderRadius * 1.25,
+//   }),
+// });
 
 // ----------------------------------------------------------------------
 

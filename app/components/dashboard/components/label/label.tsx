@@ -8,8 +8,20 @@ import { StyledLabel } from './styles';
 
 // ----------------------------------------------------------------------
 
-const Label = forwardRef(
-  ({ children, color = 'default', variant = 'soft', startIcon, endIcon, sx, ...other }, ref) => {
+interface LabelProps {
+  children: any;
+  color?: any;
+  variant?: any;
+  startIcon?:any;
+  endIcon?:any;
+  sx?:any;
+  other?:any;
+
+}
+
+const Label: React.FC<LabelProps> = ({
+  children,color,variant, startIcon,endIcon,sx,other}) => {
+
     const theme = useTheme();
 
     const iconStyles = {
@@ -20,7 +32,6 @@ const Label = forwardRef(
 
     return (
       <StyledLabel
-        ref={ref}
         component="span"
         ownerState={{ color, variant }}
         sx={{
@@ -39,7 +50,7 @@ const Label = forwardRef(
       </StyledLabel>
     );
   }
-);
+
 
 Label.propTypes = {
   children: PropTypes.node,
