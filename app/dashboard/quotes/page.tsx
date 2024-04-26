@@ -1,12 +1,9 @@
-import getQuotes, { IListingsParams } from '@/app/actions/getQuotes';
+import getQuotes from '@/app/actions/getQuotes';
 import { UserView } from '@/app/components/dashboard/sections/user/view';
 
-interface HomeProps {
-  searchParams: IListingsParams
-};
 
-const Page = async ({ searchParams }: HomeProps) => {
-  const quotes = await getQuotes(searchParams);
+const Page = async () => {
+  const quotes = await getQuotes();
   console.log(quotes);
   return (
     <UserView data={quotes}/>
