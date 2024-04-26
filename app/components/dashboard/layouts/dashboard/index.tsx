@@ -8,8 +8,13 @@ import Main from './main';
 import Header from './header';
 
 // ----------------------------------------------------------------------
+interface ScrollbarProps{
+  children: React.ReactNode;
+}
 
-export default function DashboardLayout({ children }) {
+const DashboardLayout: React.FC<ScrollbarProps> = ({
+  children}) => {
+
   const [openNav, setOpenNav] = useState(false);
 
   return (
@@ -34,3 +39,5 @@ export default function DashboardLayout({ children }) {
 DashboardLayout.propTypes = {
   children: PropTypes.node,
 };
+
+export default DashboardLayout;
