@@ -96,16 +96,16 @@ const UserTableRow: React.FC<RowProps> = ({
   );
 }
 
-UserTableRow.propTypes = {
-  avatarUrl: PropTypes.any,
-  company: PropTypes.any,
-  handleClick: PropTypes.func,
-  isVerified: PropTypes.any,
-  name: PropTypes.any,
-  role: PropTypes.any,
-  selected: PropTypes.any,
-  status: PropTypes.string,
-};
+// UserTableRow.propTypes = {
+//   avatarUrl: PropTypes.any,
+//   company: PropTypes.any,
+//   handleClick: PropTypes.func,
+//   isVerified: PropTypes.any,
+//   name: PropTypes.any,
+//   role: PropTypes.any,
+//   selected: PropTypes.any,
+//   status: PropTypes.string,
+// };
 
 
 export default UserTableRow

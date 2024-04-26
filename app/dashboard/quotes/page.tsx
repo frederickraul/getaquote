@@ -1,6 +1,6 @@
 import getQuotes, { IListingsParams } from '@/app/actions/getQuotes';
-import UserPage from '@/app/components/dashboard2/pages/user'
-import { UserView } from '@/app/components/dashboard2/sections/user/view';
+import UserPage from '@/app/components/dashboard/pages/user'
+import { UserView } from '@/app/components/dashboard/sections/user/view';
 
 interface HomeProps {
   searchParams: IListingsParams

@@ -21,7 +21,12 @@ import NotificationsPopover from './common/notifications-popover';
 
 // ----------------------------------------------------------------------
 
-export default function Header({ onOpenNav }) {
+interface HeaderProps {
+  onOpenNav: ()=>void;
+}
+
+const Header: React.FC<HeaderProps> = ({
+  onOpenNav}) => {
   const theme = useTheme();
 
   const lgUp = useResponsive('up', 'lg');
@@ -75,6 +80,8 @@ export default function Header({ onOpenNav }) {
   );
 }
 
-Header.propTypes = {
-  onOpenNav: PropTypes.func,
-};
+// Header.propTypes = {
+//   onOpenNav: PropTypes.func,
+// };
+
+export default Header

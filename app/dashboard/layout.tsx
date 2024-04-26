@@ -1,7 +1,7 @@
 'use client'
-import DashboardLayout from "../components/dashboard2/layouts/dashboard";
+import DashboardLayout from "../components/dashboard/layouts/dashboard";
 import '@/app/dashboard.css';
-import ThemeProvider from "../components/dashboard2/theme";
+import ThemeProvider from "../components/dashboard/theme";
 
 
 

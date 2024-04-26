@@ -347,9 +347,9 @@ const QuoteForm: React.FC<ListingCardProps> = ({
 
     axios.post('/api/cars', data)
       .then(() => {
-        toast.success('Quote Created');
-       // router.refresh();
-        //setStep(STEPS.DESCRIPTION);
+        toast.success('Quote Created Wait For a Call');
+        router.refresh();
+        setStep(STEPS.DESCRIPTION);
 
       })
       .catch(() => {
