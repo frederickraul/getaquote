@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+:root {
+	background-color: #f1f5f8;
+}
+
+
+.custom-select select {
+	appearance: none !important;
+	-webkit-appearance: none !important;
+	-moz-appearance: none !important;
+}
+
+.custom-select select::-ms-expand {
+	display: none !important;
+}
+
+
+.custom-select i {
+	position: absolute;
+	right: 20px;
+	top: calc(50% - 10px);
+	width: 12px;
+	height: 12px;
+	display: block;
+	border-left: 2px solid #444;
+	border-bottom: 2px solid #444;
+	transform: rotate(-45deg);
+	/* Giramos el cuadrado */
+	transition: all 0.25s ease;
+}
+
+.custom-select:hover i {
+	margin-top: 3px;
+}
+
+/* MuiToggleButtonGroup */
+
+
+.MuiToggleButtonGroup-groupedHorizontal:not(:last-child) {
+	border-radius: 10px;
+}
+
+.MuiToggleButtonGroup-groupedHorizontal:not(:first-child) {
+	border-radius: 10px;
+	border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.Mui-selected {
+	border-radius: 10px;
+	background-color: #000 !important;
+	color: #fff !important;
+}
+.MuiToggleButton-root{
+	font-family:'Raleway', sans-serif o !important;
+    font-size: .8rem !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    border-radius: 10px !important;
+}
+.MuiToggleButton-root:hover {
+
+	background-color: #000;
+	color: #fff;
+}
+
+
+.MuiSlider-valueLabelOpen .MuiSlider-valueLabel  {
+  transform: scale(1) translateY(-10px);
+}
+
+.css-3besu{
+	background-color: transparent !important;
+
+}
+
+.css-nnid7-MuiSlider-valueLabel{
+	background-color: transparent !important;
+
+}
+.MuiSlider-valueLabelOffset {
+  top: -34px;
+  z-index: 1;
+  position: absolute;
+  transform: scale(0);
+  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.01071em;
+  transform-origin: bottom center;
+}
+.MuiSlider-valueLabelCircle {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  transform: rotate(-45deg);
+  align-items: center;
+  border-radius: 50% 50% 50% 0;
+  justify-content: center;
+  background-color: black !important;
+}
+.MuiSlider-valueLabelLabel {
+  color: #fff;
+  transform: rotate(45deg);
+  font-size: 0.75rem !important;
+
+}
+.bg-primary{
+	background-color: #00ff6c !important;
+}
+
+.text-primary{
+	color: #00ff6c !important;
+}
+
+.border-primary{
+	border: 1px solid #00ff6c !important;
+
+}
+
+
+.bg-primary-green{
+	background-color: rgba(3,239,138,1);
+}
+
+.text-primary-green{
+	color: rgba(3,239,138,1);
+}
+
+/*Virtualize Dropdown */
+
+.selectVirtualized div{
+	padding-left: 5px;
+}
+
+.selectVirtualized input{
+	padding: 12px 0px !important;
+	margin-left: 5px;
+}
+
+
+/*Phone Input */
+.flag-dropdown {
+	display: none !important;
+	width: 0px !important;
+}
+
+.react-tel-input .form-control{
+	padding-left: 20px !important;
+}

@@ -11,7 +11,7 @@ export interface IListingsParams {
   category?: string;
 }
 
-export default async function getListings(
+export default async function getQuotes(
   params: IListingsParams
 ) {
   try {
@@ -54,9 +54,9 @@ export default async function getListings(
     //   }
     // }
 
-    if (locationValue) {
-      query.locationValue = locationValue;
-    }
+    // if (locationValue) {
+    //   query.locationValue = locationValue;
+    // }
 
     // if (startDate && endDate) {
     //   query.NOT = {
@@ -77,19 +77,19 @@ export default async function getListings(
     //   }
     // }
 
-    const listings = await prisma.listing.findMany({
+    const quotes = await prisma.car.findMany({
       where: query,
       orderBy: {
         createdAt: 'desc'
       }
     });
 
-    const safeListings = listings.map((listing) => ({
-      ...listing,
-      createdAt: listing.createdAt.toISOString(),
+    const safeQuotes = quotes.map((quote) => ({
+      ...quote,
+      createdAt: quote.createdAt.toISOString(),
     }));
 
-    return safeListings;
+    return safeQuotes;
   } catch (error: any) {
     throw new Error(error);
   }

@@ -43,7 +43,6 @@ const SelectVirtualized:React.FC<SelectProps> = ({
         className='selectVirtualized'
         />
        
-        <i className="z-0"></i>
           </>
     
   )

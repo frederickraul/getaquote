@@ -17,6 +17,7 @@ interface InputProps{
   formatPrice?: boolean;
   required?: boolean;
   disableDropdown?: boolean;
+  dropdownClass?:string;
 }
 
 const InputPhone: React.FC<InputProps> = ({
@@ -32,6 +33,7 @@ const InputPhone: React.FC<InputProps> = ({
   small,
   formatPrice,
   required,
+  dropdownClass,
 
 }) => {
   return (
@@ -46,8 +48,10 @@ const InputPhone: React.FC<InputProps> = ({
         onChange={(phone,data,evet,formattedPhone) => onChange(phone,formattedPhone)
       }
         disabled={disabled}
-        disableDropdown={disableDropdown}
+        disableDropdown
         placeholder=" "
+        dropdownClass={dropdownClass}
+        disableSearchIcon
         inputClass={
           `
           peer
@@ -66,7 +70,7 @@ const InputPhone: React.FC<InputProps> = ({
           ${type === "checkbox" ? 'w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600': ''}
           `}
         containerClass="relative"
-        dropdownClass={`${disableDropdown && 'hidden'}`}
+       
       />
 
     </div>
