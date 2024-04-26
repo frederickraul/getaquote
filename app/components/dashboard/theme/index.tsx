@@ -12,7 +12,16 @@ import { customShadows } from './custom-shadows';
 
 // ----------------------------------------------------------------------
 
-export default function ThemeProvider({ children }) {
+
+
+interface ThemeProviderProps{
+  children: React.ReactNode;
+
+}
+
+const ThemeProvider: React.FC<ThemeProviderProps> = ({
+  children}) => {
+
   const memoizedValue = useMemo(
     () => ({
       palette: palette(),
@@ -39,3 +48,5 @@ export default function ThemeProvider({ children }) {
 ThemeProvider.propTypes = {
   children: PropTypes.node,
 };
+
+export default ThemeProvider
