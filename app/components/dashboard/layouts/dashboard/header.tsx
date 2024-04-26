@@ -57,8 +57,7 @@ const Header: React.FC<HeaderProps> = ({
         boxShadow: 'none',
         height: HEADER.H_MOBILE,
         zIndex: theme.zIndex.appBar + 1,
-        backdropFilter: `blur(${blur}px)`,
-        WebkitBackdropFilter: `blur(${blur}px)`,
+       
         backgroundColor: alpha(theme.palette.background.default, 0.8),
         transition: theme.transitions.create(['height'], {
           duration: theme.transitions.duration.shorter,

@@ -36,7 +36,7 @@ const UserPage: React.FC<ListingCardProps> = ({
 
   const [order, setOrder] = useState('asc');
 
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<string[]>();
 
   const [orderBy, setOrderBy] = useState('name');
 
@@ -62,28 +62,29 @@ const UserPage: React.FC<ListingCardProps> = ({
   };
 
   const handleClick = (event:any, name:any) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
+    console.log(event);
+    // const selectedIndex = selected?.indexOf(name);
+    // let newSelected;
+    // if (selectedIndex === -1) {
+    //   newSelected = newSelected?.concat(selected, name);
+    // } else if (selectedIndex === 0) {
+    //   newSelected = newSelected.concat(selected.slice(1));
+    // } else if (selectedIndex === selected.length - 1) {
+    //   newSelected = newSelected.concat(selected.slice(0, -1));
+    // } else if (selectedIndex > 0) {
+    //   newSelected = newSelected.concat(
+    //     selected.slice(0, selectedIndex),
+    //     selected.slice(selectedIndex + 1)
+    //   );
+    // }
+    // setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event:any, newPage:any) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = (event:any) => {
     setPage(0);
     setRowsPerPage(parseInt(event.target.value, 10));
   };
@@ -109,7 +110,7 @@ const UserPage: React.FC<ListingCardProps> = ({
 
       <Card>
         <UserTableToolbar
-          numSelected={selected.length}
+          numSelected={selected?.length}
           filterName={filterName}
           onFilterName={handleFilterByName}
         />
@@ -121,7 +122,7 @@ const UserPage: React.FC<ListingCardProps> = ({
                 order={order}
                 orderBy={orderBy}
                 rowCount={users.length}
-                numSelected={selected.length}
+                numSelected={selected?.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
