@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -43,6 +43,13 @@ const UserPage: React.FC<ListingCardProps> = ({
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const [quotes, setQuotes] = useState(data);
+
+  useEffect(() => {
+      setQuotes(data);
+  }, [data])
+  
 
   const handleSort = (event:any, id:any) => {
     const isAsc = orderBy === id && order === 'asc';

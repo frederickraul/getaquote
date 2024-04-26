@@ -11,7 +11,6 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
-
   return (
     <ThemeProvider>
       <DashboardLayout>
