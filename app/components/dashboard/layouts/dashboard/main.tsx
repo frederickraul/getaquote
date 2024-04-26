@@ -9,8 +9,15 @@ import { NAV, HEADER } from './config-layout';
 // ----------------------------------------------------------------------
 
 const SPACING = 8;
+interface ScrollbarProps{
+  children: React.ReactNode;
+  sx?: any;
+  other?:any;
+}
 
-export default function Main({ children, sx, ...other }) {
+const Main: React.FC<ScrollbarProps> = ({
+  children,sx,other}) => {
+
   const lgUp = useResponsive('up', 'lg');
 
   return (
@@ -40,3 +47,6 @@ Main.propTypes = {
   children: PropTypes.node,
   sx: PropTypes.object,
 };
+
+
+export default Main;

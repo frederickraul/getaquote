@@ -37,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = ({currentUser, notifications}) => {
                     </div>
                     <div className='lg:flex flex-row items-center hidden'>
                       <ul className='nav-ul'>
-                          <li>
+                          {/* <li>
                             <div className='wrap'>
                               <a> Home</a>
                             </div>
@@ -61,10 +61,10 @@ const Navbar: React.FC<NavbarProps> = ({currentUser, notifications}) => {
                             <div className='wrap'>
                               <a> About </a>
                             </div>
-                          </li>
-                              <li>
+                          </li> */}
+                              <li onClick={()=>{router.push('/dashboard')}}>
                             <div className='wrap'>
-                              <a> Contact </a>
+                              <a> Admin </a>
                             </div>
                           </li>
                          

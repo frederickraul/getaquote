@@ -5,11 +5,17 @@ import Box from '@mui/material/Box';
 
 // ----------------------------------------------------------------------
 
-const SvgColor = forwardRef(({ src, sx, ...other }, ref) => (
+interface SvgProps{
+  src: React.ReactNode;
+  sx?: any;
+  other?:any;
+}
+
+const SvgColor: React.FC<SvgProps> = ({
+  src,sx,other}) => (
   <Box
     component="span"
     className="svg-color"
-    ref={ref}
     sx={{
       width: 24,
       height: 24,
@@ -21,7 +27,7 @@ const SvgColor = forwardRef(({ src, sx, ...other }, ref) => (
     }}
     {...other}
   />
-));
+);
 
 SvgColor.propTypes = {
   src: PropTypes.string,
