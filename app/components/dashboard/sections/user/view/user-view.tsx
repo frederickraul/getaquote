@@ -62,7 +62,7 @@ const UserPage: React.FC<ListingCardProps> = ({
   };
 
   const handleClick = (event:any, name:any) => {
-    console.log(event);
+    console.log(name);
     // const selectedIndex = selected?.indexOf(name);
     // let newSelected;
     // if (selectedIndex === -1) {
