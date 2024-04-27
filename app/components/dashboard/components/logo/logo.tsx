@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
+import { useRouter } from 'next/navigation';
 
 
 // ----------------------------------------------------------------------
@@ -32,6 +33,8 @@ const Logo: React.FC<LogoProps> = ({
   //   />
   // );
 
+  const router = useRouter();
+
   const logo = (
     <Box
       component="img"
@@ -52,7 +55,7 @@ const Logo: React.FC<LogoProps> = ({
   }
 
   return (
-    <div>
+    <div className='cursor-pointer' onClick={()=>{router.push('/')}}>
       {logo}
     </div>
   );
