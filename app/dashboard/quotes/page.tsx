@@ -4,7 +4,6 @@ import { UserView } from '@/app/components/dashboard/sections/user/view';
 
 const Page = async () => {
   const quotes = await getQuotes();
-  console.log(quotes);
   return (
     <UserView data={quotes}/>
     

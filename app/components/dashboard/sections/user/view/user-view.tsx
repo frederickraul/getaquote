@@ -48,6 +48,7 @@ const UserPage: React.FC<ListingCardProps> = ({
 
   useEffect(() => {
       setQuotes(data);
+      console.log(data);
   }, [data])
   
 
