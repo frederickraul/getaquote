@@ -350,6 +350,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
         toast.success('Quote Created Wait For a Call');
         router.refresh();
         setStep(STEPS.DESCRIPTION);
+        setData(defaultValues);
 
       })
       .catch(() => {
