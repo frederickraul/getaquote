@@ -10,6 +10,7 @@ interface ModalProps {
   isOpen?: boolean;
   onSubmit?: () =>void;
   title?: string;
+  head?: React.ReactElement;
   body?: React.ReactElement;
   footer?: React.ReactElement;
   actionLabel?: string;
@@ -22,6 +23,7 @@ const Modal: React.FC<ModalProps> = ({
   isOpen,
   onSubmit,
   title,
+  head,
   body,
   footer,
   actionLabel,
@@ -76,6 +78,7 @@ const Modal: React.FC<ModalProps> = ({
               </div>
               {/* BODY */}
               <div className="relative py-3">
+                {head}
                 {body}
               </div>
               {/* FOOTER */}

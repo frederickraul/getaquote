@@ -134,11 +134,12 @@ const UserPage: React.FC<ListingCardProps> = ({
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  { id: 'name', label: 'Name' },
                   { id: 'vin', label: 'VIN' },
                   { id: 'make', label: 'Make' },
                   { id: 'model', label: 'Model' },
                   { id: 'year', label: 'Year' },
+                  { id: 'engine', label: 'Engine' },
+
                   { id: '' },
                 ]}
               />

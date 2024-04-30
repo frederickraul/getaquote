@@ -44,20 +44,12 @@ const UserTableRow: React.FC<RowProps> = ({
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
 
-        <TableCell component="th">
-        <Stack direction="row" alignItems="center" spacing={2}>
-            {/* <Avatar alt={data?.name} src={data?.avatarUrl} /> */}
-            <Typography variant="subtitle2" noWrap>
-              {data?.name}
-            </Typography>
-          </Stack>
-        </TableCell>
-
         <TableCell>{data?.vin}</TableCell>
 
         <TableCell>{data?.make}</TableCell>
         <TableCell>{data?.model}</TableCell>
         <TableCell>{data?.year}</TableCell>
+        <TableCell>{data?.engine}</TableCell>
 
         {/* <TableCell align="center">{data?.isVerified ? 'Yes' : 'No'}</TableCell>
 

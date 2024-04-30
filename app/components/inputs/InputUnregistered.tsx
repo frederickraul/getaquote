@@ -1,8 +1,10 @@
 
 'use client';
 
+import { Button, Tooltip } from "@mui/material";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
-import { BiDollar } from "react-icons/bi";
+import { FcInfo } from "react-icons/fc";
+
 
 interface InputProps{
   value?: any;
@@ -17,7 +19,9 @@ interface InputProps{
   formatPrice?: boolean;
   formatWebsite?: boolean;
   required?: boolean;
+  error?:boolean;
   placeholder?:string;
+  infoMessage?:string;
 }
 
 const InputUnregistered: React.FC<InputProps> = ({
@@ -33,15 +37,25 @@ const InputUnregistered: React.FC<InputProps> = ({
   formatPrice,
   formatWebsite,
   required,
+  error,
   placeholder,
+  infoMessage,
 
 }) => {
   return (
     <>
     <div className="w-full relative">
-    <div className="font-bold text-neutral-600 text-lg p-0 mb-1">
+    <div className="font-bold text-lg p-0 mb-0 flex flex-row">
       {label && label}
       {required && <span className="text-red-500"> * </span>}
+      {infoMessage && <Tooltip title={infoMessage} content={infoMessage}>
+          <div className="ml-2 cursor-pointer">
+          <FcInfo/>
+          </div>
+        </Tooltip>}
+      {error && <span className='ml-5 text-sm font-bold text-red-500'>Required</span>}
+
+      
     </div>
       <input
         value={value}
@@ -52,21 +66,25 @@ const InputUnregistered: React.FC<InputProps> = ({
         placeholder={placeholder}
         type={type}
         className={`
+        input 
         peer
         w-full
         font-light
         ${readonly ? 'bg-neutral-300':'bg-white'}
-        border-2
+        border-[1px]
+        border-neutral-300
+        active:border-blue-500
+        focus:border-blue-500
         rounded-md
         outline-nonde
         transition
         disabled:opacity-70
         disabled:cursor-not-allowed
         ${small ? 'text-sm' : 'text-md'}
-        ${small ? 'p-2' : 'p-4'}
-        ${small ? 'p-3' : 'pt-6'}
+        ${small ? 'p-2' : 'p-2'}
+        ${small ? 'p-3' : 'pt-3'}
         ${small ? 'font-light' : 'font-semibold'}
-        ${type === "checkbox" ? 'w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600': ''}
+        
         `}
         />
     

@@ -7,9 +7,11 @@ import InputUnregistered from '../inputs/InputUnregistered';
 interface AlertProps { 
     onChange:(value:any) => void;
     value:string;
+    error?:boolean;
   }
   const ZipLookUp: React.FC<AlertProps> = ({
     value,
+    error,
     onChange
   })=>{
 
@@ -74,7 +76,9 @@ interface AlertProps {
     return (
         <InputUnregistered
             label="Zip Code"
+            infoMessage="What's the vehicle's location?"
             required
+            error={error}
             value={zip}
             onChange={(e)=>{handleZipChange(e.target.value)}}
           />

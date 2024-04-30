@@ -1,79 +1,65 @@
+import { useState } from "react";
+import InputUnregistered from "./InputUnregistered";
 
-'use client';
-
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
-import PhoneInput from "react-phone-input-2";
-import '@/app/reactInputPhone.css'
 interface InputProps{
-  country: string;
-  value?: any;
-  checked?: boolean;
-  onChange: (phone: any, formattedPhone: any) => void;
-  label: string;
-  type?: string;
-  disabled?: boolean;
-  small?: boolean;
-  optional?: boolean;
-  formatPrice?: boolean;
-  required?: boolean;
-  disableDropdown?: boolean;
-  dropdownClass?:string;
+  label?:string;
+  error?:boolean;
+  infoMessage?:string;
+  value:any;
+  onChange:(value:any)=>void;
 }
 
 const InputPhone: React.FC<InputProps> = ({
-  country,
+  label,
+  infoMessage,
+  error,
   value,
   onChange,
-  checked,
-  label,
-  optional,
-  type,
-  disabled,
-  disableDropdown,
-  small,
-  formatPrice,
-  required,
-  dropdownClass,
-
 }) => {
-  return (
-    <div className="w-full relative">
-    <div className="font-bold text-neutral-600 text-lg p-0 mb-1">
-      {label && label}
-      {required && <span className="text-red-500"> * </span>}
-    </div>
-      <PhoneInput
-        country={country}
-        value={value}
-        onChange={(phone,data,evet,formattedPhone) => onChange(phone,formattedPhone)
-      }
-        disabled={disabled}
-        disableDropdown
-        placeholder=" "
-        dropdownClass={dropdownClass}
-        disableSearchIcon
-        inputClass={
-          `
-          peer
-          w-full
-          font-light
-          border-2
-          rounded-md
-          outline-nonde
-          transition
-          disabled:opacity-70
-          disabled:cursor-not-allowed
-          ${small ? 'text-sm' : 'text-md'}
-          ${small ? 'p-2' : 'p-4'}
-          ${small ? 'p-3' : 'pt-6'}
-          ${small ? 'font-light' : 'font-semibold'}
-          ${type === "checkbox" ? 'w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600': ''}
-          `}
-        containerClass="relative"
-       
-      />
+  const [phone, setphone] = useState("");
 
-    </div>
+
+  const normalizeInput = (value:any, previousValue:any) => {
+    if (!value) return value;
+    const currentValue = value.replace(/[^\d]/g, '');
+    const cvLength = currentValue.length;
+    
+    if (!previousValue || value.length > previousValue.length) {
+      if (cvLength < 4) return currentValue;
+      if (cvLength < 7) return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
+      return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)}-${currentValue.slice(6, 10)}`;
+    }
+  };
+  
+  const validateInput = (value:any) => {
+    let error = ""
+    
+    if (!value) error = "Required!"
+    else if (value.length !== 14) error = "Invalid phone format. ex: (555) 555-5555";
+    
+    return error;
+  };
+
+  const handleChange =(e:any)=>{
+    const number = e.target.value;
+    const formattedNumber = normalizeInput(number, value);
+    onChange(formattedNumber);
+    
+  }
+
+
+    return(
+      <>
+      <InputUnregistered
+        label={label ? label : "Phone"}
+        infoMessage={infoMessage ? infoMessage : ""}
+        required
+        value={value}
+        error={error}
+        onChange={(e)=>{handleChange(e)}}
+      />
+       
+        </>
   )
 }
 

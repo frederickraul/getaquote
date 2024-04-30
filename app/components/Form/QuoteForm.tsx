@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from "react";
-import Heading from '../Heading';
+import { FaRegCheckCircle } from "react-icons/fa";
 
 import { useRouter } from "next/navigation";
 
@@ -17,6 +17,7 @@ import ZipLookUp from "../zipcode/ZipLookUp";
 import InputPhone from "../inputs/InputPhone";
 import ValidateForm from "./ValidateForm";
 import toast from "react-hot-toast";
+import Button from "../Button";
 
 
 enum STEPS {
@@ -31,6 +32,7 @@ enum STEPS {
   PHONE = 9,
   FINISH = 10,
   NOPAIDOFFMESSAGE = 11,
+  DONE = 12,
 }
 
 const defaultOption = { label: '', value: '' };
@@ -56,9 +58,9 @@ const defaultValues = {
   state: '',
   zip: '',
   phone: '',
-  formattedPhone: '',
+  phone2: '',
   name: '',
-  engine:''
+  engine: ''
 
 };
 
@@ -83,9 +85,9 @@ const defaultErrorValues = {
   state: false,
   zip: false,
   phone: false,
-  formattedPhone: false,
+  phone2: false,
   name: false,
-  engine:false
+  engine: false
 };
 
 
@@ -148,11 +150,10 @@ const QuoteForm: React.FC<ListingCardProps> = ({
     setData({ ...data, ['city']: value.city, ['state']: value.state_name, ['zip']: value.zip });
 
   }
-  const handleInputChange = (field: string, value: any, value2?: any) => {
-    if (field === 'phone') {
+  const handleInputChange = (field: string, value: any) => {
+    if (field === 'phone' || field === 'phone2') {
       console.log(value);
-      console.log(value2);
-      setData({ ...data, [field]: value, ['formattedPhone']: value2 });
+      setData({ ...data, [field]: value });
 
     } else if (field === 'vin') {
       const vinNumber = value.target.value;
@@ -184,13 +185,13 @@ const QuoteForm: React.FC<ListingCardProps> = ({
         setData({ ...data, [field]: value, ['model']: defaultOption });
       }
     } else {
-     
-        if(value === null){
-          setData({ ...data, [field]: defaultOption });
-        }else{
-          setData({ ...data, [field]: value });
-        }
-      
+
+      if (value === null) {
+        setData({ ...data, [field]: defaultOption });
+      } else {
+        setData({ ...data, [field]: value });
+      }
+
     }
   }
 
@@ -241,19 +242,22 @@ const QuoteForm: React.FC<ListingCardProps> = ({
         const model = vinDetails.filter((item: any) => item.Variable === 'Model');
         const make = vinDetails.filter((item: any) => item.Variable === 'Make');
         const engine = vinDetails.filter((item: any) => item.Variable === 'Engine Model');
+        const cylinders = vinDetails.filter((item: any) => item.Variable === 'Engine Number of Cylinders');
+        const liters = vinDetails.filter((item: any) => item.Variable === 'Displacement (L)');
 
         setSelectedMake({ value: make[0].ValueId, label: make[0].Value });
         console.log(year[0].Value);
         console.log(model[0].Value);
         console.log(make[0].Value);
         console.log(engine[0]?.Value);
+        const engineDetails = cylinders[0]?.Value+"-Cyl, "+cylinders[0]?.Value+" Liter"
         setData({
           ...data,
           ['vin']: VIN,
           ['year']: { value: year[0].Value, label: year[0].Value },
           ['make']: { value: make[0].ValueId, label: make[0].Value },
           ['model']: { value: model[0].ValueId, label: model[0].Value },
-          ['engine']: engine[0]?.Value,
+          ['engine']: engineDetails,
         }
         );
       }
@@ -284,7 +288,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
   const [step, setStep] = useState(STEPS.DESCRIPTION);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [isVinValid, setisVinValid] = useState(false);
+  const [isVinValid, setisVinValid] = useState(true);
 
 
 
@@ -336,12 +340,13 @@ const QuoteForm: React.FC<ListingCardProps> = ({
 
   const onSubmit = (data: any) => {
     if (step !== STEPS.FINISH) {
-      const errorCount = ValidateForm(step ,STEPS, data, errors,setErrors);
-      if( errorCount > 0){
+      const errorCount = ValidateForm(step, STEPS, data, errors, setErrors);
+      if (errorCount > 0) {
         return;
       }
       return onNext();
     }
+
 
     setIsLoading(true);
 
@@ -349,7 +354,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
       .then(() => {
         toast.success('Quote Created Wait For a Call');
         router.refresh();
-        setStep(STEPS.DESCRIPTION);
+        setStep(STEPS.DONE);
         setData(defaultValues);
 
       })
@@ -370,6 +375,10 @@ const QuoteForm: React.FC<ListingCardProps> = ({
       return undefined;
     }
 
+    if(step === STEPS.DONE){
+      return undefined;
+    }
+
     return 'Next';
   }, [step]);
 
@@ -378,72 +387,94 @@ const QuoteForm: React.FC<ListingCardProps> = ({
       return undefined;
     }
 
+    if (step === STEPS.DONE) {
+      return undefined;
+    }
+
     return 'Back';
   }, [step]);
 
 
+  const headContent = (
+    <div className='my-5'>
+        {step !== STEPS.DONE &&
+          <div className='text-4xl sm:text-5xl font-bold mt-10 sm:mt-20 md:mt-10'>Get A Quote</div>
+        }
+    </div>
+  );
 
 
   // DESCRIPTION STEP
   let bodyContent = (
-    <div className="flex flex-col gap-8">
+    <>
+      <div className="font-bold sm:text-lg mb-5">To receive an offer for your car, please fill out the form below. Make sure to include the correct
+        <span className="text-red-500"> Vehicle ID Number (VIN)</span>.
+      </div>
+      <div className="flex flex-col gap-8">
 
-      <div className="flex flex-col ">
-        <div className="flex flex-col gap-3 2xl:gap-4 pr-5 3xl:pr-0">
-          <InputUnregistered
-            label="Please enter your VIN"
-            //disabled={isLoading}
-            value={data.vin}
-            required
-            onChange={(value) => { handleInputChange('vin', value) }} />
-          <div className="flex flex-row">
+        <div className="flex flex-col ">
+          <div className="flex flex-col gap-3 2xl:gap-4 pr-5 3xl:pr-0">
+            <InputUnregistered
+              label="Please enter your VIN"
+              infoMessage="The vehicle ID number (VIN) can be found on the title, registration card, or insurance card."
+              //disabled={isLoading}
+              value={data.vin}
+              required
+              error={errors.vin}
+              onChange={(value) => { handleInputChange('vin', value) }} />
+            <div className="flex flex-row -mt-2">
+            
+            {data?.vin.length > 0 &&
+               (isVinValid ?
+                <span className='text-sm font-bold text-green-500 mr-5'>Valid VIN</span>
+                :
+                <span className='text-sm font-bold text-red-500 flex mr-5'>Invalid VIN</span>)
+              
+            }
+             
 
-          {isVinValid ?
-            <span className='text-sm font-bold text-green-500 mr-5'>Valid VIN</span>
-            :
-            <span className='text-sm font-bold text-red-500 flex mr-5'>Invalid VIN</span>
-          }
+             
+            </div>
 
-          {errors.vin && <span className='flex text-sm font-bold text-red-500'> Required</span>}
-          </div>
+            <SelectVirtualized
+              label='Year'
+              required
+              error={errors.year}
+              options={yearList}
+              value={data.year}
+              onChange={(value) => { handleSelectChange('year', value) }}
+            />
 
-          <SelectVirtualized
-            label='Year'
-            required
-            options={yearList}
-            value={data.year}
-            onChange={(value) => { handleSelectChange('year', value) }}
-          />
-          {errors.year && <span className='text-sm font-bold text-red-500'>Required</span>}
 
-          <SelectVirtualized
-            label='Make'
-            required
-            options={makes}
-            value={data.make}
-            onChange={(value) => { handleSelectChange('make', value) }}
-          />
-          {errors.make && <span className='text-sm font-bold text-red-500'>Required</span>}
+            <SelectVirtualized
+              label='Make'
+              required
+              error={errors.make}
+              options={makes}
+              value={data.make}
+              onChange={(value) => { handleSelectChange('make', value) }}
+            />
 
-          <SelectVirtualized
-            label='Model'
-            required
-            options={modelList}
-            value={data.model}
-            onChange={(value) => { handleSelectChange('model', value) }}
-          />
 
-           {errors.model && <span className='text-sm font-bold text-red-500'>Required</span>}
+            <SelectVirtualized
+              label='Model'
+              required
+              error={errors.model}
+              options={modelList}
+              value={data.model}
+              onChange={(value) => { handleSelectChange('model', value) }}
+            />
 
-           <InputUnregistered
+            <InputUnregistered
               label="Engine Model"
               placeholder=''
               value={data.engine}
               onChange={(value) => { handleInputChange('engine', value) }} />
+          </div>
         </div>
-      </div>
 
-    </div>
+      </div>
+    </>
   )
 
 
@@ -459,11 +490,10 @@ const QuoteForm: React.FC<ListingCardProps> = ({
             <SelectVirtualized
               label='Is Your Vehicle Paid Off?'
               required
+              error={errors.paidOff}
               options={paidOfOptions}
               value={data.paidOff}
               onChange={(value) => { handleSelectChange('paidOff', value) }} />
-            
-            {errors.paidOff && <span className='text-sm font-bold text-red-500'>Required</span>}
 
           </div>
         </div>
@@ -503,32 +533,34 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               label="Vehicle Mileage?"
               placeholder='100,000'
               required
+              error={errors.mileage}
               value={data.mileage}
               onChange={(value) => { handleInputChange('mileage', value) }} />
 
-            {errors.mileage && <span className='text-sm font-bold text-red-500'>Required</span>}
 
             <SelectVirtualized
               label='Vehicle Operating Condition?'
               required
+              error={errors.vehicleCondition}
               options={vehicleConditionOptions}
               value={data.vehicleCondition}
               onChange={(value) => { handleSelectChange('vehicleCondition', value) }} />
-              
-            {errors.vehicleCondition && <span className='text-sm font-bold text-red-500'>Required</span>}
+  
 
-             <SelectVirtualized
+            <SelectVirtualized
               label='Are Your Wheels Aluminum Or Steel?'
               required
+              error={errors.wheels}
               options={wheelsOptions}
               value={data.wheels}
               onChange={(value) => { handleSelectChange('wheels', value) }} />
-              {errors.wheels && <span className='text-sm font-bold text-red-500'>Required</span>}
 
 
             <SelectVirtualized
               label='Does It Have All Wheels?'
               required
+              error={errors.allWheels}
+
               options={
                 [
                   { label: 'Yes - Has 4 Wheels.', value: 'Yes - Has 4 Wheels.' },
@@ -538,7 +570,6 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               value={data.allWheels}
               onChange={(value) => { handleSelectChange('allWheels', value) }} />
 
-            {errors.allWheels && <span className='text-sm font-bold text-red-500'>Required</span>}
 
 
 
@@ -557,9 +588,10 @@ const QuoteForm: React.FC<ListingCardProps> = ({
         <div className="flex flex-col ">
           <div className="flex flex-col gap-3 2xl:gap-4 pr-5 3xl:pr-0">
 
-          <SelectVirtualized
+            <SelectVirtualized
               label='Is There Any Body Damage?'
               required
+              error={errors.bodyDamage}
               options={
                 [
                   { label: 'Yes', value: 'Yes' },
@@ -568,7 +600,6 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               value={data.bodyDamage}
               onChange={(value) => { handleSelectChange('bodyDamage', value) }} />
 
-            {errors.bodyDamage && <span className='text-sm font-bold text-red-500'>Required</span>}
 
             {data.bodyDamage.value === 'Yes' &&
               <InputText label="Please explain exactly what is damaged."
@@ -576,7 +607,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
                 onChange={(value) => { handleInputChange('bodyDamageDescription', value) }} />
             }
 
-           
+
           </div>
         </div>
       </div>
@@ -592,13 +623,13 @@ const QuoteForm: React.FC<ListingCardProps> = ({
         <div className="flex flex-col ">
           <div className="flex flex-col gap-3 2xl:gap-4 pr-5 3xl:pr-0">
 
-          <SelectVirtualized
+            <SelectVirtualized
               label='Ownership Documents'
               required
+              error={errors.ownershipDocument}
               options={ownershipOptiones}
               value={data.ownershipDocument}
               onChange={(value) => { handleSelectChange('ownershipDocument', value) }} />
-          {errors.ownershipDocument && <span className='text-sm font-bold text-red-500'>Required</span>}
           </div>
         </div>
       </div>
@@ -616,6 +647,8 @@ const QuoteForm: React.FC<ListingCardProps> = ({
             <SelectVirtualized
               label='Any Parts Missing?'
               required
+              error={errors.partMissing}
+
               options={
                 [
                   { label: 'Yes', value: 'Yes' },
@@ -624,7 +657,6 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               value={data.partMissing}
               onChange={(value) => { handleSelectChange('partMissing', value) }} />
 
-              {errors.partMissing && <span className='text-sm font-bold text-red-500'>Required</span>}
 
 
             {data.partMissing.value === 'Yes' &&
@@ -652,6 +684,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
             <SelectVirtualized
               label='Does It Have A Battery?'
               required
+              error={errors.battery}
               options={
                 [
                   { label: 'Yes', value: 'Yes' },
@@ -659,11 +692,11 @@ const QuoteForm: React.FC<ListingCardProps> = ({
                 ]}
               value={data.battery}
               onChange={(value) => { handleSelectChange('battery', value) }} />
-                {errors.battery && <span className='text-sm font-bold text-red-500'>Required</span>}
 
             <SelectVirtualized
               label='Catalytic Converter?'
               required
+              error={errors.catalytic}
               options={
                 [
                   { label: 'Yes - Original.', value: 'Yes - Original.' },
@@ -672,7 +705,6 @@ const QuoteForm: React.FC<ListingCardProps> = ({
                 ]}
               value={data.catalytic}
               onChange={(value) => { handleSelectChange('catalytic', value) }} />
-                  {errors.catalytic && <span className='text-sm font-bold text-red-500'>Required</span>}
 
           </div>
         </div>
@@ -685,32 +717,35 @@ const QuoteForm: React.FC<ListingCardProps> = ({
   if (step === STEPS.ZIPCODE) {
     bodyContent = (
       <div className="flex flex-col gap-8">
-
+   <div className="font-bold sm:text-2xl mb-5 mt-5">
+        What's the vehicle's location?
+      </div>
         <div className="flex flex-col ">
           <div className="flex flex-col gap-3 2xl:gap-4 pr-5 3xl:pr-0">
             <ZipLookUp
+              error={errors.zip}
+
               value={data.zip}
               onChange={handleZipcodeChange}
             />
-            {errors.zip && <span className='text-sm font-bold text-red-500'>Required</span>}
 
             <InputUnregistered
               label="City"
+              error={errors.city}
               disabled={isLoading}
               readonly={true}
               value={data.city}
               onChange={() => { }}
             />
-            {errors.city && <span className='text-sm font-bold text-red-500'>Required</span>}
 
             <InputUnregistered
               label="State"
+              error={errors.state}
               disabled={isLoading}
               readonly={true}
               value={data.state}
               onChange={() => { }}
             />
-            {errors.state && <span className='text-sm font-bold text-red-500'>Required</span>}
 
           </div>
         </div>
@@ -723,30 +758,35 @@ const QuoteForm: React.FC<ListingCardProps> = ({
     bodyContent = (
 
       <div className="flex flex-col gap-8">
-
+      <div className="font-bold sm:text-2xl mt-5 mb-5">
+        Seller's Contact Info
+      </div>
         <div className="flex flex-col ">
           <div className="flex flex-col gap-3 2xl:gap-4 pr-5 3xl:pr-0">
             <InputUnregistered
               label="Name"
               disabled={isLoading}
               required
+              error={errors.name}
+
               value={data.name}
               onChange={(value) => { handleInputChange('name', value) }} />
-            
-            {errors.name && <span className='text-sm font-bold text-red-500'>Required</span>}
+
 
 
             <InputPhone
-              country="US"
-              label="Phone"
-              disabled={isLoading}
-              required
+             label="Phone"
+              error={errors.phone}
               value={data.phone}
-              //disableDropdown={true}
-              //dropdownClass='hidden'
+              onChange={(value)=>{handleInputChange('phone',value)}} />
 
-              onChange={(value, formattedPhone) => { handleInputChange('phone', value, formattedPhone) }} />
-            {errors.phone && <span className='text-sm font-bold text-red-500'>Required</span>}
+            <InputPhone
+              label="Alternative Phone"
+              error={errors.phone2}
+              value={data.phone2}
+              onChange={(value)=>{handleInputChange('phone2',value)}} />
+
+             
 
 
           </div>
@@ -760,14 +800,52 @@ const QuoteForm: React.FC<ListingCardProps> = ({
     bodyContent = (
       <div className="flex flex-col gap-8">
         <h1 className="text-2xl pt-5 mb-10">
-        Are you ready?<br/>
-        You are about to send the form!!!
+          Are you ready?<br />
+          You are about to send the form!!!
         </h1>
-      
+
       </div>
     )
-
   }
+
+    // CATEGORY STEP
+    if (step === STEPS.DONE) {
+
+      bodyContent = (
+        <div className="flex flex-col gap-8">
+  
+          <div className="flex flex-col">
+            <div className="
+                 gap-3 2xl:gap-4
+                flex 
+                flex-col 
+                pr-5 3xl:pr-0 
+                items-center
+               ">
+            <FaRegCheckCircle className="text-primary mt-16" size={50}/>
+
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold pt-10 pb-10 text-center">
+                Thank you for sending us the details of your vehicle.
+              </h1>
+
+              <span className="-m-5 px-10 text-center">Someone form our buying departman will contact you soon!</span>
+
+              <div className="font-bold text-2xl mt-10 w-[230px] text-center">
+                Expect a call from (800) 440-1510
+              </div>
+
+              <div className="font-bold text-2xl">
+                Monday-Friday 9AM - 5PM
+              </div>
+             <a className="mt-5" href="https://ecologycashforcars.com/">
+             <Button big label="Return to Main Site" styles="bg-primary" borderless onClick={()=>{}}/>
+             </a>
+            </div>
+          </div>
+  
+        </div>
+      )
+    }
 
   return (
     <div className="h[900px]">
@@ -778,6 +856,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
         secondaryActionLabel={secondaryActionLabel}
         secondaryAction={step === STEPS.DESCRIPTION ? undefined : onBack}
         body={bodyContent}
+        head={headContent}
         //size={step === STEPS.OPERATION ? 'lg' : 'md'}
         disabled={isLoading}
       />

@@ -94,7 +94,7 @@ model Car {
   state                   String
   zip                     String
   phone                   String
-  formattedPhone          String
+  phone2                  String?
   name                    String
   engine                  String? 
   createdAt               DateTime @default(now())

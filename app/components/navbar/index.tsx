@@ -7,6 +7,7 @@ import { SafeUser } from '@/app/types';
 import { useRouter } from 'next/navigation';
 
 import './styles.css';
+import { MdDashboard } from 'react-icons/md';
 
 interface NavbarProps {
     currentUser?: SafeUser | null
@@ -30,9 +31,10 @@ const Navbar: React.FC<NavbarProps> = ({currentUser, notifications}) => {
                     justify-between
                     gap-3   
                     md:gap-0
-                    py-4
+                    md:py-4
+                    
                         '>
-                    <div className='flex flex-row items-center justify-around'>
+                    <div className='pl-3 lg:pl-0 flex flex-row items-center justify-around'>
                     <Logo/>
                     </div>
                     <div className='lg:flex flex-row items-center'>
@@ -63,8 +65,8 @@ const Navbar: React.FC<NavbarProps> = ({currentUser, notifications}) => {
                             </div>
                           </li> */}
                               <li onClick={()=>{router.push('/dashboard')}}>
-                            <div className='wrap mr-5'>
-                              <a> Admin </a>
+                            <div className='wrap mr-5 cursor-pointer'>
+                              <MdDashboard size={40}/>
                             </div>
                           </li>
                          

@@ -36,7 +36,7 @@ const InputText: React.FC<InputProps> = ({
 }) => {
   return (
     <div className="w-full relative">
-    <div className="font-bold text-neutral-600 text-lg p-0 mb-1">
+    <div className="font-bold text-black text-lg p-0 mb-1">
       {label && label}
       {required && <span className="text-red-500"> * </span>}
     </div>
