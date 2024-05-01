@@ -17,9 +17,7 @@ const QuoteDetails: React.FC<ListingCardProps> = ({
 }) => {
 
 
-  if (!visible) {
-    return null;
-  }
+
 
   const {
     year,
@@ -83,6 +81,10 @@ const QuoteDetails: React.FC<ListingCardProps> = ({
     </>
 
   );
+
+  if (!visible) {
+    return null;
+  }
 
   return (
     <>
