@@ -78,6 +78,12 @@ const UserPage: React.FC<ListingCardProps> = ({
   };
 
   const handleClick = (event:any, data:any) => {
+    
+    const role = event;
+    console.log(role);
+    if(role == "checkbox"){
+      return;
+    }
     setSelectedRow(data);
     setisModalVisible(true);
     

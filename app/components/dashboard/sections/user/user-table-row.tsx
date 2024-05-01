@@ -37,6 +37,9 @@ const UserTableRow: React.FC<RowProps> = ({
     setOpen(null);
   };
 
+  const handleCheckBoxClick = (event:any)=>{
+  }
+
   return (
     <>
       <TableRow 
@@ -45,18 +48,17 @@ const UserTableRow: React.FC<RowProps> = ({
           role="checkbox" 
           selected={selected} 
           style={{cursor:'pointer'}}
-          onClick={handleClick}
           >
         <TableCell padding="checkbox">
-          <Checkbox disableRipple checked={selected} onChange={handleClick} />
+          <Checkbox disableRipple checked={selected}  />
         </TableCell>
 
-        <TableCell>{data?.vin}</TableCell>
+        <TableCell onClick={handleClick}>{data?.vin}</TableCell>
 
-        <TableCell>{data?.make}</TableCell>
-        <TableCell>{data?.model}</TableCell>
-        <TableCell>{data?.year}</TableCell>
-        <TableCell>{data?.engine}</TableCell>
+        <TableCell onClick={handleClick}>{data?.make}</TableCell>
+        <TableCell onClick={handleClick}>{data?.model}</TableCell>
+        <TableCell onClick={handleClick}>{data?.year}</TableCell>
+        <TableCell onClick={handleClick}>{data?.engine}</TableCell>
 
         {/* <TableCell align="center">{data?.isVerified ? 'Yes' : 'No'}</TableCell>
 
