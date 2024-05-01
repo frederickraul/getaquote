@@ -22,6 +22,7 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+import QuoteDetails from './QuoteDetails';
 
 // ----------------------------------------------------------------------
 
@@ -46,11 +47,18 @@ const UserPage: React.FC<ListingCardProps> = ({
 
   const [quotes, setQuotes] = useState(data);
 
+  const [isModalVisible, setisModalVisible] = useState(false);
+  const [selectedRow, setSelectedRow] = useState({});
+
   useEffect(() => {
       setQuotes(data);
       console.log(data);
   }, [data])
   
+
+  const handleModalClose = () =>{
+    setisModalVisible(false);
+  }
 
   const handleSort = (event:any, id:any) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -69,8 +77,10 @@ const UserPage: React.FC<ListingCardProps> = ({
     setSelected([]);
   };
 
-  const handleClick = (event:any, name:any) => {
-    console.log(name);
+  const handleClick = (event:any, data:any) => {
+    setSelectedRow(data);
+    setisModalVisible(true);
+    
     // const selectedIndex = selected?.indexOf(name);
     // let newSelected;
     // if (selectedIndex === -1) {
@@ -112,6 +122,7 @@ const UserPage: React.FC<ListingCardProps> = ({
 
   return (
     <Container>
+      <QuoteDetails visible={isModalVisible} data={selectedRow} onClose={handleModalClose}/>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Quotes</Typography>
       </Stack>
@@ -150,7 +161,7 @@ const UserPage: React.FC<ListingCardProps> = ({
                     <UserTableRow
                       key={row.id}
                       data={row}
-                      handleClick={(event) => handleClick(event, row.name)}
+                      handleClick={(event) => handleClick(event, row)}
                     />
                   ))}
 
