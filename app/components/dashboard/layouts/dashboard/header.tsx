@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({
       sx={{
         boxShadow: 'none',
         height: HEADER.H_MOBILE,
-        zIndex: 10,
+        zIndex: theme.zIndex.appBar + 1,
        
         backgroundColor: alpha(theme.palette.background.default, 0.8),
         transition: theme.transitions.create(['height'], {

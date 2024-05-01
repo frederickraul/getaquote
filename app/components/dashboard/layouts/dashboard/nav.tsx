@@ -119,7 +119,9 @@ const Nav: React.FC<NavProps> = ({
           height: 1,
           display: 'flex',
           flexDirection: 'column',
+          
         },
+        backgroundColor: 'white'
       }}
     >
       <Logo sx={{ mt: 3, ml: 4 }} />
