@@ -25,7 +25,7 @@ interface TabsProps {
                 md:text-lg 
                 font-medium 
                 text-center 
-                text-gray-500 
+                text-gray-800 
                 dark:text-gray-400">
                 <li className="me-2" onClick={()=>{onClick(1)}}>
                     <a href="#" 

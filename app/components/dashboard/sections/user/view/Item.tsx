@@ -12,7 +12,7 @@ interface ItemProps {
   return (
     <div className="text-lg flex flex-col mt-2"> 
     <span className="font-bold">{label} </span>
-    <span className="text-gray-500">{value}</span>
+    <span className="text-black">{value}</span>
   </div>
   )
 }

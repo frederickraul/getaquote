@@ -9,8 +9,8 @@ export const ownershipOptions = [
   ];
   
   export const paidOfOptions = [
-    { label: 'Yes. I own it outright.', value: 'Yes' },
-    { label: 'No. I still owe some money for it.', value: 'No' },
+    { label: 'Yes. I own it outright.', value: 'Yes.' },
+    { label: 'No. I still owe some money for it.', value: 'No.' },
   ];
   
   export const vehicleConditionOptions = [
@@ -29,6 +29,6 @@ export const ownershipOptions = [
   ];
   
   export const wheelsOptions = [
-    { label: "Alumium", value: "Alumium" },
-    { label: "Not Alumium", value: "Not Alumium" },
+    { label: "Aluminum.", value: "Aluminum." },
+    { label: "Not Aluminum.", value: "Not Aluminum." },
   ];

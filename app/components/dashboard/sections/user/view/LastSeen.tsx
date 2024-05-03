@@ -7,14 +7,17 @@ interface ComponentProps {
 }
 
 
+
 const LastSeen: React.FC<ComponentProps> = ({
- date
+  date
 }) => {
+  const DATE = new Date(date);
+
   const [currentDate, setcurrentDate] = useState(date);
 
   return (
     <div>
-      <ReactTimeAgo date={currentDate} locale="en-US" timeStyle="twitter"/>
+      {date.getDay()} {}
     </div>
   )
 }

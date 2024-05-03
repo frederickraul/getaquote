@@ -628,8 +628,8 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               error={errors.battery}
               options={
                 [
-                  { label: 'Yes', value: 'Yes' },
-                  { label: 'No', value: 'No' }
+                  { label: 'Yes.', value: 'Yes.' },
+                  { label: 'No.', value: 'No.' }
                 ]}
               value={data.battery}
               onChange={(value) => { handleSelectChange('battery', value) }} />
@@ -762,13 +762,13 @@ const QuoteForm: React.FC<ListingCardProps> = ({
                 pr-5 3xl:pr-0 
                 items-center
                ">
-            <FaRegCheckCircle className="text-primary mt-16" size={50}/>
+            <FaRegCheckCircle className="text-blue-500 mt-16" size={60}/>
 
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold pt-10 pb-10 text-center">
                 Thank you for sending us the details of your vehicle.
               </h1>
 
-              <span className="-m-5 px-10 text-center">Someone form our buying departman will contact you soon!</span>
+              <span className="-m-5 px-10 text-center text-lg font-bold">Someone from our buying departman will contact you soon!</span>
 
               <div className="font-bold text-2xl mt-10 w-[230px] text-center">
                 Expect a call from (800) 440-1510
@@ -778,7 +778,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
                 Monday-Friday 9AM - 5PM
               </div>
              <a className="mt-5" href="/">
-             <Button big label="Return to Main Site" styles="bg-primary" borderless onClick={()=>{}}/>
+             <Button big label="Return to Main Site" styles="" borderless onClick={()=>{}}/>
              </a>
             </div>
           </div>
