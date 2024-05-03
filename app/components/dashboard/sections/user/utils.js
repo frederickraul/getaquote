@@ -45,12 +45,16 @@ export function applyFilter({ inputData, comparator, filterName }) {
   });
 
   inputData = stabilizedThis.map((el) => el[0]);
-
   if (filterName) {
     inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      (quote) => 
+          quote?.make?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 
+          || quote?.model?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+          || quote?.vin?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+          || quote?.year?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
+
 
   return inputData;
 }

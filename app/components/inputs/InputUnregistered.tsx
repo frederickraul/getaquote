@@ -48,7 +48,7 @@ const InputUnregistered: React.FC<InputProps> = ({
     <div className="font-bold text-lg p-0 mb-0 flex flex-row">
       {label && label}
       {required && <span className="text-red-500"> * </span>}
-      {infoMessage && <Tooltip title={infoMessage} content={infoMessage}>
+      {infoMessage && <Tooltip title={infoMessage} content={infoMessage} enterTouchDelay={0}>
           <div className="ml-2 cursor-pointer">
           <FcInfo/>
           </div>
@@ -73,9 +73,9 @@ const InputUnregistered: React.FC<InputProps> = ({
         ${readonly ? 'bg-neutral-300':'bg-white'}
         border-[1px]
         border-neutral-300
-        active:border-blue-500
-        focus:border-blue-500
-        rounded-md
+        focus:outline-blue-500
+        rounded-sm 
+        
         outline-nonde
         transition
         disabled:opacity-70

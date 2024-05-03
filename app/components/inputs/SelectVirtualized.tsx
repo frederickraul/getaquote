@@ -1,7 +1,9 @@
 'use client';
 
 import { IconType } from "react-icons";
+
 import Select from 'react-select-virtualized';
+import '@/app/pages.css'
 
 
 export type CustomOptions ={

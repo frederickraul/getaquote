@@ -10,14 +10,11 @@ interface ListingCardProps {
   onClose: () => void;
 }
 
-const QuoteDetails: React.FC<ListingCardProps> = ({
+const ModalDetails: React.FC<ListingCardProps> = ({
   data,
   visible,
   onClose,
 }) => {
-
-
-
 
   const {
     year,
@@ -62,8 +59,8 @@ const QuoteDetails: React.FC<ListingCardProps> = ({
       <Item label="Vehicle ID Number: " value={vin} />
       <Item label="Vehicle Mileage: " value={mileage} />
       <Item label="Vehicle Operating Condition:" value={vehicleCondition} />
-      <Item label="Is There Body Damage:" value={bodyDamage + " " + bodyDamageDescription} />
-      <Item label="Any Parts Missing:" value={partMissing + " " + partMissingDescription} />
+      <Item label="Is There Body Damage:" value={bodyDamage + ". " + bodyDamageDescription} />
+      <Item label="Any Parts Missing:" value={partMissing + ". " + partMissingDescription} />
       <Item label="Are Your Wheels Aluminum Or Steel?:" value={wheels} />
       <Item label="Does It Have All Wheels:" value={allWheels} />
       <Item label="Does It Have A Battery:" value={battery} />
@@ -73,7 +70,7 @@ const QuoteDetails: React.FC<ListingCardProps> = ({
   );
 
 
-  let contactInformation = (
+  const contactInformation = (
     <>
       <Item label="Name:" value={name} />
       <Item label="Phone:" value={phone} />
@@ -90,15 +87,24 @@ const QuoteDetails: React.FC<ListingCardProps> = ({
     <>
       <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div className="
+            fixed 
+            inset-0 
+            bg-gray-500 
+            bg-opacity-75 
+            transition-opacity">
+        <div className="
+            fixed 
+            inset-0 
+            z-10 
+            w-screen 
+            overflow-y-auto">
           <div className="
             flex 
             min-h-full 
-            items-end 
+            items-start 
             justify-center 
-            p-4 
+            p-2
             text-center 
             sm:items-start 
             sm:p-0">
@@ -112,12 +118,19 @@ const QuoteDetails: React.FC<ListingCardProps> = ({
                 text-left 
                 shadow-xl 
                 transition-all 
+                my-0
                 sm:my-8 
                 sm:w-full 
                 sm:max-w-lg">
-              <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <div className="
+                  bg-white 
+                  px-4 
+                  pb-4 
+                  pt-5 
+                  sm:p-6 
+                  sm:pb-4">
                 <div className="mb-5">
-                  <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                  <div className="mt-3 sm:ml-4 sm:mt-0 ">
                     <div className="flex flex-row">
                       <button onClick={onClose} type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-lg w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="static-modal">
                         <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -131,12 +144,10 @@ const QuoteDetails: React.FC<ListingCardProps> = ({
                       </div>
                     <div className="flex flex-row">
                       <div className="mt-2">
-                          {selectedTab == 1 &&vehicleDetails}
+                          {selectedTab == 1 && vehicleDetails}
                       </div>
                       <div className="mt-2">
                       {selectedTab == 2 && contactInformation}
-
-
                       </div>
                     </div>
                   </div>
@@ -147,9 +158,9 @@ const QuoteDetails: React.FC<ListingCardProps> = ({
           </div>
         </div>
       </div>
-
+      </div>
     </>
   );
 }
 
-export default QuoteDetails
+export default ModalDetails

@@ -3,3 +3,27 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.text-primary{
+	color: #9cff1e !important;
+}
+
+.border-primary{
+	border: 1px solid #9cff1e !important;
+
+}
+
+
+.bg-primary-green{
+	background-color: #9cff1e;
+}
+
+.input{
+	font-family: "Poppins", sans-serif !important;
+    font-weight: 100 !important;
+    font-style: normal !important;
+	color: black !important;
+}
+
+
+

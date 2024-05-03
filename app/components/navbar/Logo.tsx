@@ -14,8 +14,8 @@ const Logo = () => {
         height={60}
         width={240}
         alt="Logo"
-        className="md:block cursor-pointer w-[120px] sm:w-[150px] md:w-[200px] lg:w-[200px] "  
-        src="/images/ecology-logo.webp"
+        className="md:block cursor-pointer w-[200px] sm:w-[250px] md:w-[300px] lg:w-[400px] "  
+        src="/assets/logo.png"
         onClick={()=>{router.push('/')}} 
         quality={50}
         />

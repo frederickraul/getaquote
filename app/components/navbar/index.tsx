@@ -30,8 +30,8 @@ const Navbar: React.FC<NavbarProps> = ({currentUser, notifications}) => {
                     items-center
                     justify-between
                     gap-3   
-                    md:gap-0
-                    md:py-4
+                    py-0
+                    lg:py-2
                     
                         '>
                     <div className='pl-3 lg:pl-0 flex flex-row items-center justify-around'>
@@ -66,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({currentUser, notifications}) => {
                           </li> */}
                               <li onClick={()=>{router.push('/dashboard')}}>
                             <div className='wrap mr-5 cursor-pointer'>
-                              <MdDashboard size={40}/>
+                              <MdDashboard className='text-3xl sm:text-4xl md:text-5xl'/>
                             </div>
                           </li>
                          

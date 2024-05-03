@@ -19,32 +19,16 @@ const Scrollbar: React.FC<ScrollbarProps> = ({
 
   const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
 
-  if (mobile) {
-    return (
-      <Box sx={{ overflow: 'auto', ...sx }} {...other}>
-        {children}
-      </Box>
-    );
-  }
 
   return (
-    <StyledRootScrollbar>
-      <StyledScrollbar
-        scrollableNodeProps={{
-        }}
-        clickOnTrack={false}
-        sx={sx}
-        {...other}
-      >
+    <div className='h-[100%] overflow-auto lg:overflow-hidden flex-grow grid-rows-1'>
+      <div className='h-max[100%]'>
         {children}
-      </StyledScrollbar>
-    </StyledRootScrollbar>
+      </div>
+      </div>
   );
 };
 
-Scrollbar.propTypes = {
-  children: PropTypes.node,
-  sx: PropTypes.object,
-};
+
 
 export default memo(Scrollbar);

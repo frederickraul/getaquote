@@ -11,7 +11,23 @@ import Iconify from '../../components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function UserTableToolbar({ numSelected, filterName, onFilterName }) {
+
+interface ToolbarProps {
+  numSelected: any;
+  filterName?:string;
+  onFilterName:(value:any)=>void;
+  onDelete:(value:any)=>void;
+}
+
+const UserTableToolbar: React.FC<ToolbarProps> = ({
+  numSelected,
+  filterName,
+  onFilterName,
+  onDelete,
+
+}) => {
+
+
   return (
     <Toolbar
       sx={{
@@ -33,7 +49,7 @@ export default function UserTableToolbar({ numSelected, filterName, onFilterName
         <OutlinedInput
           value={filterName}
           onChange={onFilterName}
-          placeholder="Search user..."
+          placeholder="Search ..."
           startAdornment={
             <InputAdornment position="start">
               <Iconify
@@ -45,8 +61,8 @@ export default function UserTableToolbar({ numSelected, filterName, onFilterName
         />
       )}
 
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
+{numSelected > 0 ? (
+        <Tooltip title="Delete" onClick={onDelete}>
           <IconButton>
             <Iconify icon="eva:trash-2-fill" />
           </IconButton>
@@ -62,8 +78,11 @@ export default function UserTableToolbar({ numSelected, filterName, onFilterName
   );
 }
 
-UserTableToolbar.propTypes = {
-  numSelected: PropTypes.number,
-  filterName: PropTypes.string,
-  onFilterName: PropTypes.func,
-};
+// UserTableToolbar.propTypes = {
+//   numSelected: PropTypes.number,
+//   filterName: PropTypes.string,
+//   onFilterName: PropTypes.func,
+// };
+
+
+export default  UserTableToolbar

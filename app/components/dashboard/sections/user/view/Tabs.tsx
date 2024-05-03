@@ -12,15 +12,28 @@ interface TabsProps {
     onClick
   }) => {
     return (
-        <div className="border-b border-gray-200 dark:border-gray-700">
-            <ul className="flex flex-wrap -mb-px text-sm sm:text-base md:text-lg font-medium text-center text-gray-500 dark:text-gray-400">
+        <div className="
+                border-b 
+                border-gray-200 
+                dark:border-gray-700">
+            <ul className="
+                flex 
+                flex-wrap 
+                -mb-px 
+                text-sm 
+                sm:text-base 
+                md:text-lg 
+                font-medium 
+                text-center 
+                text-gray-500 
+                dark:text-gray-400">
                 <li className="me-2" onClick={()=>{onClick(1)}}>
                     <a href="#" 
                         className={
                            `inline-flex 
                             items-center 
                             justify-center 
-                            p-4 
+                            p-1 sm:p-4 
                             rounded-t-lg 
                             group
                             ${selected == 1 && 'text-blue-600'}
@@ -45,7 +58,7 @@ interface TabsProps {
                             `inline-flex 
                              items-center 
                              justify-center 
-                             p-4 
+                             p-1 sm:p-4 
                              rounded-t-lg 
                              group
                              ${selected == 2 && 'text-blue-600'}

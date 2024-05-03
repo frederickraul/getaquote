@@ -18,6 +18,7 @@ import InputPhone from "../inputs/InputPhone";
 import ValidateForm from "./ValidateForm";
 import toast from "react-hot-toast";
 import Button from "../Button";
+import { ownershipOptions, paidOfOptions, vehicleConditionOptions, wheelsOptions } from "./const";
 
 
 enum STEPS {
@@ -25,12 +26,11 @@ enum STEPS {
   PAIDOFF = 2,
   VEHICLECONDITION = 3,
   BODYDAMAGE = 4,
-  OWNERSHIP = 5,
-  OPERATION = 6,
-  BATTERY = 7,
-  ZIPCODE = 8,
-  PHONE = 9,
-  FINISH = 10,
+  OPERATION = 5,
+  BATTERY = 6,
+  ZIPCODE = 7,
+  PHONE = 8,
+  FINISH = 9,
   NOPAIDOFFMESSAGE = 11,
   DONE = 12,
 }
@@ -91,40 +91,7 @@ const defaultErrorValues = {
 };
 
 
-const ownershipOptiones = [
-  { label: 'I Have A Clean Title.', value: 'I Have A Clean Title.' },
-  { label: 'I Have A Salvage Title.', value: 'I Have A Salvage Title.' },
-  { label: 'I Only Have The Registration.', value: 'I Only Have The Registration.' },
-  { label: 'I Have Lien-Sale Paperwork.', value: 'I Have Lien-Sale Paperwork.' },
-  { label: 'I Have A Junk Slip.', value: 'I Have A Junk Slip.' },
-  { label: "I Don't Have Any Papers, But The Vehicle Is Registered In My Name.", value: "I Don't Have Any Papers, But The Vehicle Is Registered In My Name." },
-  { label: 'Other', value: 'Other' },
-];
 
-const paidOfOptions = [
-  { label: 'Yes. I own it outright.', value: 'Yes' },
-  { label: 'No. I still owe some money for it.', value: 'No' },
-];
-
-const vehicleConditionOptions = [
-  { label: "Not Running.", value: "Not Running." },
-  { label: "Runs and Drives.", value: "Runs and Drives." },
-  { label: "Starts Doesn't Drive.", value: "Starts Doesn't Drive." },
-  { label: "Vehicle Has Fire Damage.", value: "Vehicle Has Fire Damage." },
-  { label: "Vehicle Has Flood Damage.", value: "Vehicle Has Flood Damage." },
-  { label: "Runs and Drives, Overheats.", value: "Runs and Drives, Overheats." },
-  { label: "Runs and Drives, Not Passing Smog. ", value: "Runs and Drives, Not Passing Smog. " },
-  { label: "Runs and Drives, Has Brake Problems.", value: "Runs and Drives, Has Brake Problems." },
-  { label: "Runs and Drives, Has Engine Problems.", value: "Runs and Drives, Has Engine Problems." },
-  { label: "Runs and Drives, Has Blown Head Gasket.", value: "Runs and Drives, Has Blown Head Gasket." },
-  { label: "Runs and Drives, Has Transmission Problems.", value: "Runs and Drives, Has Transmission Problems." },
-  { label: "Runs and Drives, Has Bad Battery or Alternator.", value: "Runs and Drives, Has Bad Battery or Alternator." },
-];
-
-const wheelsOptions = [
-  { label: "Alumium", value: "Alumium" },
-  { label: "Not Alumium", value: "Not Alumium" },
-]
 
 interface ListingCardProps {
   makes: any
@@ -146,19 +113,17 @@ const QuoteForm: React.FC<ListingCardProps> = ({
 
 
   const handleZipcodeChange = (value: any) => {
-    console.log(value);
     setData({ ...data, ['city']: value.city, ['state']: value.state_name, ['zip']: value.zip });
 
   }
   const handleInputChange = (field: string, value: any) => {
     if (field === 'phone' || field === 'phone2') {
-      console.log(value);
       setData({ ...data, [field]: value });
 
     } else if (field === 'vin') {
       const vinNumber = value.target.value;
-      setData({ ...data, [field]: vinNumber });
-      console.log(vinNumber);
+      let uppercaseVIN = vinNumber.toUpperCase(); //To convert Upper Case
+      setData({ ...data, [field]: uppercaseVIN });
       if (validateVin(vinNumber)) {
         setisVinValid(true);
         decodeVIN(vinNumber);
@@ -172,9 +137,9 @@ const QuoteForm: React.FC<ListingCardProps> = ({
   }
 
   const handleSelectChange = (field: string, value: any) => {
-    console.log(value);
     setData({ ...data, [field]: value });
     if (field == 'make') {
+      console.log(value);
       if (value === null) {
         setSelectedMake(defaultOption);
         setModelList([defaultOption]);
@@ -194,18 +159,6 @@ const QuoteForm: React.FC<ListingCardProps> = ({
 
     }
   }
-
-  useEffect(() => {
-    console.log(data);
-  }, [data])
-
-  useEffect(() => {
-    console.log(errors);
-  }, [errors])
-
-
-
-
 
   useEffect(() => {
     getModelList();
@@ -237,11 +190,10 @@ const QuoteForm: React.FC<ListingCardProps> = ({
       if (response) {
         const vinDetails = response.data.Results;
         // Filtering based on multiple properties
-        console.log(vinDetails);
         const year = vinDetails.filter((item: any) => item.Variable === 'Model Year');
         const model = vinDetails.filter((item: any) => item.Variable === 'Model');
         const make = vinDetails.filter((item: any) => item.Variable === 'Make');
-        const engine = vinDetails.filter((item: any) => item.Variable === 'Engine Model');
+        // const engine = vinDetails.filter((item: any) => item.Variable === 'Engine Model');
         const cylinders = vinDetails.filter((item: any) => item.Variable === 'Engine Number of Cylinders');
         const liters = vinDetails.filter((item: any) => item.Variable === 'Displacement (L)');
 
@@ -249,8 +201,8 @@ const QuoteForm: React.FC<ListingCardProps> = ({
         console.log(year[0].Value);
         console.log(model[0].Value);
         console.log(make[0].Value);
-        console.log(engine[0]?.Value);
-        const engineDetails = cylinders[0]?.Value+"-Cyl, "+cylinders[0]?.Value+" Liter"
+        // console.log(engine[0]?.Value);
+        const engineDetails = cylinders[0]?.Value+"-Cyl, "+liters[0]?.Value+" Liter"
         setData({
           ...data,
           ['vin']: VIN,
@@ -354,8 +306,8 @@ const QuoteForm: React.FC<ListingCardProps> = ({
       .then(() => {
         toast.success('Quote Created Wait For a Call');
         router.refresh();
-        setStep(STEPS.DONE);
-        setData(defaultValues);
+        // setStep(STEPS.DONE);
+        // setData(defaultValues);
 
       })
       .catch(() => {
@@ -396,9 +348,9 @@ const QuoteForm: React.FC<ListingCardProps> = ({
 
 
   const headContent = (
-    <div className='my-5'>
+    <div className='my-5 sm:mb-10'>
         {step !== STEPS.DONE &&
-          <div className='text-4xl sm:text-5xl font-bold mt-10 sm:mt-20 md:mt-10'>Get A Quote</div>
+          <div className='text-2xl sm:text-4xl lg:text-5xl font-bold mt-10 sm:mt-20 md:mt-10'>Get A Quote</div>
         }
     </div>
   );
@@ -466,8 +418,9 @@ const QuoteForm: React.FC<ListingCardProps> = ({
             />
 
             <InputUnregistered
-              label="Engine Model"
-              placeholder=''
+              label="Engine"
+              placeholder='4 Cyl, 1.8 L'
+              error={errors.engine}
               value={data.engine}
               onChange={(value) => { handleInputChange('engine', value) }} />
           </div>
@@ -495,6 +448,13 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               value={data.paidOff}
               onChange={(value) => { handleSelectChange('paidOff', value) }} />
 
+          <SelectVirtualized
+              label='Ownership Documents'
+              required
+              error={errors.ownershipDocument}
+              options={ownershipOptions}
+              value={data.ownershipDocument}
+              onChange={(value) => { handleSelectChange('ownershipDocument', value) }} />
           </div>
         </div>
 
@@ -615,26 +575,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
 
   }
 
-  // LOCATION STEP
-  if (step === STEPS.OWNERSHIP) {
-    bodyContent = (
-      <div className="flex flex-col gap-8 ">
 
-        <div className="flex flex-col ">
-          <div className="flex flex-col gap-3 2xl:gap-4 pr-5 3xl:pr-0">
-
-            <SelectVirtualized
-              label='Ownership Documents'
-              required
-              error={errors.ownershipDocument}
-              options={ownershipOptiones}
-              value={data.ownershipDocument}
-              onChange={(value) => { handleSelectChange('ownershipDocument', value) }} />
-          </div>
-        </div>
-      </div>
-    )
-  }
 
 
   // INFO STEP
@@ -717,14 +658,13 @@ const QuoteForm: React.FC<ListingCardProps> = ({
   if (step === STEPS.ZIPCODE) {
     bodyContent = (
       <div className="flex flex-col gap-8">
-   <div className="font-bold sm:text-2xl mb-5 mt-5">
-        What's the vehicle's location?
+   <div className="font-bold sm:text-2xl mb-0 mt-5">
+        Vehicle's location?
       </div>
         <div className="flex flex-col ">
           <div className="flex flex-col gap-3 2xl:gap-4 pr-5 3xl:pr-0">
             <ZipLookUp
               error={errors.zip}
-
               value={data.zip}
               onChange={handleZipcodeChange}
             />
@@ -758,7 +698,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
     bodyContent = (
 
       <div className="flex flex-col gap-8">
-      <div className="font-bold sm:text-2xl mt-5 mb-5">
+      <div className="font-bold sm:text-2xl mt-0 mb-5">
         Seller's Contact Info
       </div>
         <div className="flex flex-col ">
@@ -837,7 +777,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               <div className="font-bold text-2xl">
                 Monday-Friday 9AM - 5PM
               </div>
-             <a className="mt-5" href="https://ecologycashforcars.com/">
+             <a className="mt-5" href="/">
              <Button big label="Return to Main Site" styles="bg-primary" borderless onClick={()=>{}}/>
              </a>
             </div>

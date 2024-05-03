@@ -76,7 +76,7 @@ interface AlertProps {
     return (
         <InputUnregistered
             label="Zip Code"
-            infoMessage="What's the vehicle's location?"
+            //infoMessage="What's the vehicle's location?"
             required
             error={error}
             value={zip}

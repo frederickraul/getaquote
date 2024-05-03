@@ -10,7 +10,7 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Get A Quote - Ecology Cash For Cars',
+  title: 'The Quote Form',
   description: '',
 }
 
@@ -27,7 +27,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={font.className} >
+      <body>
               {children}
       </body>
     </html>

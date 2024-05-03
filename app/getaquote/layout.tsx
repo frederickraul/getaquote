@@ -21,7 +21,7 @@ export default async function RootLayout({
       <Navbar/>
     </div>
     <Suspense fallback={<Loading/>}>
-    <div className="pb-20 pt-28">
+    <div className="pb-20 pt-20 sm:pt-18 md:pt-28 lg:pt-32">
       {children}
     </div>
     </Suspense>

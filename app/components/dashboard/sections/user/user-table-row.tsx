@@ -13,19 +13,27 @@ import IconButton from '@mui/material/IconButton';
 
 import Label from '../../components/label';
 import Iconify from '../../components/iconify';
+import LastSeen from './view/LastSeen';
+
 
 // ----------------------------------------------------------------------
 
 interface RowProps {
   data: any;
   selected?:boolean;
+  handleRowClick?:(value:any)=>void;
   handleClick:(value:any)=>void;
+  handleDeleteClick:(value:any)=>void;
+  handleEditClick:(value:any)=>void;
 }
 
 const UserTableRow: React.FC<RowProps> = ({
   data,
   selected,
-  handleClick
+  handleRowClick,
+  handleClick,
+  handleDeleteClick,
+  handleEditClick,
 }) => {
   const [open, setOpen] = useState(null);
 
@@ -37,28 +45,22 @@ const UserTableRow: React.FC<RowProps> = ({
     setOpen(null);
   };
 
-  const handleCheckBoxClick = (event:any)=>{
-  }
+
 
   return (
     <>
-      <TableRow 
-          hover 
-          tabIndex={-1} 
-          role="checkbox" 
-          selected={selected} 
-          style={{cursor:'pointer'}}
-          >
+      <TableRow hover tabIndex={-1} role="checkbox" selected={selected} style={{cursor:'pointer'}}>
         <TableCell padding="checkbox">
-          <Checkbox disableRipple checked={selected}  />
+          <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
 
-        <TableCell onClick={handleClick}>{data?.vin}</TableCell>
+        <TableCell onClick={handleRowClick}>{data?.vin}</TableCell>
 
-        <TableCell onClick={handleClick}>{data?.make}</TableCell>
-        <TableCell onClick={handleClick}>{data?.model}</TableCell>
-        <TableCell onClick={handleClick}>{data?.year}</TableCell>
-        <TableCell onClick={handleClick}>{data?.engine}</TableCell>
+        <TableCell onClick={handleRowClick}>{data?.make}</TableCell>
+        <TableCell onClick={handleRowClick}>{data?.model}</TableCell>
+        <TableCell onClick={handleRowClick}>{data?.year}</TableCell>
+        <TableCell onClick={handleRowClick}>{data?.engine}</TableCell>
+        <TableCell onClick={handleRowClick}><LastSeen date={new Date(data?.createdAt)}/> </TableCell>
 
         {/* <TableCell align="center">{data?.isVerified ? 'Yes' : 'No'}</TableCell>
 
@@ -83,12 +85,19 @@ const UserTableRow: React.FC<RowProps> = ({
           sx: { width: 140 },
         }}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem onClick={(e)=>{
+          handleCloseMenu();
+          handleEditClick(e);
+        }}>
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
           Edit
         </MenuItem>
 
-        <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={(e)=>{
+          handleCloseMenu();
+          handleDeleteClick(e);
+          }}
+         sx={{ color: 'error.main' }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           Delete
         </MenuItem>

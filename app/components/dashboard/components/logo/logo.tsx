@@ -38,10 +38,9 @@ const Logo: React.FC<LogoProps> = ({
   const logo = (
     <Box
       component="img"
-      src='/images/ecology-logo.webp'
+      src='/assets/logo.png'
       sx={{
-        width: 150,
-        height: 45,
+        width: 200,
         display: 'inline-flex',
         ...sx,
       }}

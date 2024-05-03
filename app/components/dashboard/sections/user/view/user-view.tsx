@@ -1,11 +1,9 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
@@ -13,7 +11,6 @@ import TablePagination from '@mui/material/TablePagination';
 
 import { users } from '../../../_mock/user';
 
-import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
 
 import TableNoData from '../table-no-data';
@@ -22,7 +19,19 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-import QuoteDetails from './QuoteDetails';
+import ModalConfirm from './ModalConfirm';
+import ModalDetails from './ModalDetails';
+
+import TimeAgo from 'javascript-time-ago'
+
+import en from 'javascript-time-ago/locale/en.json'
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import Container from '@/app/components/Container';
+import ModalEdit from './ModalEdit';
+
+TimeAgo.addLocale(en)
 
 // ----------------------------------------------------------------------
 
@@ -35,29 +44,44 @@ const UserPage: React.FC<ListingCardProps> = ({
 }) => {
   const [page, setPage] = useState(0);
 
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState('desc');
 
-  const [selected, setSelected] = useState<string[]>();
+  const [selected, setSelected] = useState<string[]>([]);
 
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('createdAt');
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [quotes, setQuotes] = useState(data);
-
+  const [quotes, setQuotes] = useState<any[]>([]);
+  const [notFound, setNotFound] = useState(false);
   const [isModalVisible, setisModalVisible] = useState(false);
+  const [isEditVisible, setisEditVisible] = useState(false);
+  const [isConfirmVisible, setisConfirmVisible] = useState(false);
   const [selectedRow, setSelectedRow] = useState({});
+  const [deleteRowId, setdeleteRowId] = useState("");
+  const [isLoading, setisLoading] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
       setQuotes(data);
-      console.log(data);
   }, [data])
+  
+  useEffect(() => {
+    console.log(selected);
+  }, [selected])
   
 
   const handleModalClose = () =>{
     setisModalVisible(false);
+  }
+  const handleEditClose = () =>{
+    setisEditVisible(false);
+  }
+  const handleConfirmModalClose = () =>{
+    setisConfirmVisible(false);
   }
 
   const handleSort = (event:any, id:any) => {
@@ -69,15 +93,16 @@ const UserPage: React.FC<ListingCardProps> = ({
   };
 
   const handleSelectAllClick = (event:any) => {
+    console.log(event.target.checked);
     if (event.target.checked) {
-      const newSelecteds = users.map((n) => n.name);
+      const newSelecteds = quotes.map((n:any) => n.id);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event:any, data:any) => {
+  const handleRowClick = (event:any, data:any) => {
     
     const role = event;
     console.log(role);
@@ -86,23 +111,101 @@ const UserPage: React.FC<ListingCardProps> = ({
     }
     setSelectedRow(data);
     setisModalVisible(true);
-    
-    // const selectedIndex = selected?.indexOf(name);
-    // let newSelected;
-    // if (selectedIndex === -1) {
-    //   newSelected = newSelected?.concat(selected, name);
-    // } else if (selectedIndex === 0) {
-    //   newSelected = newSelected.concat(selected.slice(1));
-    // } else if (selectedIndex === selected.length - 1) {
-    //   newSelected = newSelected.concat(selected.slice(0, -1));
-    // } else if (selectedIndex > 0) {
-    //   newSelected = newSelected.concat(
-    //     selected.slice(0, selectedIndex),
-    //     selected.slice(selectedIndex + 1)
-    //   );
-    // }
-    // setSelected(newSelected);
   };
+
+  const handleClick = (event:any, id:any) => {
+ 
+    const selectedIndex = selected.indexOf(id);
+    let newSelected:any = [];
+    
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+    setSelected(newSelected);
+  };
+
+  const handleDeleteClick = (event:any, data:any) => {
+
+
+    setdeleteRowId(data.id);
+    setisConfirmVisible(true);
+  };
+
+  const onDelete = useCallback(() => {
+    setisConfirmVisible(false);
+    setisLoading(true);
+
+    axios.delete(`/api/cars/${deleteRowId}`)
+    .then(() => {
+      toast.success('Quote deleted!!!', {
+        duration: 4000,
+        position: 'top-center',
+      
+        // Change colors of success/error/loading icon
+        iconTheme: {
+          primary: '#E4A11B',
+          secondary: '#fff',
+        },  
+      });
+      
+      router.refresh();
+      
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.error)
+    })
+    .finally(() => {
+      setdeleteRowId('');
+      setisLoading(false);
+
+    })
+  }, [router,deleteRowId]);
+
+  const onBatchDelete = useCallback(() => {
+    setisConfirmVisible(false);
+    setisLoading(true);
+    axios.delete(`/api/cars`, {data: {ids: selected}})
+    .then(() => {
+      console.log(selected);
+      toast.success('Quote list deleted!!!', {
+        duration: 4000,
+        position: 'top-center',
+      
+        // Change colors of success/error/loading icon
+        iconTheme: {
+          primary: '#E4A11B',
+          secondary: '#fff',
+        },  
+      });
+      
+      setSelected([]);
+     router.refresh();
+      
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.error)
+    })
+    .finally(() => {
+      setisLoading(false);
+
+    })
+  }, [router,selected]);
+
+  const handleEditClick = (event:any, data:any) => {
+    
+    setSelectedRow(data);
+    setisEditVisible(true);
+  };
+
 
   const handleChangePage = (event:any, newPage:any) => {
     setPage(newPage);
@@ -114,40 +217,50 @@ const UserPage: React.FC<ListingCardProps> = ({
   };
 
   const handleFilterByName = (event:any) => {
+    console.log(event.target.value)
     setPage(0);
     setFilterName(event.target.value);
   };
 
+  
+useEffect(() => {
   const dataFiltered = applyFilter({
-    inputData: users,
+    inputData: data,
     comparator: getComparator(order, orderBy),
     filterName,
   });
 
+  setQuotes(dataFiltered);
   const notFound = !dataFiltered.length && !!filterName;
+  setNotFound(notFound);
+
+  
+}, [filterName]);
 
   return (
-    <Container>
-      <QuoteDetails visible={isModalVisible} data={selectedRow} onClose={handleModalClose}/>
+    <Container isLoading={isLoading}>
+      <ModalConfirm visible={isConfirmVisible} onClose={handleConfirmModalClose} action={onDelete}/>
+      <ModalDetails visible={isModalVisible} data={selectedRow} onClose={handleModalClose}/>
+      <ModalEdit  visible={isEditVisible} data={selectedRow} onClose={handleEditClose}/>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Quotes</Typography>
       </Stack>
 
       <Card>
         <UserTableToolbar
+          onDelete={onBatchDelete}
           numSelected={selected?.length}
           filterName={filterName}
           onFilterName={handleFilterByName}
         />
-
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
               <UserTableHead
-                order={order}
+               order={order}
                 orderBy={orderBy}
-                rowCount={users.length}
-                numSelected={selected?.length}
+                rowCount={quotes.length}
+                numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
@@ -156,18 +269,23 @@ const UserPage: React.FC<ListingCardProps> = ({
                   { id: 'model', label: 'Model' },
                   { id: 'year', label: 'Year' },
                   { id: 'engine', label: 'Engine' },
+                  { id: 'date', label: 'Date' },
 
                   { id: '' },
                 ]}
               />
               <TableBody>
-                {data
+                {quotes
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row:any) => (
                     <UserTableRow
                       key={row.id}
                       data={row}
-                      handleClick={(event) => handleClick(event, row)}
+                      selected={selected?.indexOf(row.id) !== -1}
+                      handleClick={(event) => handleClick(event, row.id)}
+                      handleRowClick={(event) => handleRowClick(event, row)}
+                      handleEditClick={(event) => handleEditClick(event, row)}
+                      handleDeleteClick={(event) => handleDeleteClick(event, row)}
                     />
                   ))}
 
@@ -180,19 +298,19 @@ const UserPage: React.FC<ListingCardProps> = ({
               </TableBody>
             </Table>
           </TableContainer>
-        </Scrollbar>
-
-        {/* <TablePagination
+          </Scrollbar>
+        <TablePagination
           page={page}
           component="div"
-          count={users.length}
+          count={quotes.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10, 25,50,100]}
           onRowsPerPageChange={handleChangeRowsPerPage}
-        /> */}
+        />
       </Card>
     </Container>
+    
   );
 }
 

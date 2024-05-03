@@ -9,6 +9,7 @@ const validateForm = (step:number, STEPS:any, data:any, errors:any, setErrors:an
       let yearError = false;
       let makeError = false;
       let modelError = false;
+      let engineError = false;
 
         if(data.vin === ''){
           vinError = true;
@@ -26,7 +27,11 @@ const validateForm = (step:number, STEPS:any, data:any, errors:any, setErrors:an
           modelError = true;
           isError++;
         }
-        setErrors({ ...errors, ['vin']: vinError, ['year']: yearError, ['make']: makeError, ['model']: modelError})
+        if(data.engine === ''){
+          engineError = true;
+          isError++;
+        }
+        setErrors({ ...errors, ['vin']: vinError, ['year']: yearError, ['make']: makeError, ['model']: modelError,['engine']: engineError})
     } 
 
     if(step === STEPS.PAIDOFF){

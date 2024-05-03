@@ -69,13 +69,6 @@ const Modal: React.FC<ModalProps> = ({
           {/* CONTENT */}
           <div>
             <div>
-              {/* HEADER */}
-              <div>
-
-                <div className="text-2xl xl:text-3xl font-semibold">
-                    {title}
-                </div>
-              </div>
               {/* BODY */}
               <div className="relative py-3">
                 {head}
