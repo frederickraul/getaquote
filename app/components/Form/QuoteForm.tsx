@@ -306,8 +306,8 @@ const QuoteForm: React.FC<ListingCardProps> = ({
       .then(() => {
         toast.success('Quote Created Wait For a Call');
         router.refresh();
-        // setStep(STEPS.DONE);
-        // setData(defaultValues);
+        setStep(STEPS.DONE);
+        setData(defaultValues);
 
       })
       .catch(() => {
@@ -471,7 +471,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
         <div className="flex flex-col ">
           <div className="flex flex-col gap-3 2xl:gap-4 pr-5 3xl:pr-0">
 
-            <h1 className="text-3xl pt-10 pb-10">
+            <h1 className="text-3xl pt-10 pb-10 font-bold">
               We are sorry, your car does not meet the requirements to be purchased by us.
             </h1>
 
@@ -739,9 +739,9 @@ const QuoteForm: React.FC<ListingCardProps> = ({
   if (step === STEPS.FINISH) {
     bodyContent = (
       <div className="flex flex-col gap-8">
-        <h1 className="text-2xl pt-5 mb-10">
-          Are you ready?<br />
-          You are about to send the form!!!
+        <h1 className="text-2xl pt-5 mb-10 font-bold">
+          Are you ready to get an offer?<br />
+          Press the send button!!!
         </h1>
 
       </div>
