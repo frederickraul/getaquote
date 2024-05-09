@@ -368,7 +368,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
           <div className="flex flex-col gap-3 2xl:gap-4 pr-5 3xl:pr-0">
             <InputUnregistered
               label="Please enter your VIN"
-              infoMessage="The vehicle ID number (VIN) can be found on the title, registration card, or insurance card."
+              infoMessage="The vehicle ID number (VIN) can be found on the title, registration card, or insurance card. "
               //disabled={isLoading}
               value={data.vin}
               required

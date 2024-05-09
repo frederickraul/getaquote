@@ -6,7 +6,7 @@ interface ContainerProps{
     full?:boolean;
 }
 
-const Container:React.FC<ContainerProps> = ({
+const LoadingContainer:React.FC<ContainerProps> = ({
     children,
     isLoading,
     full
@@ -16,16 +16,11 @@ const Container:React.FC<ContainerProps> = ({
       {isLoading && (
         <Loading/>
       )}
-    <div 
-      className={`
-        ${full ? 'w-full': 'max-w-[1200px] 2xl:max-w-[1200px]'}
-        mx-auto
-
-      `}>
+    <div>
       {children }
       </div>
       </>
   )
 }
 
-export default Container
+export default LoadingContainer

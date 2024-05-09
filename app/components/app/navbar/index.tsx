@@ -1,6 +1,6 @@
 'use client';
 
-import Container from  '../Container';
+import Container from  '../../LoadingContainer';
 import Logo from './Logo';
 
 import { SafeUser } from '@/app/types';

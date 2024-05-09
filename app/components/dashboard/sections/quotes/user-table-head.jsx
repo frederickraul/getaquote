@@ -12,6 +12,7 @@ import { visuallyHidden } from './utils';
 // ----------------------------------------------------------------------
 
 export default function UserTableHead({
+  styles,
   order,
   orderBy,
   rowCount,
@@ -26,12 +27,14 @@ export default function UserTableHead({
 
   return (
     <TableHead>
-      <TableRow>
+      <TableRow className={`${styles&&styles}`}>
         <TableCell padding="checkbox"
-                    style={{backgroundColor:'rgba(249,250,251)', fontWeight: 'bold'}}>
+                    style={{
+                      fontWeight: 'bold'}}>
 
           
           <Checkbox
+            style={{color:'white'}}
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
@@ -40,7 +43,7 @@ export default function UserTableHead({
 
         {headLabel.map((headCell) => (
           <TableCell
-          style={{backgroundColor:'rgba(249,250,251)', fontWeight: 'bold'}}
+          style={{fontWeight: 'bold', color:'white'}}
           key={headCell.id}
             align={headCell.align || 'left'}
             sortDirection={orderBy === headCell.id ? order : false}

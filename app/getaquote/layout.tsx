@@ -1,6 +1,6 @@
 import { Suspense } from "react"
-import Footer from "../components/footer"
-import Navbar from "../components/navbar"
+import Footer from "../components/app/footer"
+import Navbar from "../components/app/navbar"
 import ToasterProvider from "../providers/ToasterProvider"
 import Loading from "../Loading"
 import '@/app/pages.css';

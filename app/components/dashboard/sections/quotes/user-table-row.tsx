@@ -19,21 +19,26 @@ import LastSeen from './view/LastSeen';
 // ----------------------------------------------------------------------
 
 interface RowProps {
+  fieldOrder?:boolean;
   data: any;
   selected?:boolean;
   handleRowClick?:(value:any)=>void;
   handleClick:(value:any)=>void;
   handleDeleteClick:(value:any)=>void;
   handleEditClick:(value:any)=>void;
+  handleOrderClick:(value:any)=>void;
+  
 }
 
 const UserTableRow: React.FC<RowProps> = ({
+  fieldOrder,
   data,
   selected,
   handleRowClick,
   handleClick,
   handleDeleteClick,
   handleEditClick,
+  handleOrderClick,
 }) => {
   const [open, setOpen] = useState(null);
 
@@ -53,14 +58,20 @@ const UserTableRow: React.FC<RowProps> = ({
         <TableCell padding="checkbox">
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
-
+        {fieldOrder &&
         <TableCell onClick={handleRowClick}>{data?.vin}</TableCell>
-
+        }
+        <TableCell onClick={handleRowClick}>{data?.vin}</TableCell>
+        <TableCell onClick={handleRowClick}>{data?.year}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.make}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.model}</TableCell>
-        <TableCell onClick={handleRowClick}>{data?.year}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.engine}</TableCell>
-        <TableCell onClick={handleRowClick}><LastSeen date={new Date(data?.createdAt)}/> </TableCell>
+        <TableCell onClick={handleRowClick} style={{textWrap:'nowrap'}}>
+          <Typography noWrap className="w-full" fontWeight="fontWeightMedium">
+            {data?.phone}
+          </Typography>
+        </TableCell>
+        <TableCell onClick={handleRowClick}><LastSeen date={data?.createdAt}/> </TableCell>
 
         {/* <TableCell align="center">{data?.isVerified ? 'Yes' : 'No'}</TableCell>
 
@@ -82,9 +93,16 @@ const UserTableRow: React.FC<RowProps> = ({
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         PaperProps={{
-          sx: { width: 140 },
+          sx: { width: 160 },
         }}
       >
+        <MenuItem onClick={(e)=>{
+          handleCloseMenu();
+          handleOrderClick(e);
+        }}>
+        <Iconify icon="ic:outline-task" sx={{mr: 2 }} />
+          Order
+        </MenuItem>
         <MenuItem onClick={(e)=>{
           handleCloseMenu();
           handleEditClick(e);

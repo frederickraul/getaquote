@@ -1,7 +1,7 @@
 'use client';
 
 import { User} from '@prisma/client'
-import Container from  '../Container';
+import Container from  '../../LoadingContainer';
 
 
 interface FooterProps {

@@ -113,16 +113,7 @@ const Nav: React.FC<NavProps> = ({
 
   const renderContent = (
     <Scrollbar
-      sx={{
-        height: 1,
-        '& .simplebar-content': {
-          height: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          
-        },
-        backgroundColor: 'white'
-      }}
+    styles='bg-white'
     >
       <Logo sx={{ mt: 3, ml: 4 }} />
 
@@ -202,7 +193,7 @@ function NavItem(element:any) {
         }),
       }}
     >
-      <Box component="span" sx={{ width: 24, height: 24, mr: 2 }}>
+      <Box component="span" sx={{ width: 24, height: 24, mr: 2 }} style={{color:item.color}}>
         {item.icon}
       </Box>
 

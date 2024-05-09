@@ -40,9 +40,10 @@ export async function POST(
     zip,
     phone,
     phone2,
-    formattedPhone,
     name,
-    engine
+    engine,
+   
+
   } = body;
   console.log(body);
 
@@ -78,7 +79,12 @@ export async function POST(
       phone,
       phone2,
       name,
-      engine
+      engine,
+      noOrder:"",
+      price:"",
+      price2:"",
+      status:"pending"
+
     }
   })
 

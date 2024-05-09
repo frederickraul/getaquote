@@ -5,44 +5,32 @@ import Item from "./Item";
 import Tabs from "./Tabs";
 import Field from "./Field";
 import { Box } from "@mui/material";
-import Button from "@/app/components/Button";
+import Button from "@/app/components/app/Button";
+import { MdOutlineTask } from "react-icons/md";
 
-interface ListingCardProps {
+interface ModalProps {
   data: any;
+  error?:boolean;
   visible: boolean;
   onClose: () => void;
+  handleInput: (field:string, value:string) => void;
+  handleSubmit: () => void;
+
 }
 
-const ModalEdit: React.FC<ListingCardProps> = ({
+const ModalOrder: React.FC<ModalProps> = ({
   data,
+  error,
   visible,
   onClose,
+  handleInput,
+  handleSubmit
 }) => {
 
   const {
-    year,
-    make,
-    model,
-    ownershipDocument,
-    paidOff,
-    vehicleCondition,
-    wheels,
-    bodyDamage,
-    partMissing,
-    allWheels,
-    battery,
-    catalytic,
-    vin,
-    mileage,
-    bodyDamageDescription,
-    partMissingDescription,
-    city,
-    state,
-    zip,
-    phone,
-    name,
-    engine,
-    phone2,
+    noOrder,
+    price,
+    price2
   } = data;
 
 
@@ -52,36 +40,20 @@ const ModalEdit: React.FC<ListingCardProps> = ({
     setSelectedTab(tab);
   }
 
+  const tabList = [
+    {id:1, label:'Order', icon: <MdOutlineTask/>},
+  ]
 
-  const vehicleDetails = (
+
+
+
+  const orderNumber = (
     <>
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-
-      <Field label="Vehicle:" value={year + " " + make + " " + model} />
-      <Field label="Engine:" value={engine} />
-      <Field label="Ownership Documents:" value={ownershipDocument} />
-      <Field label="Is Your Vehicle Paid Off?" value={paidOff} />
-      <Field label="Vehicle ID Number: " value={vin} />
-      <Field label="Vehicle Mileage: " value={mileage} />
-      <Field label="Vehicle Operating Condition:" value={vehicleCondition} />
-      <Field label="Is There Body Damage:" value={bodyDamage + ". " + bodyDamageDescription} />
-      <Field label="Any Parts Missing:" value={partMissing + ". " + partMissingDescription} />
-      <Field label="Are Your Wheels Aluminum Or Steel?:" value={wheels} />
-      <Field label="Does It Have All Wheels:" value={allWheels} />
-      <Field label="Does It Have A Battery:" value={battery} />
-      <Field label="Catalytic Converter: " value={catalytic} />
-      <Field label="Vehicle Location: " value={city + ", " + state + " " + zip} />
-      </Box>
-    </>
-  );
-
-
-  const contactInformation = (
-    <>
-    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-      <Field label="Name:" value={name} />
-      <Field label="Phone:" value={phone} />
-      <Field label="2nd Phone:" value={phone2} />
+      <Field onChange={(value)=>{handleInput('noOrder', value)}} label="Orden Number:" value={noOrder} />
+      <Field onChange={(value)=>{handleInput('price', value)}} label="Seller Price:" value={price} price />
+      <Field onChange={(value)=>{handleInput('price2', value)}} label="Zeus Price:" value={price2} price />
+      <span className="text-red-500 font-bold text-right w-full">{error && 'All fields are required'}</span>
       </Box>
     </>
 
@@ -148,18 +120,15 @@ const ModalEdit: React.FC<ListingCardProps> = ({
                       </button>
                     </div>
                       <div className="flex">
-                      <Tabs selected={selectedTab} onClick={handleTabChange} />
+                      <Tabs data={tabList} selected={selectedTab} onClick={handleTabChange} />
                       </div>
                     <div className="">
                       <div className="mt-2">
-                          {selectedTab == 1 && vehicleDetails}
-                      </div>
-                      <div className="mt-2">
-                      {selectedTab == 2 && contactInformation}
+                          {selectedTab == 1 && orderNumber}
                       </div>
                     </div>
                     <div className="mt-1 border-t-2 pt-5 flex">
-                        <Button label="Update" onClick={()=>{alert('soon')}} full/>
+                        <Button label="Update" onClick={handleSubmit} full/>
                     </div>
                   </div>
                 </div>
@@ -174,4 +143,4 @@ const ModalEdit: React.FC<ListingCardProps> = ({
   );
 }
 
-export default ModalEdit
+export default ModalOrder

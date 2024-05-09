@@ -48,10 +48,8 @@ export function applyFilter({ inputData, comparator, filterName }) {
   if (filterName) {
     inputData = inputData.filter(
       (quote) => 
-          quote?.make?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 
-          || quote?.model?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+          quote?.vehicle?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1 
           || quote?.vin?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
-          || quote?.year?.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

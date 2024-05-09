@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from "react";
-import EmptySpace from "./components/EmptySpace";
+import EmptySpace from "./components/app/EmptySpace";
 
 
 interface ErrorStateProps {

@@ -30,6 +30,7 @@ const UserTableToolbar: React.FC<ToolbarProps> = ({
 
   return (
     <Toolbar
+    className='white'
       sx={{
         height: 96,
         display: 'flex',
@@ -37,7 +38,6 @@ const UserTableToolbar: React.FC<ToolbarProps> = ({
         p: (theme) => theme.spacing(0, 1, 0, 3),
         ...(numSelected > 0 && {
           color: 'primary.main',
-          bgcolor: 'primary.lighter',
         }),
       }}
     >

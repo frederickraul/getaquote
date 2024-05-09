@@ -28,20 +28,53 @@ import en from 'javascript-time-ago/locale/en.json'
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import Container from '@/app/components/Container';
 import ModalEdit from './ModalEdit';
+import ModalOrder from './ModalOrder';
+import { Container } from '@mui/material';
+import LoadingContainer from '@/app/components/LoadingContainer';
 
 TimeAgo.addLocale(en)
 
 // ----------------------------------------------------------------------
 
 interface ListingCardProps {
+  fieldOrder?:boolean;
+  header:any;
+  headerStyles?:any;
   data: any;
 }
 
-const UserPage: React.FC<ListingCardProps> = ({
+const QuotesPage: React.FC<ListingCardProps> = ({
+  fieldOrder,
+  header,
+  headerStyles,
   data,
 }) => {
+
+  let tableHeader = [
+    { id: 'vin', label: 'VIN' },
+    { id: 'year', label: 'Year' },
+    { id: 'make', label: 'Make' },
+    { id: 'model', label: 'Model' },
+    { id: 'engine', label: 'Engine' },
+    { id: 'phone', label: 'Phone' },
+    { id: 'date', label: 'Date' },
+    { id: '' },
+  ];
+
+  if(fieldOrder){
+    tableHeader = [
+      { id: 'OrderNo', label: 'Order No' },
+      { id: 'vin', label: 'VIN' },
+      { id: 'year', label: 'Year' },
+      { id: 'make', label: 'Make' },
+      { id: 'model', label: 'Model' },
+      { id: 'engine', label: 'Engine' },
+      { id: 'phone', label: 'Phone' },
+      { id: 'date', label: 'Date' },
+      { id: '' },
+    ];
+  }
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('desc');
@@ -56,14 +89,19 @@ const UserPage: React.FC<ListingCardProps> = ({
 
   const [quotes, setQuotes] = useState<any[]>([]);
   const [notFound, setNotFound] = useState(false);
+
   const [isModalVisible, setisModalVisible] = useState(false);
   const [isEditVisible, setisEditVisible] = useState(false);
+  const [isOrderVisible, setisOrderVisible] = useState(false);
   const [isConfirmVisible, setisConfirmVisible] = useState(false);
-  const [selectedRow, setSelectedRow] = useState({});
+  1
+  const [selectedRow, setSelectedRow] = useState({id:'',price:'',price2:'',status:'',noOrder:''});
   const [deleteRowId, setdeleteRowId] = useState("");
   const [isLoading, setisLoading] = useState(false);
+  const [noOrderError, setnoOrderError] = useState(false);
 
   const router = useRouter();
+  
 
   useEffect(() => {
       setQuotes(data);
@@ -82,6 +120,9 @@ const UserPage: React.FC<ListingCardProps> = ({
   }
   const handleConfirmModalClose = () =>{
     setisConfirmVisible(false);
+  }
+  const handleOrderClose = () =>{
+    setisOrderVisible(false);
   }
 
   const handleSort = (event:any, id:any) => {
@@ -140,6 +181,24 @@ const UserPage: React.FC<ListingCardProps> = ({
     setisConfirmVisible(true);
   };
 
+  const handleEditClick = (event:any, data:any) => {
+    
+    setSelectedRow(data);
+    setisEditVisible(true);
+  };
+
+
+  const handleOrderClick = (event:any, data:any) => {
+    setSelectedRow({...data,['status']: 'proccesing'});
+    setisOrderVisible(true);
+  };
+
+  const handleInputChange = (field: string, value: any) => {
+
+      setSelectedRow({ ...selectedRow, [field]: value });
+  }
+
+
   const onDelete = useCallback(() => {
     setisConfirmVisible(false);
     setisLoading(true);
@@ -175,7 +234,6 @@ const UserPage: React.FC<ListingCardProps> = ({
     setisLoading(true);
     axios.delete(`/api/cars`, {data: {ids: selected}})
     .then(() => {
-      console.log(selected);
       toast.success('Quote list deleted!!!', {
         duration: 4000,
         position: 'top-center',
@@ -200,11 +258,48 @@ const UserPage: React.FC<ListingCardProps> = ({
     })
   }, [router,selected]);
 
-  const handleEditClick = (event:any, data:any) => {
+
+const handleOrderSubmit = useCallback(() => {
+  setnoOrderError(false);
+
+  if(selectedRow.noOrder === null || selectedRow.price === null || selectedRow.price2 === null){
+    setnoOrderError(true);
+    return;
+  }
+
+  if(selectedRow.noOrder === "" || selectedRow.price === "" || selectedRow.price2 === ""){
+    setnoOrderError(true);
+    return;
+  }
+
+  setisOrderVisible(false);
+  setisLoading(true);
+  const quoteId = selectedRow?.id;
+  axios.post(`/api/cars/${quoteId}`,selectedRow)
+  .then(() => {
+    toast.success("Quote updated, now you'll find it on proccesing list!!!", {
+      duration: 5000,
+      position: 'top-center',
     
-    setSelectedRow(data);
-    setisEditVisible(true);
-  };
+      // Change colors of success/error/loading icon
+      iconTheme: {
+        primary: '#54B4D3',
+        secondary: '#fff',
+      },  
+    });
+    
+    router.refresh();
+    
+  })
+  .catch((error) => {
+    toast.error(error?.response?.data?.error)
+  })
+  .finally(() => {
+    setdeleteRowId('');
+    setisLoading(false);
+
+  })
+}, [router,selectedRow]);
 
 
   const handleChangePage = (event:any, newPage:any) => {
@@ -238,12 +333,36 @@ useEffect(() => {
 }, [filterName]);
 
   return (
-    <Container isLoading={isLoading}>
-      <ModalConfirm visible={isConfirmVisible} onClose={handleConfirmModalClose} action={onDelete}/>
-      <ModalDetails visible={isModalVisible} data={selectedRow} onClose={handleModalClose}/>
-      <ModalEdit  visible={isEditVisible} data={selectedRow} onClose={handleEditClose}/>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Quotes</Typography>
+    <LoadingContainer isLoading={isLoading}>
+    <Container>
+      <ModalConfirm 
+          visible={isConfirmVisible} 
+          onClose={handleConfirmModalClose} 
+          action={onDelete}/>
+
+      <ModalDetails 
+          visible={isModalVisible} 
+          data={selectedRow} 
+          onClose={handleModalClose}/>
+
+      <ModalEdit 
+        handleInput={handleInputChange}  
+        visible={isEditVisible} 
+        data={selectedRow} 
+        onClose={handleEditClose}/>
+
+      <ModalOrder 
+        error={noOrderError}
+        handleSubmit={handleOrderSubmit} 
+        handleInput={handleInputChange} 
+        visible={isOrderVisible} 
+        data={selectedRow} 
+        onClose={handleOrderClose}/>
+
+      <Stack className='my-5' direction="row" alignItems="center" justifyContent="space-between" >
+        <Typography variant="h4">
+          {header}
+        </Typography>
       </Stack>
 
       <Card>
@@ -257,28 +376,21 @@ useEffect(() => {
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
               <UserTableHead
-               order={order}
+                styles={headerStyles}
+                order={order}
                 orderBy={orderBy}
                 rowCount={quotes.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
-                headLabel={[
-                  { id: 'vin', label: 'VIN' },
-                  { id: 'make', label: 'Make' },
-                  { id: 'model', label: 'Model' },
-                  { id: 'year', label: 'Year' },
-                  { id: 'engine', label: 'Engine' },
-                  { id: 'date', label: 'Date' },
-
-                  { id: '' },
-                ]}
+                headLabel={tableHeader}
               />
               <TableBody>
                 {quotes
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row:any) => (
                     <UserTableRow
+                      fieldOrder
                       key={row.id}
                       data={row}
                       selected={selected?.indexOf(row.id) !== -1}
@@ -286,6 +398,7 @@ useEffect(() => {
                       handleRowClick={(event) => handleRowClick(event, row)}
                       handleEditClick={(event) => handleEditClick(event, row)}
                       handleDeleteClick={(event) => handleDeleteClick(event, row)}
+                      handleOrderClick={(event) => handleOrderClick(event, row)}
                     />
                   ))}
 
@@ -310,9 +423,10 @@ useEffect(() => {
         />
       </Card>
     </Container>
+    </LoadingContainer>
     
   );
 }
 
 
-export default UserPage
+export default QuotesPage

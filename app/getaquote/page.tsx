@@ -1,8 +1,8 @@
 
-import ClientOnly from '../components/ClientOnly'
-import Container from '../components/Container'
+import ClientOnly from '../components/app/ClientOnly'
+import Container from '../components/LoadingContainer'
 
-import QuoteForm from '../components/Form/QuoteForm';
+import QuoteForm from '../components/app/Form/QuoteForm';
 import getAllMakes from '../actions/getAllMakes';
 import { makeList } from '../const/make';
 

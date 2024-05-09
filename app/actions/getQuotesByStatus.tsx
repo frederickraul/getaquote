@@ -1,13 +1,15 @@
 import prisma from "@/app/libs/prismadb";
 
 
-export default async function getQuotes(
-) {
+export default async function getQuotesByStatus(status?:string) {
   try {
-
-
     let query: any = {};
 
+      if (status) {
+        query.status = status
+      }else{
+        query.status = undefined
+      }
 
 
     const quotes = await prisma.car.findMany({

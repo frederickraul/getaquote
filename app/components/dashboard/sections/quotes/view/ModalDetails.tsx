@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import Item from "./Item";
 import Tabs from "./Tabs";
+import { FaCar } from "react-icons/fa";
+import { MdContactPhone } from "react-icons/md";
 
 interface ListingCardProps {
   data: any;
@@ -44,6 +46,11 @@ const ModalDetails: React.FC<ListingCardProps> = ({
 
 
   const [selectedTab, setSelectedTab] = useState(1);
+
+  const tabList = [
+    {id:1, label:'Vehicle Details', icon: <FaCar/>},
+    {id:2, label:'Contact Information', icon: <MdContactPhone/>},
+  ]
 
   const handleTabChange = (tab: number) => {
     setSelectedTab(tab);
@@ -140,7 +147,7 @@ const ModalDetails: React.FC<ListingCardProps> = ({
                       </button>
                     </div>
                       <div className="flex">
-                      <Tabs selected={selectedTab} onClick={handleTabChange} />
+                      <Tabs data={tabList} selected={selectedTab} onClick={handleTabChange} />
                       </div>
                     <div className="flex flex-row">
                       <div className="mt-2">
