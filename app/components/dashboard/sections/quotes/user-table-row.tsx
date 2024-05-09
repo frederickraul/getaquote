@@ -59,7 +59,7 @@ const UserTableRow: React.FC<RowProps> = ({
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
         {fieldOrder &&
-        <TableCell onClick={handleRowClick}>{data?.vin}</TableCell>
+        <TableCell onClick={handleRowClick}>{data?.noOrder}</TableCell>
         }
         <TableCell onClick={handleRowClick}>{data?.vin}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.year}</TableCell>
