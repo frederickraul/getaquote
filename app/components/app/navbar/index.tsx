@@ -32,9 +32,10 @@ const Navbar: React.FC<NavbarProps> = ({currentUser, notifications}) => {
                     gap-3   
                     py-0
                     lg:py-2
-                    
+                    h-16
+                    md:h-20
                         '>
-                    <div className='pl-3 lg:pl-0 flex flex-row items-center justify-around'>
+                    <div className='pl-3 lg:pl-0 flex flex-row items-center justify-aroun'>
                     <Logo/>
                     </div>
                     <div className='lg:flex flex-row items-center'>
