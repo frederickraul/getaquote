@@ -58,9 +58,8 @@ const UserTableRow: React.FC<RowProps> = ({
         <TableCell padding="checkbox">
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
-        {fieldOrder &&
         <TableCell onClick={handleRowClick}>{data?.noOrder}</TableCell>
-        }
+        
         <TableCell onClick={handleRowClick}>{data?.vin}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.year}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.make}</TableCell>

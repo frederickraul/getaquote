@@ -52,6 +52,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
 }) => {
 
   let tableHeader = [
+    { id: 'OrderNo', label: 'Order No' },
     { id: 'vin', label: 'VIN' },
     { id: 'year', label: 'Year' },
     { id: 'make', label: 'Make' },
@@ -62,19 +63,19 @@ const QuotesPage: React.FC<ListingCardProps> = ({
     { id: '' },
   ];
 
-  if(fieldOrder){
-    tableHeader = [
-      { id: 'OrderNo', label: 'Order No' },
-      { id: 'vin', label: 'VIN' },
-      { id: 'year', label: 'Year' },
-      { id: 'make', label: 'Make' },
-      { id: 'model', label: 'Model' },
-      { id: 'engine', label: 'Engine' },
-      { id: 'phone', label: 'Phone' },
-      { id: 'date', label: 'Date' },
-      { id: '' },
-    ];
-  }
+  // if(fieldOrder){
+  //   tableHeader = [
+  //     { id: 'OrderNo', label: 'Order No' },
+  //     { id: 'vin', label: 'VIN' },
+  //     { id: 'year', label: 'Year' },
+  //     { id: 'make', label: 'Make' },
+  //     { id: 'model', label: 'Model' },
+  //     { id: 'engine', label: 'Engine' },
+  //     { id: 'phone', label: 'Phone' },
+  //     { id: 'date', label: 'Date' },
+  //     { id: '' },
+  //   ];
+  // }
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('desc');
