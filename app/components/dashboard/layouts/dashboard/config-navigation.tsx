@@ -32,8 +32,8 @@ const navConfig = [
     color: '#54B4D3'
   },
   {
-    title: 'pending quotes',
-    path: '/dashboard/pending',
+    title: 'new quotes',
+    path: '/dashboard/new',
     icon: <MdOutlinePendingActions size={24}/>,
 
     color: '#E4A11B'

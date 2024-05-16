@@ -6,7 +6,7 @@ interface InputProps{
   error?:boolean;
   infoMessage?:string;
   value:any;
-  onChange:(value:any)=>void;
+  onChange:(value:any,value2?:any)=>void;
 }
 
 const InputPhone: React.FC<InputProps> = ({
@@ -43,7 +43,7 @@ const InputPhone: React.FC<InputProps> = ({
   const handleChange =(e:any)=>{
     const number = e.target.value;
     const formattedNumber = normalizeInput(number, value);
-    onChange(formattedNumber);
+    onChange(formattedNumber,number);
     
   }
 

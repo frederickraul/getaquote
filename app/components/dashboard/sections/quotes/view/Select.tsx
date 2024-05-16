@@ -6,7 +6,7 @@ interface FieldProps {
     value: any;
     options: any;
     price?: boolean;
-    onChange: (value:string) => void;
+    onChange: (value:any) => void;
   }
   
   const Select: React.FC<FieldProps> = ({
@@ -26,7 +26,7 @@ interface FieldProps {
             onChange={(e)=>{onChange(e.target.value)}}
           >
             {options.map((option:any) => (
-            <MenuItem key={option.value} value={option.value}>
+            <MenuItem key={option.value} value={option}>
               {option.label}
             </MenuItem>
           ))}

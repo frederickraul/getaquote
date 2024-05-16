@@ -32,6 +32,9 @@ import ModalEdit from './ModalEdit';
 import ModalOrder from './ModalOrder';
 import { Container } from '@mui/material';
 import LoadingContainer from '@/app/components/LoadingContainer';
+import { usePathName } from '../../../routes/hooks/usePathName';
+import ModalSend from './ModalSend';
+import { emailList } from '@/app/const/emails';
 
 TimeAgo.addLocale(en)
 
@@ -78,6 +81,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   // }
   const [page, setPage] = useState(0);
 
+
   const [order, setOrder] = useState('desc');
 
   const [selected, setSelected] = useState<string[]>([]);
@@ -94,9 +98,10 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   const [isModalVisible, setisModalVisible] = useState(false);
   const [isEditVisible, setisEditVisible] = useState(false);
   const [isOrderVisible, setisOrderVisible] = useState(false);
+  const [isSendVisible, setisSendVisible] = useState(false);
   const [isConfirmVisible, setisConfirmVisible] = useState(false);
   1
-  const [selectedRow, setSelectedRow] = useState({id:'',price:'',price2:'',status:'',noOrder:''});
+  const [selectedRow, setSelectedRow] = useState({id:'',price:'',price2:'',status:'',noOrder:'',buyer:{label:'',name:'',value:''}});
   const [deleteRowId, setdeleteRowId] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [noOrderError, setnoOrderError] = useState(false);
@@ -107,10 +112,6 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   useEffect(() => {
       setQuotes(data);
   }, [data])
-  
-  useEffect(() => {
-    console.log(selected);
-  }, [selected])
   
 
   const handleModalClose = () =>{
@@ -125,6 +126,9 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   const handleOrderClose = () =>{
     setisOrderVisible(false);
   }
+  const handleSendClose = () =>{
+    setisSendVisible(false);
+  }
 
   const handleSort = (event:any, id:any) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -135,7 +139,6 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   };
 
   const handleSelectAllClick = (event:any) => {
-    console.log(event.target.checked);
     if (event.target.checked) {
       const newSelecteds = quotes.map((n:any) => n.id);
       setSelected(newSelecteds);
@@ -147,7 +150,6 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   const handleRowClick = (event:any, data:any) => {
     
     const role = event;
-    console.log(role);
     if(role == "checkbox"){
       return;
     }
@@ -177,7 +179,6 @@ const QuotesPage: React.FC<ListingCardProps> = ({
 
   const handleDeleteClick = (event:any, data:any) => {
 
-
     setdeleteRowId(data.id);
     setisConfirmVisible(true);
   };
@@ -189,8 +190,13 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   };
 
 
+  const handleSendClick = (event:any, data:any) => {
+    setSelectedRow({...data,['status']: 'proccesing',['buyer']: emailList[0], ['subject']:`New Car Price ${data.year} ${data.make} ${data.model}   `});
+    setisSendVisible(true);
+  };
+
   const handleOrderClick = (event:any, data:any) => {
-    setSelectedRow({...data,['status']: 'proccesing'});
+    setSelectedRow(data);
     setisOrderVisible(true);
   };
 
@@ -198,7 +204,6 @@ const QuotesPage: React.FC<ListingCardProps> = ({
 
       setSelectedRow({ ...selectedRow, [field]: value });
   }
-
 
   const onDelete = useCallback(() => {
     setisConfirmVisible(false);
@@ -259,6 +264,70 @@ const QuotesPage: React.FC<ListingCardProps> = ({
     })
   }, [router,selected]);
 
+  const onBatchChangeStatus = useCallback((status:string) => {
+    setisConfirmVisible(false);
+    setisLoading(true);
+    axios.post(`/api/cars/changestatus/`, {ids: selected, status:status})
+    .then(() => {
+      toast.success('Quote list updated!!!', {
+        duration: 4000,
+        position: 'top-center',
+      
+        // Change colors of success/error/loading icon
+        iconTheme: {
+          primary: '#E4A11B',
+          secondary: '#fff',
+        },  
+      });
+      
+      setSelected([]);
+     router.refresh();
+      
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.error)
+    })
+    .finally(() => {
+      setisLoading(false);
+
+    })
+  }, [router,selected]);
+
+  const onSendEmail = useCallback(() => {
+    if(selectedRow.buyer.value === ''){
+      return
+    }
+
+    setisSendVisible(false);
+    setisLoading(true);
+    axios.post(`/api/email/send/`, {data:selectedRow})
+    .then(() => {
+      axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'proccesing',buyerName:selectedRow?.buyer?.name, buyerEmail:selectedRow?.buyer?.value}).then(()=>{
+        router.refresh();
+      });
+      toast.success('Email sended!!!', {
+        duration: 4000,
+        position: 'top-center',
+      
+        // Change colors of success/error/loading icon
+        iconTheme: {
+          primary: '#E4A11B',
+          secondary: '#fff',
+        },  
+      });
+      
+    router.refresh();
+      
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.error)
+    })
+    .finally(() => {
+      setisLoading(false);
+
+    })
+  }, [router,selectedRow]);
+
 
 const handleOrderSubmit = useCallback(() => {
   setnoOrderError(false);
@@ -276,9 +345,9 @@ const handleOrderSubmit = useCallback(() => {
   setisOrderVisible(false);
   setisLoading(true);
   const quoteId = selectedRow?.id;
-  axios.post(`/api/cars/${quoteId}`,selectedRow)
+  axios.post(`/api/cars/changeorderno/${quoteId}`,selectedRow)
   .then(() => {
-    toast.success("Quote updated, now you'll find it on proccesing list!!!", {
+    toast.success("Order number updated!!!", {
       duration: 5000,
       position: 'top-center',
     
@@ -313,7 +382,6 @@ const handleOrderSubmit = useCallback(() => {
   };
 
   const handleFilterByName = (event:any) => {
-    console.log(event.target.value)
     setPage(0);
     setFilterName(event.target.value);
   };
@@ -332,6 +400,7 @@ useEffect(() => {
 
   
 }, [filterName]);
+
 
   return (
     <LoadingContainer isLoading={isLoading}>
@@ -360,6 +429,13 @@ useEffect(() => {
         data={selectedRow} 
         onClose={handleOrderClose}/>
 
+      <ModalSend 
+         visible={isSendVisible} 
+         data={selectedRow} 
+         handleInput={handleInputChange} 
+         handleSubmit={onSendEmail} 
+         onClose={handleSendClose}/>
+
       <Stack className='my-5' direction="row" alignItems="center" justifyContent="space-between" >
         <Typography variant="h4">
           {header}
@@ -369,6 +445,7 @@ useEffect(() => {
       <Card>
         <UserTableToolbar
           onDelete={onBatchDelete}
+          onChangeStatus={onBatchChangeStatus}
           numSelected={selected?.length}
           filterName={filterName}
           onFilterName={handleFilterByName}
@@ -377,6 +454,7 @@ useEffect(() => {
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
               <UserTableHead
+                
                 styles={headerStyles}
                 order={order}
                 orderBy={orderBy}
@@ -400,6 +478,7 @@ useEffect(() => {
                       handleEditClick={(event) => handleEditClick(event, row)}
                       handleDeleteClick={(event) => handleDeleteClick(event, row)}
                       handleOrderClick={(event) => handleOrderClick(event, row)}
+                      handleEmailClick={(event) => handleSendClick(event, row)}
                     />
                   ))}
 

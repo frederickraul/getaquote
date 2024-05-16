@@ -14,6 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import Label from '../../components/label';
 import Iconify from '../../components/iconify';
 import LastSeen from './view/LastSeen';
+import { usePathName } from '../../routes/hooks/usePathName';
 
 
 // ----------------------------------------------------------------------
@@ -27,6 +28,7 @@ interface RowProps {
   handleDeleteClick:(value:any)=>void;
   handleEditClick:(value:any)=>void;
   handleOrderClick:(value:any)=>void;
+  handleEmailClick:(value:any)=>void;
   
 }
 
@@ -39,7 +41,11 @@ const UserTableRow: React.FC<RowProps> = ({
   handleDeleteClick,
   handleEditClick,
   handleOrderClick,
+  handleEmailClick
 }) => {
+
+  const pathname = usePathName();
+
   const [open, setOpen] = useState(null);
 
   const handleOpenMenu = (event:any) => {
@@ -49,6 +55,7 @@ const UserTableRow: React.FC<RowProps> = ({
   const handleCloseMenu = () => {
     setOpen(null);
   };
+
 
 
 
@@ -95,6 +102,7 @@ const UserTableRow: React.FC<RowProps> = ({
           sx: { width: 160 },
         }}
       >
+        { pathname == '/dashboard/processing' &&
         <MenuItem onClick={(e)=>{
           handleCloseMenu();
           handleOrderClick(e);
@@ -102,6 +110,17 @@ const UserTableRow: React.FC<RowProps> = ({
         <Iconify icon="ic:outline-task" sx={{mr: 2 }} />
           Order
         </MenuItem>
+        }
+          { pathname === '/dashboard/new' &&
+        <MenuItem onClick={(e)=>{
+          handleCloseMenu();
+          handleEmailClick(e);
+        }}>
+          <Iconify icon="eva:email-fill" sx={{ mr: 2 }} />
+          Send
+        </MenuItem>
+        }
+
         <MenuItem onClick={(e)=>{
           handleCloseMenu();
           handleEditClick(e);

@@ -16,10 +16,9 @@ const Footer: React.FC<FooterProps> = ({currentUser}) => {
         bg-black absolute bottom-0 w-[100%]
         ">
                 <div className="text-gray-100 container mx-auto px-6 pt-10 pb-6 max-w-[960px] flex flex-col items-center" >
-                <a href="/" target='_blank'>
-                  <span className='mt-2'>Copyright © {date.getFullYear()} The Quote Form - All Rights Reserved.
-
-</span>
+                <a href="/" target='_blank' className=''>
+                  <span className='mt-2'>Copyright © {date.getFullYear()}</span>
+                  <span> The Quote Form - All Rights Reserved.</span>
                 </a>
         </div>
             </div>

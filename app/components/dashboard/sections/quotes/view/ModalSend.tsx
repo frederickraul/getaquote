@@ -4,20 +4,28 @@ import React, { useState } from "react";
 import Item from "./Item";
 import Tabs from "./Tabs";
 import { FaCar } from "react-icons/fa";
-import { MdContactPhone, MdOutlineTask } from "react-icons/md";
-import { usePathName } from "../../../routes/hooks/usePathName";
-import { BiCheckSquare } from "react-icons/bi";
+import { MdContactPhone, MdEmail } from "react-icons/md";
+import { TfiEmail } from "react-icons/tfi";
+import Field from "./Field";
+import Select from "./Select";
+import { emailList } from "@/app/const/emails";
+import Button from "@/app/components/app/Button";
+import { BiSend } from "react-icons/bi";
 
-interface ListingCardProps {
+interface MadalProps {
   data: any;
   visible: boolean;
   onClose: () => void;
+  handleInput: (field:string, value:any) => void;
+  handleSubmit: () => void;
 }
 
-const ModalDetails: React.FC<ListingCardProps> = ({
+const ModalSend: React.FC<MadalProps> = ({
   data,
   visible,
   onClose,
+  handleInput,
+  handleSubmit
 }) => {
 
   const {
@@ -44,55 +52,25 @@ const ModalDetails: React.FC<ListingCardProps> = ({
     name,
     engine,
     phone2,
-    price,
-    price2,
-    noOrder,
-    buyerName,
-    buyerEmail,
+    buyer,
+    subject,
+    message,
   } = data;
 
-  const pathname = usePathName();
 
   const [selectedTab, setSelectedTab] = useState(1);
 
-  let tabList = [
-    {id:1, label:'Vehicle Details', icon: <FaCar/>},
-    {id:2, label:'Contact', icon: <MdContactPhone/>},
-  ]
-
-  if(pathname !== '/dashboard/new'){
-     tabList = [
-      {id:3, label:'Order', icon: <MdOutlineTask/>},
-      {id:1, label:'Vehicle Details', icon: <FaCar/>},
-      {id:2, label:'Contact', icon: <MdContactPhone/>},
-    ]
+  const handleOnChange= (value:any)=>{
+    console.log(value);
   }
-
-
-
-
-  const handleTabChange = (tab: number) => {
-    setSelectedTab(tab);
-  }
-
-  const OrderInformation = (
-    <>
-      <Item label="Order Number:" value={noOrder} />
-      <Item label="Price:" value={price} />
-      <Item label="Zeus Price:" value={price2} />
-      <Item label="Buyer Name:" value={buyerName} />
-      <Item label="Buyer Email:" value={buyerEmail} />
-    </>
-
-  );
 
   const vehicleDetails = (
     <>
       <Item label="Vehicle:" value={year + " " + make + " " + model} />
       <Item label="Engine:" value={engine} />
-      <Item label="Ownership Documents:" value={ownershipDocument} />
-      <Item label="Is Your Vehicle Paid Off?" value={paidOff} />
       <Item label="Vehicle ID Number: " value={vin} />
+      {/* <Item label="Ownership Documents:" value={ownershipDocument} />
+      <Item label="Is Your Vehicle Paid Off?" value={paidOff} />
       <Item label="Vehicle Mileage: " value={mileage} />
       <Item label="Vehicle Operating Condition:" value={vehicleCondition} />
       <Item label="Is There Body Damage:" value={bodyDamage + ". " + bodyDamageDescription} />
@@ -101,19 +79,10 @@ const ModalDetails: React.FC<ListingCardProps> = ({
       <Item label="Does It Have All Wheels:" value={allWheels} />
       <Item label="Does It Have A Battery:" value={battery} />
       <Item label="Catalytic Converter: " value={catalytic} />
-      <Item label="Vehicle Location: " value={city + ", " + state + " " + zip} />
+      <Item label="Vehicle Location: " value={city + ", " + state + " " + zip} /> */}
     </>
   );
 
-
-  const contactInformation = (
-    <>
-      <Item label="Name:" value={name} />
-      <Item label="Phone:" value={phone} />
-      <Item label="2nd Phone:" value={phone2} />
-    </>
-
-  );
 
   if (!visible) {
     return null;
@@ -140,7 +109,6 @@ const ModalDetails: React.FC<ListingCardProps> = ({
             min-h-full 
             items-start 
             justify-center 
-            p-2
             text-center 
             sm:items-start 
             sm:p-0">
@@ -155,16 +123,13 @@ const ModalDetails: React.FC<ListingCardProps> = ({
                 shadow-xl 
                 transition-all 
                 my-0
-                sm:my-8 
-                w-full 
-                sm:max-w-lg
-                md:max-w-xl"
-                >
+                sm:w-full 
+                sm:max-w-lg">
               <div className="
                   bg-white 
                   px-4 
                   pb-4 
-                  pt-5 
+                  
                   sm:p-6 
                   sm:pb-4">
                 <div className="mb-5">
@@ -177,19 +142,43 @@ const ModalDetails: React.FC<ListingCardProps> = ({
                         <span className="sr-only">Close modal</span>
                       </button>
                     </div>
-                      <div className="flex">
-                      <Tabs data={tabList} selected={selectedTab} onClick={handleTabChange} />
+                      <div className="flex flex-row items-center">
+                      <MdEmail size={26}/>
+                      <span className="ml-2 font-bold text-2xl"> Send Email  </span>
                       </div>
+                    <div className="mt-5">
+                      <Select
+                        label="To"
+                        value={buyer}
+                        options={emailList}
+                        onChange={(e)=>{handleInput('buyer',e)}} 
+                      />
+                      <Field
+                        label="Subject"
+                        value={subject}
+                        required
+                        onChange={(e)=>{handleInput('subject',e)}} 
+                      />
+                      <Field
+                        label="Message"
+                        value={message}
+                        onChange={(e)=>{handleInput('message',e)}} />
+
+                      
+                    </div>
                     <div className="flex flex-row">
-                      <div className="mt-2">
+                      <div className="mt-2 px-5">
                           {selectedTab == 1 && vehicleDetails}
                       </div>
-                      <div className="mt-2">
-                      {selectedTab == 2 && contactInformation}
-                      </div>
-
-                      <div className="mt-2">
-                      {selectedTab == 3 && OrderInformation}
+                    </div>
+                    <div className="flex mt-5 flex-row justify-end">
+                      <div className="w-full"> 
+                      <Button 
+                        full
+                        label="Send"
+                        icon={BiSend}
+                        onClick={handleSubmit}
+                      />
                       </div>
                     </div>
                   </div>
@@ -205,4 +194,4 @@ const ModalDetails: React.FC<ListingCardProps> = ({
   );
 }
 
-export default ModalDetails
+export default ModalSend

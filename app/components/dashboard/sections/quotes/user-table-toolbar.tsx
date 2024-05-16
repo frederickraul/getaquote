@@ -8,6 +8,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import Iconify from '../../components/iconify';
+import { usePathName } from '../../routes/hooks/usePathName';
 
 // ----------------------------------------------------------------------
 
@@ -17,6 +18,7 @@ interface ToolbarProps {
   filterName?:string;
   onFilterName:(value:any)=>void;
   onDelete:(value:any)=>void;
+  onChangeStatus:(value:any)=>void;
 }
 
 const UserTableToolbar: React.FC<ToolbarProps> = ({
@@ -24,9 +26,11 @@ const UserTableToolbar: React.FC<ToolbarProps> = ({
   filterName,
   onFilterName,
   onDelete,
+  onChangeStatus,
 
 }) => {
 
+  const pathname = usePathName();
 
   return (
     <Toolbar
@@ -61,18 +65,41 @@ const UserTableToolbar: React.FC<ToolbarProps> = ({
         />
       )}
 
-{numSelected > 0 ? (
+{numSelected > 0 && (
+  <div className='flex flex-row items-center'>
+    <div className='mr-5'>
+        <span className='mr-5 text-neutral-600 '>Move to</span>
+        { pathname == '/dashboard/declined' &&
+
+        <Tooltip title="New" onClick={()=>{onChangeStatus('pending')}}>
+          <IconButton>
+            <Iconify icon="material-symbols:pending-actions" width={34} />
+          </IconButton>
+        </Tooltip>
+        }
+        { (pathname == '/dashboard/declined' || pathname == '/dashboard/processing') &&
+        <Tooltip title="Accepted" onClick={()=>{onChangeStatus('accepted')}}>
+          <IconButton>
+            <Iconify icon="pepicons-pop:shield-check" width={30} />
+          </IconButton>
+        </Tooltip>
+        }
+        { (pathname == '/dashboard/accepted' || pathname == '/dashboard/processing') &&
+        <Tooltip title="Declined" onClick={()=>{onChangeStatus('declined')}}>
+          <IconButton>
+            <Iconify icon="pepicons-pop:times-circle-filled" width={26} />
+          </IconButton>
+        </Tooltip>
+        }
+    </div>
+       
+        
         <Tooltip title="Delete" onClick={onDelete}>
           <IconButton>
-            <Iconify icon="eva:trash-2-fill" />
+            <Iconify icon="pepicons-pop:trash" width={28} />
           </IconButton>
         </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <Iconify icon="ic:round-filter-list" />
-          </IconButton>
-        </Tooltip>
+  </div>
       )}
     </Toolbar>
   );

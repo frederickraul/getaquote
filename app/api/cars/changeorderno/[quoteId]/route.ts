@@ -1,0 +1,53 @@
+import getCurrentUser from "@/app/actions/getCurrentUser";
+import { NextResponse } from "next/server";
+import prisma from '@/app/libs/prismadb';
+
+
+interface IParams {
+    quoteId?: string;
+  }
+
+  export async function POST(
+    request: Request,
+    { params }: { params: IParams }
+  ) {
+    // const currentUser = await getCurrentUser();
+  
+    // if (!currentUser) {
+    //   return NextResponse.error();
+    // }
+  
+    const { quoteId } = params;
+    const body = await request.json();
+  
+    const {
+      noOrder,
+      price,
+      price2,
+    } = body;
+
+    console.log(body);
+  
+  
+  
+    Object.keys(body).forEach((value: any) => {
+      if (!body[value]) {
+        NextResponse.error();
+      }
+    });
+  
+    const quote = await prisma.car.update({
+      where:{
+        id:quoteId
+      },
+      data: {
+       noOrder,
+       price,
+       price2
+      }
+    })
+  
+    return NextResponse.json(quote);
+  }
+  
+

@@ -58,7 +58,9 @@ const defaultValues = {
   state: '',
   zip: '',
   phone: '',
+  formattedPhone: '',
   phone2: '',
+  formattedPhone2: '',
   name: '',
   engine: ''
 
@@ -116,11 +118,14 @@ const QuoteForm: React.FC<ListingCardProps> = ({
     setData({ ...data, ['city']: value.city, ['state']: value.state_name, ['zip']: value.zip });
 
   }
-  const handleInputChange = (field: string, value: any) => {
-    if (field === 'phone' || field === 'phone2') {
-      setData({ ...data, [field]: value });
+  const handleInputChange = (field: string, value: any, value2?: any) => {
+    if (field === 'phone') {
+      setData({ ...data, [field]: value2,['formattedPhone']: value });
 
-    } else if (field === 'vin') {
+    }else if (field === 'phone2') {
+      setData({ ...data, [field]: value2,['formattedPhone2']: value });
+
+    }else if (field === 'vin') {
       const vinNumber = value.target.value;
       let uppercaseVIN = vinNumber.toUpperCase(); //To convert Upper Case
       setData({ ...data, [field]: uppercaseVIN });
@@ -718,13 +723,13 @@ const QuoteForm: React.FC<ListingCardProps> = ({
              label="Phone"
               error={errors.phone}
               value={data.phone}
-              onChange={(value)=>{handleInputChange('phone',value)}} />
+              onChange={(value,value2)=>{handleInputChange('phone',value,value2)}} />
 
             <InputPhone
               label="Alternative Phone"
               error={errors.phone2}
               value={data.phone2}
-              onChange={(value)=>{handleInputChange('phone2',value)}} />
+              onChange={(value,value2)=>{handleInputChange('phone2',value,value2)}} />
 
              
 

@@ -72,6 +72,13 @@ model Notification {
   recipient User @relation(fields: [recipientId], references: [id], name: "recipient")
 }
 
+type Select {
+    label                 String
+    value                 String
+    lowercaseLabel        String
+
+}
+
 model Car {
   id                      String @id @default(auto()) @map("_id") @db.ObjectId
   year                    String
@@ -94,13 +101,17 @@ model Car {
   state                   String
   zip                     String
   phone                   String
+  formattedPhone          String?
   phone2                  String?
+  formattedphone2         String?
   name                    String
   engine                  String? 
   noOrder                 String? 
   price                   String? 
   price2                  String? 
   status                  String? 
+  buyerName               String? 
+  buyerEmail              String? 
   createdAt               DateTime @default(now())
 
   

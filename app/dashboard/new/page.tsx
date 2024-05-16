@@ -13,7 +13,7 @@ const Page = async () => {
   const header = (
     <div className='flex flex-row items-center justify-center'>
     <MdOutlinePendingActions className='mr-2' color='#E4A11B'/>
-    Pending Quotes
+    New Quotes
     </div>
   );
 
