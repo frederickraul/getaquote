@@ -18,6 +18,10 @@ export default async function getQuotesByStatus(status?:string) {
         createdAt: 'desc'
       }
     });
+    
+    if(!quotes){
+      return null;
+    }
 
     const safeQuotes = quotes.map((quote) => ({
       ...quote,
@@ -28,6 +32,7 @@ export default async function getQuotesByStatus(status?:string) {
 
     return safeQuotes;
   } catch (error: any) {
+    return null;
     throw new Error(error);
   }
 }

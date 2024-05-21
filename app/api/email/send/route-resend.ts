@@ -3,10 +3,6 @@ import prisma from '@/app/libs/prismadb';
 import { NextResponse } from 'next/server'
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { Resend } from 'resend';
-
-
 interface IParams {
   ids?: string[];
 }
@@ -48,9 +44,6 @@ export async function POST(
     buyer,
     subject,
     message,
-    sign,
-    pickedUp,
-    droppedOff,
    
 
   } = body.data;
@@ -62,59 +55,51 @@ export async function POST(
   const resend = new Resend(process.env.RESEND_API_KEY);
 
     const { data, error } = await resend.emails.send({
-      from: 'The Quote Form <cashforcars@microcaf.online>',
+      from: 'The Quote Form <onboarding@resend.dev>',
       to: [`${buyer?.value}`],
       subject: `${subject}`,
       html: `
-      <strong>Picked Up: </strong>
-      <span>$ ${pickedUp}</span>
+      ${message && message}
       <br>
-      <strong>Dropped Off: </strong>
-      <span>$ ${droppedOff}</span>
-
-      <br> <br>
-      <strong>Vehicle Details</strong>
-      <br>
+      <h1>Vehicle Details</h1>
         <strong>Vehicle: </strong> 
         <span>${year} ${make} ${model}</span>
-      <br><br>
-          <strong>Ownership Documents: </strong> 
-          <span>${ownershipDocument}</span>
-      <br><br>
-        <strong>Is Your Vehicle paidOff: </strong>
-        <span>${paidOff}</span>
-      <br><br>
-          <strong>Vehicle ID Number: </strong>
-          <span>${vin}</span>
-      <br><br>
-            <strong>Vehicle Mileage: </strong>
-            <span>${mileage}</span>
-      <br><br>
-            <strong>Vehicle Operating Condition: </strong>
-            <span>${vehicleCondition}</span>
-      <br><br>
-            <strong>Is There Body Damage: </strong>
-            <span>${bodyDamage} ${bodyDamageDescription}</span>
-      <br><br>
-            <strong>Any Parts Missing: </strong>
-            <span>${partMissing} ${partMissingDescription}</span>
-      <br><br>
-            <strong>Are Your Wheels Aluminum Or Steel?: </strong>
-            <span>${wheels}</span>
-      <br><br>
+      <br>
+        <strong>Engine: </strong> 
+        <span>${engine} </span>
+      <br>
+        <strong>Ownership Documents: </strong> 
+        <span>${ownershipDocument}</span>
+      <br>
+        <strong>Vehicle ID Number: </strong>
+        <span>${vin}</span>
+      <br>
+        <strong>Vehicle Mileage: </strong>
+        <span>${mileage}</span>
+      <br>
+        <strong>Vehicle Operating Condition: </strong>
+        <span>${vehicleCondition}</span>
+      <br>
+        <strong>Is There Body Damage: </strong>
+        <span>${bodyDamage} ${bodyDamageDescription}</span>
+      <br>
+        <strong>Any Parts Missing: </strong>
+        <span>${partMissing} ${partMissingDescription}</span>
+      <br>
+        <strong>Are Your Wheels Aluminum Or Steel?: </strong>
+        <span>${wheels}</span>
+      <br>
         <strong>Does It Have All Wheels: </strong>
         <span>${allWheels}</span>
-      <br><br>
+      <br>
         <strong>Does It Have A Battery: </strong>
         <span>${battery}</span>
-      <br><br>
+      <br>
         <strong>Catalytic Converter: </strong>
         <span>${catalytic}</span>
-      <br><br>
+      <br>
         <strong>Vehicle Location: </strong>
         <span>${city}, ${state} ${zip}</span>
-      <br><br>
-      <span>${(sign !== "") && sign }</span>
       `,
     
   });
@@ -131,4 +116,7 @@ export async function POST(
 
 
 
+
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { Resend } from 'resend';
 

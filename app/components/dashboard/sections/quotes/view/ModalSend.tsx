@@ -55,6 +55,9 @@ const ModalSend: React.FC<MadalProps> = ({
     buyer,
     subject,
     message,
+    sign,
+    pickedUp,
+    droppedOff,
   } = data;
 
 
@@ -67,7 +70,6 @@ const ModalSend: React.FC<MadalProps> = ({
   const vehicleDetails = (
     <>
       <Item label="Vehicle:" value={year + " " + make + " " + model} />
-      <Item label="Engine:" value={engine} />
       <Item label="Vehicle ID Number: " value={vin} />
       {/* <Item label="Ownership Documents:" value={ownershipDocument} />
       <Item label="Is Your Vehicle Paid Off?" value={paidOff} />
@@ -160,9 +162,22 @@ const ModalSend: React.FC<MadalProps> = ({
                         onChange={(e)=>{handleInput('subject',e)}} 
                       />
                       <Field
-                        label="Message"
-                        value={message}
-                        onChange={(e)=>{handleInput('message',e)}} />
+                        label="Picked Up"
+                        value={pickedUp}
+                        required
+                        price
+                        onChange={(e)=>{handleInput('pickedUp',e)}} />
+                      <Field
+                        label="Dropped Off"
+                        value={droppedOff}
+                        required
+                        price
+                        onChange={(e)=>{handleInput('droppedOff',e)}} />
+                      <Field
+                        label="Sign"
+                        value={sign}
+                        required
+                        onChange={(e)=>{handleInput('sign',e)}} />
 
                       
                     </div>

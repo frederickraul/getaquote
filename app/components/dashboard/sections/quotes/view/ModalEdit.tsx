@@ -88,7 +88,7 @@ const ModalEdit: React.FC<ListingCardProps> = ({
     <>
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
 
-      <Select options={yearList} onChange={(value)=>{handleInput('year', value)}} label="Year:" value={year} />
+      <Field onChange={(value)=>{handleInput('year', value)}} label="Year:" value={year} />
       <Field onChange={(value)=>{handleInput('make', value)}} label="Make:" value={make} />
       <Field onChange={(value)=>{handleInput('model', value)}} label="Model:" value={model} />
       <Field onChange={(value)=>{handleInput('engine',value)}} label="Engine:" value={engine} />

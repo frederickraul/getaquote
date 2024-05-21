@@ -9,7 +9,6 @@ import { MdOutlinePendingActions } from 'react-icons/md';
 const Page = async () => {
   const quotes = await getQuotesByStatus("pending");
 
-
   const header = (
     <div className='flex flex-row items-center justify-center'>
     <MdOutlinePendingActions className='mr-2' color='#E4A11B'/>
@@ -17,6 +16,10 @@ const Page = async () => {
     </div>
   );
 
+  if(!quotes){
+    <QuotesView headerStyles='bg-yellow-500' header={header} data={[{name:'No quote found'}]}/>
+
+  }
   return (
     <QuotesView headerStyles='bg-yellow-500' header={header} data={quotes}/>
     

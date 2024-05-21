@@ -55,7 +55,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
 }) => {
 
   let tableHeader = [
-    { id: 'OrderNo', label: 'Order No' },
+    { id: 'OrderNo', label: 'Order' },
     { id: 'vin', label: 'VIN' },
     { id: 'year', label: 'Year' },
     { id: 'make', label: 'Make' },
@@ -110,6 +110,9 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   
 
   useEffect(() => {
+    if(!data){
+      return;
+    }
       setQuotes(data);
   }, [data])
   
@@ -191,7 +194,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
 
 
   const handleSendClick = (event:any, data:any) => {
-    setSelectedRow({...data,['status']: 'proccesing',['buyer']: emailList[0], ['subject']:`New Car Price ${data.year} ${data.make} ${data.model}   `});
+    setSelectedRow({...data,['status']: 'proccesing',['buyer']: emailList[0], ['subject']:`Zeus Lead Quote`, ['pickedUp']:'0', ['droppedOff']:'0',['sign']:'Zeus'});
     setisSendVisible(true);
   };
 
@@ -388,6 +391,10 @@ const handleOrderSubmit = useCallback(() => {
 
   
 useEffect(() => {
+  if(!data){
+    setNotFound(true);
+    return;
+  }
   const dataFiltered = applyFilter({
     inputData: data,
     comparator: getComparator(order, orderBy),
@@ -487,6 +494,7 @@ useEffect(() => {
                   emptyRows={emptyRows(page, rowsPerPage, users.length)}
                 />
 
+                {notFound && <TableNoData query={filterName} />}
                 {notFound && <TableNoData query={filterName} />}
               </TableBody>
             </Table>

@@ -19,6 +19,8 @@ import ValidateForm from "./ValidateForm";
 import toast from "react-hot-toast";
 import Button from "../Button";
 import { ownershipOptions, paidOfOptions, vehicleConditionOptions, wheelsOptions } from "./const";
+import Modal from "../modals/Modal";
+import Image from "next/image";
 
 
 enum STEPS {
@@ -112,6 +114,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
   const [selectedMake, setSelectedMake] = useState(defaultOption);
   const [selectedModel, setSelectedModel] = useState(defaultOption);
   const [errors, setErrors] = useState(defaultErrorValues);
+  const [isModalVinVisible, setisModalVinVisible] = useState(false);
 
 
   const handleZipcodeChange = (value: any) => {
@@ -165,9 +168,12 @@ const QuoteForm: React.FC<ListingCardProps> = ({
     }
   }
 
+  const closeVinModal = () =>{
+    setisModalVinVisible(false);
+  }
+
   useEffect(() => {
     getModelList();
-
   }, [selectedMake]);
 
   //GET MODEL LIST
@@ -207,7 +213,10 @@ const QuoteForm: React.FC<ListingCardProps> = ({
         console.log(model[0].Value);
         console.log(make[0].Value);
         // console.log(engine[0]?.Value);
-        const engineDetails = cylinders[0]?.Value+"-Cyl, "+liters[0]?.Value+" Liter"
+        
+        const cylindersNo = cylinders[0]?.Value == null ? '' : cylinders[0]?.Value+"-Cyl, ";
+        const litersNo = liters[0]?.Value == null ? '' : liters[0]?.Value+" Liters";
+        const engineDetails = cylindersNo+litersNo;
         setData({
           ...data,
           ['vin']: VIN,
@@ -355,7 +364,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
   const headContent = (
     <div className='my-5 sm:mb-10'>
         {step !== STEPS.DONE &&
-          <div className='text-2xl sm:text-4xl lg:text-5xl font-bold mt-10 sm:mt-20 md:mt-10'>Get A Quote</div>
+          <div className='text-2xl sm:text-4xl lg:text-5xl font-bold mt-10 sm:mt-20 md:mt-10 capitalize'>Sell your car, running or Not.</div>
         }
     </div>
   );
@@ -364,9 +373,9 @@ const QuoteForm: React.FC<ListingCardProps> = ({
   // DESCRIPTION STEP
   let bodyContent = (
     <>
-      <div className="font-bold sm:text-lg mb-5">To receive an offer for your car, please fill out the form below. Make sure to include the correct
-        <span className="text-red-500"> Vehicle ID Number (VIN)</span>.
-      </div>
+      <div className="font-bold sm:text-lg mb-5" style={{fontWeight: 600}}>
+        Answer a few questions to get an offer for your car today.
+              </div>
       <div className="flex flex-col gap-8">
 
         <div className="flex flex-col ">
@@ -388,9 +397,23 @@ const QuoteForm: React.FC<ListingCardProps> = ({
                 <span className='text-sm font-bold text-red-500 flex mr-5'>Invalid VIN</span>)
               
             }
-             
-
-             
+            <span className="text-xs text-blue-600 cursor-pointer" onClick={()=>{setisModalVinVisible(true)}}>Where do i find my VIN?</span>
+           <Modal
+           size="auto"
+           isOpen={isModalVinVisible}
+            body={<>    <Image
+              priority={false} 
+              sizes="100"
+              height={500}
+              width={250}
+              alt="Logo"
+              className="md:block cursor-pointer w-full sm:w-full md:w-[500px]"  
+              src="/images/find-vin.svg"
+              onClick={()=>{router.push('/')}} 
+              quality={50}
+              /></>}
+            onClose={closeVinModal}
+           />
             </div>
 
             <SelectVirtualized
