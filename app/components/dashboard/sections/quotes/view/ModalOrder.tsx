@@ -7,6 +7,8 @@ import Field from "./Field";
 import { Box } from "@mui/material";
 import Button from "@/app/components/app/Button";
 import { MdOutlineTask } from "react-icons/md";
+import Select from "./Select";
+import { sellTypeList } from "@/app/const/sellType";
 
 interface ModalProps {
   data: any;
@@ -14,6 +16,7 @@ interface ModalProps {
   visible: boolean;
   onClose: () => void;
   handleInput: (field:string, value:string) => void;
+  handleSelect: (field:string, value:string) => void;
   handleSubmit: () => void;
 
 }
@@ -24,15 +27,18 @@ const ModalOrder: React.FC<ModalProps> = ({
   visible,
   onClose,
   handleInput,
-  handleSubmit
+  handleSubmit,
+  handleSelect
 }) => {
 
   const {
     noOrder,
     price,
+    sellType,
     price2
   } = data;
 
+  console.log(data);
 
   const [selectedTab, setSelectedTab] = useState(1);
 
@@ -50,9 +56,21 @@ const ModalOrder: React.FC<ModalProps> = ({
   const orderNumber = (
     <>
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-      <Field onChange={(value)=>{handleInput('noOrder', value)}} label="Orden Number:" value={noOrder} />
-      <Field onChange={(value)=>{handleInput('price', value)}} label="Seller Price:" value={price} price />
-      <Field onChange={(value)=>{handleInput('price2', value)}} label="Zeus Price:" value={price2} price />
+      <Field required onChange={(value)=>{handleInput('noOrder', value)}} label="Orden Number:" value={noOrder} />
+      <Select
+                        label="Sell Type"
+                        value={sellType}
+                        options={sellTypeList}
+                        onChange={(e)=>{handleInput('sellType',e)}} 
+                      />
+                      <Field
+                        label="Price"
+                        value={price}
+                        price
+                        required
+                        onChange={(e)=>{handleInput('price',e)}} 
+                      />
+      <Field required onChange={(value)=>{handleInput('price2', value)}} label="Zeus Price:" value={price2} price />
       <span className="text-red-500 font-bold text-right w-full">{error && 'All fields are required'}</span>
       </Box>
     </>

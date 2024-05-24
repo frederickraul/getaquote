@@ -17,6 +17,7 @@ interface InputProps{
   formatPrice?: boolean;
   required?: boolean;
   rowsNumber?: number;
+  error?:boolean;
 }
 
 const InputText: React.FC<InputProps> = ({
@@ -32,6 +33,7 @@ const InputText: React.FC<InputProps> = ({
   formatPrice,
   required,
   rowsNumber,
+  error
 
 }) => {
   return (
@@ -39,6 +41,8 @@ const InputText: React.FC<InputProps> = ({
     <div className="font-bold text-black text-lg p-0 mb-1">
       {label && label}
       {required && <span className="text-red-500"> * </span>}
+      {error && <span className='ml-5 text-sm font-bold text-red-500'>Required</span>}
+
     </div>
       <textarea
         

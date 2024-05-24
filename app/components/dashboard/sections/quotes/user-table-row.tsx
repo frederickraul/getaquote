@@ -29,6 +29,7 @@ interface RowProps {
   handleEditClick:(value:any)=>void;
   handleOrderClick:(value:any)=>void;
   handleEmailClick:(value:any)=>void;
+  handleSendConfirmClick:(value:any)=>void;
   
 }
 
@@ -41,7 +42,8 @@ const UserTableRow: React.FC<RowProps> = ({
   handleDeleteClick,
   handleEditClick,
   handleOrderClick,
-  handleEmailClick
+  handleEmailClick,
+  handleSendConfirmClick,
 }) => {
 
   const pathname = usePathName();
@@ -118,6 +120,15 @@ const UserTableRow: React.FC<RowProps> = ({
         }}>
           <Iconify icon="eva:email-fill" sx={{ mr: 2 }} />
           Send
+        </MenuItem>
+        }
+          { pathname === '/dashboard/processing' &&
+          <MenuItem onClick={(e)=>{
+            handleCloseMenu();
+            handleSendConfirmClick(e);
+          }}>
+          <Iconify icon="eva:email-fill" sx={{ mr: 2 }} />
+          Confirm
         </MenuItem>
         }
 

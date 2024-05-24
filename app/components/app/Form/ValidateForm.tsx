@@ -74,12 +74,19 @@ const validateForm = (step:number, STEPS:any, data:any, errors:any, setErrors:an
 
     if(step === STEPS.BODYDAMAGE){
       let bodyDamage = false;
+      let bodyDamageDescription = false;
      
       if(data.bodyDamage.value === ""){
         bodyDamage = true;
         isError++;
       }
-      setErrors({ ...errors, ['bodyDamage']: bodyDamage,})
+      if(data.bodyDamage.value === "Yes"){
+        if(data.bodyDamageDescription.length <= 10){
+          bodyDamageDescription = true;
+          isError++;
+        }
+      }
+      setErrors({ ...errors, ['bodyDamage']: bodyDamage,['bodyDamageDescription']: bodyDamageDescription})
     }
 
     if(step === STEPS.OWNERSHIP){
@@ -94,12 +101,19 @@ const validateForm = (step:number, STEPS:any, data:any, errors:any, setErrors:an
 
     if(step === STEPS.OPERATION){
       let partMissing = false;
+      let partMissingDescription = false;
      
       if(data.partMissing.value === ""){
         partMissing = true;
         isError++;
       }
-      setErrors({ ...errors, ['partMissing']: partMissing,})
+      if(data.partMissing.value === "Yes"){
+        if(data.partMissingDescription.length <= 10){
+          partMissingDescription = true;
+          isError++;
+        }
+      }
+      setErrors({ ...errors, ['partMissing']: partMissing, ['partMissingDescription']: partMissingDescription})
     }
 
     if(step === STEPS.BATTERY){

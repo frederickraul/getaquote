@@ -10,9 +10,9 @@ interface ItemProps {
     value,
   }) => {
   return (
-    <div className="text-lg flex flex-col mt-2"> 
+    <div className="text-lg flex flex-row mt-2"> 
     <span className="font-bold">{label} </span>
-    <span className="text-black">{value}</span>
+    <span className="text-black ml-2">{value}</span>
   </div>
   )
 }

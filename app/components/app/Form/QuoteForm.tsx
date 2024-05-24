@@ -296,7 +296,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
   }
 
   const onNext = () => {
-    if (step === STEPS.PAIDOFF && data.paidOff.value === 'No') {
+    if (step === STEPS.PAIDOFF && data.paidOff.value === 'No.') {
       setStep(STEPS.NOPAIDOFFMESSAGE);
     } else {
       setStep((value) => value + 1);
@@ -388,7 +388,8 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               required
               error={errors.vin}
               onChange={(value) => { handleInputChange('vin', value) }} />
-            <div className="flex flex-row -mt-2">
+            <div className="flex flex-row justify-between -mt-2">
+              <span className="text-sm font-bold text-blue-600 cursor-pointer" onClick={()=>{setisModalVinVisible(true)}}>Where do i find my VIN?</span>
             
             {data?.vin.length > 0 &&
                (isVinValid ?
@@ -397,7 +398,6 @@ const QuoteForm: React.FC<ListingCardProps> = ({
                 <span className='text-sm font-bold text-red-500 flex mr-5'>Invalid VIN</span>)
               
             }
-            <span className="text-xs text-blue-600 cursor-pointer" onClick={()=>{setisModalVinVisible(true)}}>Where do i find my VIN?</span>
            <Modal
            size="auto"
            isOpen={isModalVinVisible}
@@ -589,12 +589,20 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               onChange={(value) => { handleSelectChange('bodyDamage', value) }} />
 
 
-            {data.bodyDamage.value === 'Yes' &&
-              <InputText label="Please explain exactly what is damaged."
+            {data.bodyDamage.value === 'Yes' && 
+              <div>
+              <InputText 
+              error={errors.bodyDamageDescription}
+              label="Please explain exactly what is damaged."
                 value={data.bodyDamageDescription}
                 onChange={(value) => { handleInputChange('bodyDamageDescription', value) }} />
-            }
-
+             
+                {/* {errors.bodyDamageDescription && 
+                  <span className="text-red-500 font-bold text-sm -mt-3">Enter a description that is at least 10 letters long</span>} */}
+               </div>
+              
+            
+              }
 
           </div>
         </div>
@@ -629,9 +637,15 @@ const QuoteForm: React.FC<ListingCardProps> = ({
 
 
             {data.partMissing.value === 'Yes' &&
-              <InputText label="Please explain exactly what is missing or removed."
+              <div>
+              <InputText 
+                error={errors.partMissingDescription}
+                label="Please explain exactly what is missing or removed."
                 value={data.partMissingDescription}
                 onChange={(value) => { handleInputChange('partMissingDescription', value) }} />
+                {/* {errors.partMissingDescription && 
+                  <span className="text-red-500 font-bold text-sm -mt-3">Enter a description that is at least 10 letters long</span>} */}
+            </div>
             }
 
           </div>
@@ -745,13 +759,13 @@ const QuoteForm: React.FC<ListingCardProps> = ({
             <InputPhone
              label="Phone"
               error={errors.phone}
-              value={data.phone}
+              value={data.formattedPhone}
               onChange={(value,value2)=>{handleInputChange('phone',value,value2)}} />
 
             <InputPhone
               label="Alternative Phone"
               error={errors.phone2}
-              value={data.phone2}
+              value={data.formattedPhone2}
               onChange={(value,value2)=>{handleInputChange('phone2',value,value2)}} />
 
              

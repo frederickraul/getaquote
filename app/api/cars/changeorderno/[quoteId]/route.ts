@@ -24,6 +24,7 @@ interface IParams {
       noOrder,
       price,
       price2,
+      sellType,
     } = body;
 
     console.log(body);
@@ -42,6 +43,7 @@ interface IParams {
       },
       data: {
        noOrder,
+       sellType,
        price,
        price2
       }

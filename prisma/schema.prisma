@@ -107,6 +107,7 @@ model Car {
   name                    String
   engine                  String? 
   noOrder                 String? 
+  sellType                String? 
   price                   String? 
   price2                  String? 
   status                  String? 

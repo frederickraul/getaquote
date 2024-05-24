@@ -16,7 +16,7 @@ export default function TableNoData({ query }) {
             textAlign: 'center',
           }}
         >
-          <Typography variant="h6" paragraph>
+          <Typography variant="h6" paragraph className='py-5 bg-neutral-100'>
             Not found quotes
           </Typography>
 

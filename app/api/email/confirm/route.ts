@@ -49,13 +49,14 @@ export async function POST(
     subject,
     message,
     sign,
+    sellType,
+    price,
+    price2,
     buyerEmail,
-   
+    noOrder
 
   } = body.data;
-  if(!buyerEmail){
-    return null;
-  }
+
 
   const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -64,11 +65,11 @@ export async function POST(
       to: [`${buyerEmail}`],
       subject: `${subject}`,
       html: `
-      <strong>Picked Up: </strong>
-      <span>$ ?</span>
+      <strong>Order No.: #${noOrder} </strong>
       <br>
-      <strong>Dropped Off: </strong>
-      <span>$ ?</span>
+      <strong>${sellType}: $${price} </strong>
+      <br>
+      <strong>Zeus: $${price2}</strong>
 
       <br> <br>
       <strong>Vehicle Details</strong>

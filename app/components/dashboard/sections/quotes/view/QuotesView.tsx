@@ -35,6 +35,8 @@ import LoadingContainer from '@/app/components/LoadingContainer';
 import { usePathName } from '../../../routes/hooks/usePathName';
 import ModalSend from './ModalSend';
 import { emailList } from '@/app/const/emails';
+import ModalSendConfirm from './ModalSendConfirm';
+import { sellTypeList } from '@/app/const/sellType';
 
 TimeAgo.addLocale(en)
 
@@ -100,8 +102,9 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   const [isOrderVisible, setisOrderVisible] = useState(false);
   const [isSendVisible, setisSendVisible] = useState(false);
   const [isConfirmVisible, setisConfirmVisible] = useState(false);
+  const [isSendConfirmVisible, setisSendConfirmVisible] = useState(false);
   1
-  const [selectedRow, setSelectedRow] = useState({id:'',price:'',price2:'',status:'',noOrder:'',buyer:{label:'',name:'',value:''}});
+  const [selectedRow, setSelectedRow] = useState({id:'',price:'',price2:'',status:'',noOrder:'',buyerEmail:'',sellType: '',buyer:{label:'',name:'',value:''}});
   const [deleteRowId, setdeleteRowId] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [noOrderError, setnoOrderError] = useState(false);
@@ -115,7 +118,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
     }
       setQuotes(data);
   }, [data])
-  
+
 
   const handleModalClose = () =>{
     setisModalVisible(false);
@@ -131,6 +134,9 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   }
   const handleSendClose = () =>{
     setisSendVisible(false);
+  }
+  const handleSendConfirmClose = () =>{
+    setisSendConfirmVisible(false);
   }
 
   const handleSort = (event:any, id:any) => {
@@ -194,8 +200,13 @@ const QuotesPage: React.FC<ListingCardProps> = ({
 
 
   const handleSendClick = (event:any, data:any) => {
-    setSelectedRow({...data,['status']: 'proccesing',['buyer']: emailList[0], ['subject']:`Zeus Lead Quote`, ['pickedUp']:'0', ['droppedOff']:'0',['sign']:'Zeus'});
+    setSelectedRow({...data,['status']: 'processing',['buyer']: emailList[0], ['subject']:`Zeus Lead Quote`, ['pickedUp']:'?', ['droppedOff']:'?',['sign']:'Zeus'});
     setisSendVisible(true);
+  };
+
+  const handleSendConfirmClick = (event:any, data:any) => {
+    setSelectedRow({...data,['status']: 'accepted',['subject']:`Zeus! Ready #${data?.noOrder}`, ['sign']:'Zeus'});
+    setisSendConfirmVisible(true);
   };
 
   const handleOrderClick = (event:any, data:any) => {
@@ -204,9 +215,15 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   };
 
   const handleInputChange = (field: string, value: any) => {
-
+      console.log(value);
       setSelectedRow({ ...selectedRow, [field]: value });
   }
+
+  const handleSelectChange = (field: string, item: any) => {
+    const value = item.value;
+    setSelectedRow({ ...selectedRow, [field]: value });
+}
+
 
   const onDelete = useCallback(() => {
     setisConfirmVisible(false);
@@ -305,7 +322,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
     setisLoading(true);
     axios.post(`/api/email/send/`, {data:selectedRow})
     .then(() => {
-      axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'proccesing',buyerName:selectedRow?.buyer?.name, buyerEmail:selectedRow?.buyer?.value}).then(()=>{
+      axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'processing',buyerName:'', buyerEmail:selectedRow?.buyerEmail}).then(()=>{
         router.refresh();
       });
       toast.success('Email sended!!!', {
@@ -331,11 +348,63 @@ const QuotesPage: React.FC<ListingCardProps> = ({
     })
   }, [router,selectedRow]);
 
+  const onSendEmailConfirm = useCallback(() => {
+    if(selectedRow.buyerEmail === ''){
+      return
+    }
+
+    if(selectedRow.noOrder === '' || selectedRow.sellType === null){
+      toast.success('Add a order number before sending a confirm email!!!', {
+        duration: 8000,
+        position: 'top-center',
+      
+        // Change colors of success/error/loading icon
+        iconTheme: {
+          primary: '#FF0000',
+          secondary: '#fff',
+        },  
+      });
+
+     setisSendConfirmVisible(false);
+     setisOrderVisible(true);
+      return;
+    }
+
+    setisSendConfirmVisible(false);
+    setisLoading(true);
+    axios.post(`/api/email/confirm/`, {data:selectedRow})
+    .then(() => {
+      axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'accepted'}).then(()=>{
+        router.refresh();
+      });
+      toast.success('Confirm Email sended, quote moved to accepted list!!!', {
+        duration: 8000,
+        position: 'top-center',
+      
+        // Change colors of success/error/loading icon
+        iconTheme: {
+          primary: '#E4A11B',
+          secondary: '#fff',
+        },  
+      });
+      
+    router.refresh();
+      
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.error)
+    })
+    .finally(() => {
+      setisLoading(false);
+
+    })
+  }, [router,selectedRow]);
+
 
 const handleOrderSubmit = useCallback(() => {
   setnoOrderError(false);
 
-  if(selectedRow.noOrder === null || selectedRow.price === null || selectedRow.price2 === null){
+  if(selectedRow.noOrder === null || selectedRow.sellType === null || selectedRow.price === null || selectedRow.price2 === null){
     setnoOrderError(true);
     return;
   }
@@ -432,6 +501,7 @@ useEffect(() => {
         error={noOrderError}
         handleSubmit={handleOrderSubmit} 
         handleInput={handleInputChange} 
+        handleSelect={handleSelectChange} 
         visible={isOrderVisible} 
         data={selectedRow} 
         onClose={handleOrderClose}/>
@@ -442,6 +512,14 @@ useEffect(() => {
          handleInput={handleInputChange} 
          handleSubmit={onSendEmail} 
          onClose={handleSendClose}/>
+
+      <ModalSendConfirm
+         visible={isSendConfirmVisible} 
+         data={selectedRow} 
+         handleInput={handleInputChange} 
+         handleSubmit={onSendEmailConfirm} 
+         onClose={handleSendConfirmClose}/>
+
 
       <Stack className='my-5' direction="row" alignItems="center" justifyContent="space-between" >
         <Typography variant="h4">
@@ -486,6 +564,7 @@ useEffect(() => {
                       handleDeleteClick={(event) => handleDeleteClick(event, row)}
                       handleOrderClick={(event) => handleOrderClick(event, row)}
                       handleEmailClick={(event) => handleSendClick(event, row)}
+                      handleSendConfirmClick={(event) => handleSendConfirmClick(event, row)}
                     />
                   ))}
 
@@ -494,7 +573,6 @@ useEffect(() => {
                   emptyRows={emptyRows(page, rowsPerPage, users.length)}
                 />
 
-                {notFound && <TableNoData query={filterName} />}
                 {notFound && <TableNoData query={filterName} />}
               </TableBody>
             </Table>

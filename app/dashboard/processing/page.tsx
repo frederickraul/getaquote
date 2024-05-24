@@ -7,7 +7,7 @@ import { TfiReload } from 'react-icons/tfi';
 
 
 const Page = async () => {
-  const quotes = await getQuotesByStatus("proccesing");
+  const quotes = await getQuotesByStatus("processing");
 
 
   const header = (

@@ -26,7 +26,7 @@ interface FieldProps {
             onChange={(e)=>{onChange(e.target.value)}}
           >
             {options.map((option:any) => (
-            <MenuItem key={option.value} value={option}>
+            <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
           ))}

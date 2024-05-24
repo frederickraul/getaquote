@@ -11,8 +11,9 @@ import Select from "./Select";
 import { emailList } from "@/app/const/emails";
 import Button from "@/app/components/app/Button";
 import { BiSend } from "react-icons/bi";
+import { sellTypeList } from "@/app/const/sellType";
 
-interface MadalProps {
+interface ModalProps {
   data: any;
   visible: boolean;
   onClose: () => void;
@@ -20,7 +21,7 @@ interface MadalProps {
   handleSubmit: () => void;
 }
 
-const ModalSend: React.FC<MadalProps> = ({
+const ModalSendConfirm: React.FC<ModalProps> = ({
   data,
   visible,
   onClose,
@@ -55,7 +56,11 @@ const ModalSend: React.FC<MadalProps> = ({
     buyer,
     subject,
     message,
+    noOrder,
+    price,
+    price2,
     sign,
+    sellType,
     buyerEmail,
   } = data;
 
@@ -68,23 +73,13 @@ const ModalSend: React.FC<MadalProps> = ({
 
   const vehicleDetails = (
     <>
-      <Item label="Picked Up:" value='?' />
-      <Item label="Drop Off:" value='?' />
-      <div className="font-bold mt-5">Vehicle Details</div>
-
-      <Item label="Vehicle:" value={year + " " + make + " " + model} />
-      <Item label="Vehicle ID Number: " value={vin} />
-      {/* <Item label="Ownership Documents:" value={ownershipDocument} />
-      <Item label="Is Your Vehicle Paid Off?" value={paidOff} />
-      <Item label="Vehicle Mileage: " value={mileage} />
-      <Item label="Vehicle Operating Condition:" value={vehicleCondition} />
-      <Item label="Is There Body Damage:" value={bodyDamage + ". " + bodyDamageDescription} />
-      <Item label="Any Parts Missing:" value={partMissing + ". " + partMissingDescription} />
-      <Item label="Are Your Wheels Aluminum Or Steel?:" value={wheels} />
-      <Item label="Does It Have All Wheels:" value={allWheels} />
-      <Item label="Does It Have A Battery:" value={battery} />
-      <Item label="Catalytic Converter: " value={catalytic} />
-      <Item label="Vehicle Location: " value={city + ", " + state + " " + zip} /> */}
+    <Item label="Order:" value={`#${noOrder}`} />
+    <Item label={`${sellType}: `} value={`$${price}`}/>
+    <Item label={`Zeus: `} value={`$${price2}`}/>
+    <div className="font-bold mt-5">Vehicle Details</div>
+    <Item label="Vehicle:" value={year + " " + make + " " + model} />
+    <Item label="Vehicle ID Number: " value={vin} />
+     
     </>
   );
 
@@ -149,8 +144,9 @@ const ModalSend: React.FC<MadalProps> = ({
                     </div>
                       <div className="flex flex-row items-center">
                       <MdEmail size={26}/>
-                      <span className="ml-2 font-bold text-2xl"> Send Email  </span>
+                      <span className="ml-2 font-bold text-2xl"> Send Confirm Email  </span>
                       </div>
+                      <span className="text-xs text-neutral-500">Once the seller confirm the price.</span>
                     <div className="mt-5">
                       <Select
                         label="To"
@@ -201,4 +197,4 @@ const ModalSend: React.FC<MadalProps> = ({
   );
 }
 
-export default ModalSend
+export default ModalSendConfirm
