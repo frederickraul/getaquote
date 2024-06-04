@@ -17,7 +17,7 @@ export default function TableNoData({ query }) {
           }}
         >
           <Typography variant="h6" paragraph className='py-5 bg-neutral-100'>
-            Not found quotes
+          There´s not quotes on this section
           </Typography>
 
           {/* <Typography variant="body2">

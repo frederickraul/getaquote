@@ -1,4 +1,5 @@
-import PropTypes from 'prop-types';
+
+'use client';
 
 import Tooltip from '@mui/material/Tooltip';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,8 +8,10 @@ import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 
-import Iconify from '../../components/iconify';
-import { usePathName } from '../../routes/hooks/usePathName';
+import Iconify from '../../../components/iconify';
+import { usePathName } from '../../../routes/hooks/usePathName';
+import FloatingButton from '../../../components/FloatingButton';
+import { FaPlus } from 'react-icons/fa';
 
 // ----------------------------------------------------------------------
 
@@ -18,15 +21,17 @@ interface ToolbarProps {
   filterName?:string;
   onFilterName:(value:any)=>void;
   onDelete:(value:any)=>void;
-  onChangeStatus:(value:any)=>void;
+  onAddModalClick:()=>void;
+  onChangeStatus?:(value:any)=>void;
 }
 
-const UserTableToolbar: React.FC<ToolbarProps> = ({
+const BuyerTableToolbar: React.FC<ToolbarProps> = ({
   numSelected,
   filterName,
   onFilterName,
   onDelete,
   onChangeStatus,
+  onAddModalClick,
 
 }) => {
 
@@ -34,12 +39,19 @@ const UserTableToolbar: React.FC<ToolbarProps> = ({
 
   return (
     <Toolbar
-    className='white'
+    className='
+        bg-white
+        rounded-t-lg 
+        justify-center 
+        items-start
+        sm:items-center 
+        sm:justify-between 
+        flex 
+        flex-col-reverse 
+        sm:flex-row
+        '
       sx={{
         height: 96,
-        display: 'flex',
-        justifyContent: 'space-between',
-        p: (theme) => theme.spacing(0, 1, 0, 3),
         ...(numSelected > 0 && {
           color: 'primary.main',
         }),
@@ -50,7 +62,9 @@ const UserTableToolbar: React.FC<ToolbarProps> = ({
           {numSelected} selected
         </Typography>
       ) : (
-        <OutlinedInput
+        <div className='flex flex-row justify-between w-full'>
+          <OutlinedInput
+          className='w-full md:w-fit'
           value={filterName}
           onChange={onFilterName}
           placeholder="Search ..."
@@ -63,42 +77,29 @@ const UserTableToolbar: React.FC<ToolbarProps> = ({
             </InputAdornment>
           }
         />
+
+        <div className='relative ml-2 items-center flex flex-col justify-center'>
+        <FloatingButton small color='bg-blue-500' label='' icon={FaPlus} onClick={onAddModalClick}/>
+        </div>
+        </div>
       )}
 
 {numSelected > 0 && (
-  <div className='flex flex-row items-center'>
-    <div className='mr-5'>
+  <div className='flex flex-row w-full sm:w-auto justify-end'>
+    <div className='sm:mr-5 flex flex-row items-center justify-between'>
         <span className='mr-5 text-neutral-600 '>Move to</span>
-        { pathname == '/dashboard/declined' &&
+        <div className='flex flex-row'>
 
-        <Tooltip title="New" onClick={()=>{onChangeStatus('pending')}}>
-          <IconButton>
-            <Iconify icon="material-symbols:pending-actions" width={34} />
-          </IconButton>
-        </Tooltip>
-        }
-        { (pathname == '/dashboard/declined' || pathname == '/dashboard/processing') &&
-        <Tooltip title="Accepted" onClick={()=>{onChangeStatus('accepted')}}>
-          <IconButton>
-            <Iconify icon="pepicons-pop:shield-check" width={30} />
-          </IconButton>
-        </Tooltip>
-        }
-        { (pathname == '/dashboard/accepted' || pathname == '/dashboard/processing') &&
-        <Tooltip title="Declined" onClick={()=>{onChangeStatus('declined')}}>
-          <IconButton>
-            <Iconify icon="pepicons-pop:times-circle-filled" width={26} />
-          </IconButton>
-        </Tooltip>
-        }
-    </div>
-       
-        
-        <Tooltip title="Delete" onClick={onDelete}>
+          <Tooltip title="Delete" onClick={onDelete}>
           <IconButton>
             <Iconify icon="pepicons-pop:trash" width={28} />
           </IconButton>
         </Tooltip>
+          </div>
+    </div>
+       
+        
+       
   </div>
       )}
     </Toolbar>
@@ -112,4 +113,4 @@ const UserTableToolbar: React.FC<ToolbarProps> = ({
 // };
 
 
-export default  UserTableToolbar
+export default  BuyerTableToolbar

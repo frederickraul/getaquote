@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -11,10 +12,11 @@ import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
-import Label from '../../components/label';
-import Iconify from '../../components/iconify';
-import LastSeen from './view/LastSeen';
-import { usePathName } from '../../routes/hooks/usePathName';
+import Label from '../../../components/label';
+import Iconify from '../../../components/iconify';
+import LastSeen from '../view/LastSeen';
+import { usePathName } from '../../../routes/hooks/usePathName';
+import ItemMenu from './itemMenu';
 
 
 // ----------------------------------------------------------------------
@@ -68,8 +70,6 @@ const UserTableRow: React.FC<RowProps> = ({
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
         <TableCell onClick={handleRowClick}>{data?.noOrder}</TableCell>
-        
-        <TableCell onClick={handleRowClick}>{data?.vin}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.year}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.make}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.model}</TableCell>
@@ -92,63 +92,17 @@ const UserTableRow: React.FC<RowProps> = ({
             <Iconify icon={"eva:more-vertical-fill"} />
           </IconButton>
         </TableCell>
+        <ItemMenu
+        open={open}
+        handleCloseMenu={handleCloseMenu}
+        handleDeleteClick={handleDeleteClick}
+        handleEditClick={handleEditClick}
+        handleEmailClick={handleEmailClick}
+        handleSendConfirmClick={handleSendConfirmClick}
+        handleOrderClick={handleOrderClick}
+      
+      />
       </TableRow>
-
-      <Popover
-        open={!!open}
-        anchorEl={open}
-        onClose={handleCloseMenu}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        PaperProps={{
-          sx: { width: 160 },
-        }}
-      >
-        { pathname == '/dashboard/processing' &&
-        <MenuItem onClick={(e)=>{
-          handleCloseMenu();
-          handleOrderClick(e);
-        }}>
-        <Iconify icon="ic:outline-task" sx={{mr: 2 }} />
-          Order
-        </MenuItem>
-        }
-          { pathname === '/dashboard/new' &&
-        <MenuItem onClick={(e)=>{
-          handleCloseMenu();
-          handleEmailClick(e);
-        }}>
-          <Iconify icon="eva:email-fill" sx={{ mr: 2 }} />
-          Send
-        </MenuItem>
-        }
-          { pathname === '/dashboard/processing' &&
-          <MenuItem onClick={(e)=>{
-            handleCloseMenu();
-            handleSendConfirmClick(e);
-          }}>
-          <Iconify icon="eva:email-fill" sx={{ mr: 2 }} />
-          Confirm
-        </MenuItem>
-        }
-
-        <MenuItem onClick={(e)=>{
-          handleCloseMenu();
-          handleEditClick(e);
-        }}>
-          <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
-          Edit
-        </MenuItem>
-
-        <MenuItem onClick={(e)=>{
-          handleCloseMenu();
-          handleDeleteClick(e);
-          }}
-         sx={{ color: 'error.main' }}>
-          <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
-          Delete
-        </MenuItem>
-      </Popover>
     </>
   );
 }

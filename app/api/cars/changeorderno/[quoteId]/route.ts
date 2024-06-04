@@ -27,7 +27,6 @@ interface IParams {
       sellType,
     } = body;
 
-    console.log(body);
   
   
   

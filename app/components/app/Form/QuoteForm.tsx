@@ -18,9 +18,10 @@ import InputPhone from "../inputs/InputPhone";
 import ValidateForm from "./ValidateForm";
 import toast from "react-hot-toast";
 import Button from "../Button";
-import { ownershipOptions, paidOfOptions, vehicleConditionOptions, wheelsOptions } from "./const";
+import { allWheelsOption, catalyticOptions, ownershipOptions, paidOfOptions, vehicleConditionOptions, wheelsOptions } from "./const";
 import Modal from "../modals/Modal";
 import Image from "next/image";
+import { yesNo } from "@/app/const/formOptions";
 
 
 enum STEPS {
@@ -446,10 +447,11 @@ const QuoteForm: React.FC<ListingCardProps> = ({
             />
 
             <InputUnregistered
-              label="Engine"
+              label='Engine'
               placeholder='4 Cyl, 1.8 L'
               error={errors.engine}
               value={data.engine}
+              required
               onChange={(value) => { handleInputChange('engine', value) }} />
           </div>
         </div>
@@ -549,12 +551,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               required
               error={errors.allWheels}
 
-              options={
-                [
-                  { label: 'Yes - Has 4 Wheels.', value: 'Yes - Has 4 Wheels.' },
-                  { label: 'No - Missing.', value: 'No - Missing.' },
-                  { label: 'Other!', value: 'Other!' }
-                ]}
+              options={allWheelsOption}
               value={data.allWheels}
               onChange={(value) => { handleSelectChange('allWheels', value) }} />
 
@@ -580,11 +577,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               label='Is There Any Body Damage?'
               required
               error={errors.bodyDamage}
-              options={
-                [
-                  { label: 'Yes', value: 'Yes' },
-                  { label: 'No', value: 'No' }
-                ]}
+              options={yesNo}
               value={data.bodyDamage}
               onChange={(value) => { handleSelectChange('bodyDamage', value) }} />
 
@@ -626,11 +619,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               required
               error={errors.partMissing}
 
-              options={
-                [
-                  { label: 'Yes', value: 'Yes' },
-                  { label: 'No', value: 'No' }
-                ]}
+              options={yesNo}
               value={data.partMissing}
               onChange={(value) => { handleSelectChange('partMissing', value) }} />
 
@@ -668,11 +657,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               label='Does It Have A Battery?'
               required
               error={errors.battery}
-              options={
-                [
-                  { label: 'Yes.', value: 'Yes.' },
-                  { label: 'No.', value: 'No.' }
-                ]}
+              options={yesNo}
               value={data.battery}
               onChange={(value) => { handleSelectChange('battery', value) }} />
 
@@ -680,12 +665,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               label='Catalytic Converter?'
               required
               error={errors.catalytic}
-              options={
-                [
-                  { label: 'Yes - Original.', value: 'Yes - Original.' },
-                  { label: 'Yes - Aftermarket.', value: 'Yes - Aftermarket.' },
-                  { label: 'No - Missing.', value: 'No - Missing.' }
-                ]}
+              options={catalyticOptions}
               value={data.catalytic}
               onChange={(value) => { handleSelectChange('catalytic', value) }} />
 

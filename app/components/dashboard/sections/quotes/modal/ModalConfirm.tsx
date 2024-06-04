@@ -30,7 +30,6 @@ interface ModalProps {
             fixed 
             inset-0 
             z-10 
-            w-screen 
             ">
                         <div className="
             flex 

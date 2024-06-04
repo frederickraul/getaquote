@@ -2,7 +2,6 @@
 
 const validateForm = (step:number, STEPS:any, data:any, errors:any, setErrors:any) =>{
     let isError = 0;
-    console.log(data);
   
     if(step === STEPS.DESCRIPTION){
       let vinError = false;

@@ -26,7 +26,6 @@ interface IParams {
       buyerEmail,
     } = body;
 
-    console.log(body);
   
     ids?.map((element: string) => {
       console.log(element);

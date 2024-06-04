@@ -141,7 +141,6 @@ export const isOpen =(timeString:string, ClosetimeString:string) => {
   const startTimeTotal = Number(Number(str1[0]) * 3600 + Number(str1[1]) * 60);
   const endTimeTotal = Number(Number(str2[0]) * 3600 + Number(str2[1]) * 60);
 
-  //console.log(currentTotal+ " - " + startTimeTotal + " - " + endTimeTotal);
   
   if (startTimeTotal <= endTimeTotal) {
     // If the end time is on the same day

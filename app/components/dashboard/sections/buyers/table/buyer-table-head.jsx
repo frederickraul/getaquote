@@ -7,11 +7,11 @@ import TableHead from '@mui/material/TableHead';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 
-import { visuallyHidden } from './utils';
+import { visuallyHidden } from '../../quotes/utils';
 
 // ----------------------------------------------------------------------
 
-export default function UserTableHead({
+export default function BuyerTableHead({
   styles,
   order,
   orderBy,
@@ -69,12 +69,3 @@ export default function UserTableHead({
   );
 }
 
-UserTableHead.propTypes = {
-  order: PropTypes.oneOf(['asc', 'desc']),
-  orderBy: PropTypes.string,
-  rowCount: PropTypes.number,
-  headLabel: PropTypes.array,
-  numSelected: PropTypes.number,
-  onRequestSort: PropTypes.func,
-  onSelectAllClick: PropTypes.func,
-};

@@ -19,15 +19,17 @@ import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
 import LanguagePopover from './common/language-popover';
 import NotificationsPopover from './common/notifications-popover';
+import { SafeUser } from '@/app/types';
 
 // ----------------------------------------------------------------------
 
 interface HeaderProps {
+  currentUser?: SafeUser | null;
   onOpenNav: ()=>void;
 }
 
 const Header: React.FC<HeaderProps> = ({
-  onOpenNav}) => {
+  onOpenNav,currentUser}) => {
   const theme = useTheme();
 
   const lgUp = useResponsive('up', 'lg');
@@ -45,8 +47,8 @@ const Header: React.FC<HeaderProps> = ({
       <Box sx={{ flexGrow: 1 }} />
 
       <Stack direction="row" alignItems="center" spacing={1}>
-        <NotificationsPopover />
-        <AccountPopover />
+        {/* <NotificationsPopover /> */}
+        <AccountPopover currentUser={currentUser} />
       </Stack>
     </>
   );

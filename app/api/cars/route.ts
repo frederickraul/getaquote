@@ -45,7 +45,6 @@ export async function POST(
    
 
   } = body;
-  console.log(body);
 
 
 
@@ -107,9 +106,6 @@ export async function DELETE(
     ids
   } = body;
 
-  ids?.map((element: string) => {
-    console.log(element);
-  });
 
   const quotes = await prisma?.car.deleteMany({
     where: { id: { in: ids } },

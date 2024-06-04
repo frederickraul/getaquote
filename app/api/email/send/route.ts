@@ -50,8 +50,6 @@ export async function POST(
     message,
     sign,
     buyerEmail,
-   
-
   } = body.data;
   if(!buyerEmail){
     return NextResponse.json(null);

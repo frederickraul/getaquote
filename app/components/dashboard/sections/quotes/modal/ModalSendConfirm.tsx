@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState } from "react";
-import Item from "./Item";
-import Tabs from "./Tabs";
+import Item from "../view/Item";
+import Tabs from "../view/Tabs";
 import { FaCar } from "react-icons/fa";
 import { MdContactPhone, MdEmail } from "react-icons/md";
 import { TfiEmail } from "react-icons/tfi";
-import Field from "./Field";
-import Select from "./Select";
+import Field from "../../../components/input/Field";
+import Select from "../view/Select";
 import { emailList } from "@/app/const/emails";
 import Button from "@/app/components/app/Button";
 import { BiSend } from "react-icons/bi";
@@ -92,7 +92,7 @@ const ModalSendConfirm: React.FC<ModalProps> = ({
     <>
       <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 
-        <div className="
+      <div className="
             fixed 
             inset-0 
             bg-gray-500 
@@ -102,13 +102,13 @@ const ModalSendConfirm: React.FC<ModalProps> = ({
             fixed 
             inset-0 
             z-10 
-            w-screen 
             overflow-y-auto">
           <div className="
             flex 
             min-h-full 
             items-start 
             justify-center 
+            p-2
             text-center 
             sm:items-start 
             sm:p-0">
@@ -123,6 +123,7 @@ const ModalSendConfirm: React.FC<ModalProps> = ({
                 shadow-xl 
                 transition-all 
                 my-0
+                sm:my-8 
                 sm:w-full 
                 sm:max-w-lg">
               <div className="

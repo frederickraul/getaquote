@@ -1,31 +1,23 @@
 'use client';
 
 import React, { useState } from "react";
-import Item from "./Item";
-import Tabs from "./Tabs";
+import Item from "../view/Item";
+import Tabs from "../view/Tabs";
 import { FaCar } from "react-icons/fa";
-import { MdContactPhone, MdEmail } from "react-icons/md";
-import { TfiEmail } from "react-icons/tfi";
-import Field from "./Field";
-import Select from "./Select";
-import { emailList } from "@/app/const/emails";
-import Button from "@/app/components/app/Button";
-import { BiSend } from "react-icons/bi";
+import { MdContactPhone, MdOutlineTask } from "react-icons/md";
+import { usePathName } from "../../../routes/hooks/usePathName";
+import { BiCheckSquare } from "react-icons/bi";
 
-interface MadalProps {
+interface ListingCardProps {
   data: any;
   visible: boolean;
   onClose: () => void;
-  handleInput: (field:string, value:any) => void;
-  handleSubmit: () => void;
 }
 
-const ModalSend: React.FC<MadalProps> = ({
+const ModalDetails: React.FC<ListingCardProps> = ({
   data,
   visible,
   onClose,
-  handleInput,
-  handleSubmit
 }) => {
 
   const {
@@ -52,30 +44,55 @@ const ModalSend: React.FC<MadalProps> = ({
     name,
     engine,
     phone2,
-    buyer,
-    subject,
-    message,
-    sign,
+    price,
+    price2,
+    noOrder,
+    buyerName,
     buyerEmail,
   } = data;
 
+  const pathname = usePathName();
 
   const [selectedTab, setSelectedTab] = useState(1);
 
-  const handleOnChange= (value:any)=>{
-    console.log(value);
+  let tabList = [
+    {id:1, label:'Vehicle Details', icon: <FaCar/>},
+    {id:2, label:'Contact', icon: <MdContactPhone/>},
+  ]
+
+  if(pathname !== '/dashboard/new'){
+     tabList = [
+      {id:3, label:'Order', icon: <MdOutlineTask/>},
+      {id:1, label:'Vehicle Details', icon: <FaCar/>},
+      {id:2, label:'Contact', icon: <MdContactPhone/>},
+    ]
   }
+
+
+
+
+  const handleTabChange = (tab: number) => {
+    setSelectedTab(tab);
+  }
+
+  const OrderInformation = (
+    <>
+      <Item label="Order Number:" value={noOrder} />
+      <Item label="Price:" value={`$${price}`} />
+      <Item label="Zeus Price:"  value={`$${price2}`} />
+      <Item label="Buyer Name:" value={buyerName} />
+      <Item label="Buyer Email:" value={buyerEmail} />
+    </>
+
+  );
 
   const vehicleDetails = (
     <>
-      <Item label="Picked Up:" value='?' />
-      <Item label="Drop Off:" value='?' />
-      <div className="font-bold mt-5">Vehicle Details</div>
-
       <Item label="Vehicle:" value={year + " " + make + " " + model} />
-      <Item label="Vehicle ID Number: " value={vin} />
-      {/* <Item label="Ownership Documents:" value={ownershipDocument} />
+      <Item label="Engine:" value={engine} />
+      <Item label="Ownership Documents:" value={ownershipDocument} />
       <Item label="Is Your Vehicle Paid Off?" value={paidOff} />
+      <Item label="Vehicle ID Number: " value={vin} />
       <Item label="Vehicle Mileage: " value={mileage} />
       <Item label="Vehicle Operating Condition:" value={vehicleCondition} />
       <Item label="Is There Body Damage:" value={bodyDamage + ". " + bodyDamageDescription} />
@@ -84,10 +101,19 @@ const ModalSend: React.FC<MadalProps> = ({
       <Item label="Does It Have All Wheels:" value={allWheels} />
       <Item label="Does It Have A Battery:" value={battery} />
       <Item label="Catalytic Converter: " value={catalytic} />
-      <Item label="Vehicle Location: " value={city + ", " + state + " " + zip} /> */}
+      <Item label="Vehicle Location: " value={city + ", " + state + " " + zip} />
     </>
   );
 
+
+  const contactInformation = (
+    <>
+      <Item label="Name:" value={name} />
+      <Item label="Phone:" value={phone} />
+      <Item label="2nd Phone:" value={phone2} />
+    </>
+
+  );
 
   if (!visible) {
     return null;
@@ -107,13 +133,14 @@ const ModalSend: React.FC<MadalProps> = ({
             fixed 
             inset-0 
             z-10 
-            w-screen 
+             
             overflow-y-auto">
           <div className="
             flex 
             min-h-full 
             items-start 
             justify-center 
+            p-2
             text-center 
             sm:items-start 
             sm:p-0">
@@ -128,13 +155,16 @@ const ModalSend: React.FC<MadalProps> = ({
                 shadow-xl 
                 transition-all 
                 my-0
-                sm:w-full 
-                sm:max-w-lg">
+                sm:my-8 
+                w-full 
+                sm:max-w-lg
+                md:max-w-xl"
+                >
               <div className="
                   bg-white 
                   px-4 
                   pb-4 
-                  
+                  pt-5 
                   sm:p-6 
                   sm:pb-4">
                 <div className="mb-5">
@@ -147,45 +177,19 @@ const ModalSend: React.FC<MadalProps> = ({
                         <span className="sr-only">Close modal</span>
                       </button>
                     </div>
-                      <div className="flex flex-row items-center">
-                      <MdEmail size={26}/>
-                      <span className="ml-2 font-bold text-2xl"> Send Email  </span>
+                      <div className="flex items-center justify-center">
+                      <Tabs data={tabList} selected={selectedTab} onClick={handleTabChange} />
                       </div>
-                    <div className="mt-5">
-                      <Select
-                        label="To"
-                        value={buyerEmail}
-                        options={emailList}
-                        onChange={(e)=>{handleInput('buyerEmail',e)}} 
-                      />
-                      <Field
-                        label="Subject"
-                        value={subject}
-                        required
-                        onChange={(e)=>{handleInput('subject',e)}} 
-                      />
-                    
-                      <Field
-                        label="Sign"
-                        value={sign}
-                        required
-                        onChange={(e)=>{handleInput('sign',e)}} />
-
-                      
-                    </div>
                     <div className="flex flex-row">
-                      <div className="mt-2 px-5">
+                      <div className="mt-2">
                           {selectedTab == 1 && vehicleDetails}
                       </div>
-                    </div>
-                    <div className="flex mt-5 flex-row justify-end">
-                      <div className="w-full"> 
-                      <Button 
-                        full
-                        label="Send"
-                        icon={BiSend}
-                        onClick={handleSubmit}
-                      />
+                      <div className="mt-2">
+                      {selectedTab == 2 && contactInformation}
+                      </div>
+
+                      <div className="mt-2">
+                      {selectedTab == 3 && OrderInformation}
                       </div>
                     </div>
                   </div>
@@ -201,4 +205,4 @@ const ModalSend: React.FC<MadalProps> = ({
   );
 }
 
-export default ModalSend
+export default ModalDetails

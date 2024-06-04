@@ -113,8 +113,14 @@ model Car {
   status                  String? 
   buyerName               String? 
   buyerEmail              String? 
-  createdAt               DateTime @default(now())
+  createdAt               DateTime @default(now())  
+}
 
-  
+model Buyer {
+  id                      String @id @default(auto()) @map("_id") @db.ObjectId
+  name                    String
+  email                   String
+  phone                   String? 
+  createdAt               DateTime @default(now())  
 }
 

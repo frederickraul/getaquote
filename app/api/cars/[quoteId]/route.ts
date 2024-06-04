@@ -51,7 +51,6 @@ interface IParams {
       price2,
       status,
     } = body;
-    console.log(body);
   
   
   
@@ -66,18 +65,18 @@ interface IParams {
         id:quoteId
       },
       data: {
-        year: year.label,
-        make: make.label,
-        model: model.label,
-        ownershipDocument: ownershipDocument.label,
-        paidOff: paidOff.label,
-        vehicleCondition: vehicleCondition.label,
-        wheels: wheels.label,
-        bodyDamage: bodyDamage.label,
-        partMissing: partMissing.label,
-        allWheels: allWheels.label,
-        battery: battery.label,
-        catalytic: catalytic.label,
+        year,
+        make,
+        model,
+        ownershipDocument,
+        paidOff,
+        vehicleCondition,
+        wheels,
+        bodyDamage,
+        partMissing,
+        allWheels,
+        battery,
+        catalytic,
         vin,
         mileage,
         bodyDamageDescription,

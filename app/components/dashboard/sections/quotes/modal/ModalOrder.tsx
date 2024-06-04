@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState } from "react";
-import Item from "./Item";
-import Tabs from "./Tabs";
-import Field from "./Field";
+import Item from "../view/Item";
+import Tabs from "../view/Tabs";
+import Field from "../../../components/input/Field";
 import { Box } from "@mui/material";
 import Button from "@/app/components/app/Button";
 import { MdOutlineTask } from "react-icons/md";
-import Select from "./Select";
+import Select from "../view/Select";
 import { sellTypeList } from "@/app/const/sellType";
 
 interface ModalProps {
@@ -38,7 +38,6 @@ const ModalOrder: React.FC<ModalProps> = ({
     price2
   } = data;
 
-  console.log(data);
 
   const [selectedTab, setSelectedTab] = useState(1);
 
@@ -95,7 +94,6 @@ const ModalOrder: React.FC<ModalProps> = ({
             fixed 
             inset-0 
             z-10 
-            w-screen 
             overflow-y-auto">
           <div className="
             flex 

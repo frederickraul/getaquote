@@ -33,7 +33,6 @@ interface AlertProps {
     }, []);
 
     const handleZipChange = (a:string) => {
-        console.log(a);
         let val = a.replace(/[^\d]/, '');
         if (val.length < 6) {
             setZip(val);
