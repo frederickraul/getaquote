@@ -1,15 +1,11 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { FixedSizeList as List } from "react-window";
-import { Button, Checkbox, IconButton } from "@mui/material";
-import DropdownMenu from "./Menu";
+import {  Checkbox, IconButton } from "@mui/material";
 import { AutoSizer } from "react-virtualized";
-import LastSeen from "../../quotes/view/LastSeen";
 import Iconify from "../../../components/iconify";
 import ItemMenu from "../../quotes/table/itemMenu";
-import ListEmptyItem from "./list-empty-item";
 import ListNoData from "./list-no-data";
-import { notFound } from "next/navigation";
 
 interface RowProps {
   notFound:boolean;
