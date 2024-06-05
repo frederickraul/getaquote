@@ -1,7 +1,15 @@
 import { Menu, MenuItem } from "@mui/material";
 import React from "react";
 
-const DropdownMenu = ({ anchorEl, onClose }) => {
+interface MenuProps {
+  anchorEl: any;
+  onClose: (value:any) => void;
+}
+
+const DropdownMenu: React.FC<MenuProps> = ({
+  anchorEl,
+  onClose,
+}) => {
   return (
     <div>
       <Menu

@@ -55,21 +55,21 @@ const ModalOrder: React.FC<ModalProps> = ({
   const orderNumber = (
     <>
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-      <Field required onChange={(value)=>{handleInput('noOrder', value)}} label="Orden Number:" value={noOrder} />
+      <Field required onChange={(value)=>{handleInput('noOrder', value)}} label="Orden Number:" value={noOrder || ""} />
       <Select
                         label="Sell Type"
-                        value={sellType}
+                        value={sellType || ""}
                         options={sellTypeList}
                         onChange={(e)=>{handleInput('sellType',e)}} 
                       />
                       <Field
                         label="Price"
-                        value={price}
+                        value={price || ""}
                         price
                         required
                         onChange={(e)=>{handleInput('price',e)}} 
                       />
-      <Field required onChange={(value)=>{handleInput('price2', value)}} label="Zeus Price:" value={price2} price />
+      <Field required onChange={(value)=>{handleInput('price2', value)}} label="Zeus Price:" value={price2 || ""} price />
       <span className="text-red-500 font-bold text-right w-full">{error && 'All fields are required'}</span>
       </Box>
     </>
