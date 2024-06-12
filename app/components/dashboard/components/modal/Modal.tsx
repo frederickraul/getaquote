@@ -85,7 +85,7 @@ const Modal: React.FC<ModalProps> = ({
         z-50
         outline-none
         focus:outline-none
-        bg-black
+        bg-transparent
       ">
         <div className={`
           relative
@@ -120,7 +120,8 @@ const Modal: React.FC<ModalProps> = ({
               sm:max-h-[85vh] 
               border-0
               rounded-lg
-              shadow-lg
+              shadow-md
+              shadow-white
               relative
               flex
               flex-col

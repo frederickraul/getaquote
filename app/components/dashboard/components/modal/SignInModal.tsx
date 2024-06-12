@@ -11,7 +11,7 @@ import {
 
 import {toast} from 'react-hot-toast';
 
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import useLoginModal from '../../hooks/useLoginModal';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import Heading from '@/app/components/app/Heading';
@@ -19,7 +19,7 @@ import Input from '@/app/components/app/inputs/Input';
 import Button from '@/app/components/app/Button';
 import Modal from './Modal';
 
-const LoginModal = () => {
+const SignInModal = () => {
   const router = useRouter();
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
@@ -69,7 +69,7 @@ const LoginModal = () => {
     <div className="flex flex-col gap-4">
         <Heading 
           title="Welcome back " 
-          subtitle="Login to your account!!"/>
+          subtitle="Sign in to your account!!"/>
         <Input
           id="email"
           label="Email"
@@ -88,7 +88,7 @@ const LoginModal = () => {
           required
         />
         <div className='flex justify-end'>
-          <Button outline styles='border-transparent text-blue-500' onClick={()=>{}} label='Forget Password?'/>
+          <Button outline styles='border-transparent text-blue-500' onClick={()=>{router.push('/auth/reset-password')}} label='Forget Password?'/>
         </div>
         
     </div>
@@ -99,7 +99,7 @@ const LoginModal = () => {
     <Modal
       disabled={isLoading}
       isOpen={true}
-      title="Login "
+      title="Sign In "
       actionLabel="Continue"
       onClose={loginModal.onClose }
       onSubmit={handleSubmit(onSubmit)}
@@ -108,4 +108,4 @@ const LoginModal = () => {
   )
 }
 
-export default LoginModal
+export default SignInModal

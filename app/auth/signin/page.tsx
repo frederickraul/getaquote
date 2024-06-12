@@ -1,13 +1,10 @@
 export const dynamic = 'auto'
 
-import getQuotesByStatus from '@/app/actions/getQuotesByStatus';
-import Login from '@/app/components/dashboard/sections/auth/Login';
-import { QuotesView } from '@/app/components/dashboard/sections/quotes/view';
+import SignIn from '@/app/components/dashboard/sections/auth/SignIn';
 import { FaRegTimesCircle } from 'react-icons/fa';
 
 
 const Page = async () => {
-  const quotes = await getQuotesByStatus('declined')
 
   const header = (
     <div className='flex flex-row items-center justify-center'>
@@ -16,7 +13,9 @@ const Page = async () => {
     </div>
   );
   return (
-    <Login/>   
+    <div>
+        <SignIn/>
+      </div>   
   )
 }
 

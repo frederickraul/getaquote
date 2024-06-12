@@ -14,6 +14,7 @@ import { BiSend } from "react-icons/bi";
 
 interface MadalProps {
   data: any;
+  buyers:any;
   visible: boolean;
   onClose: () => void;
   handleInput: (field:string, value:any) => void;
@@ -22,6 +23,7 @@ interface MadalProps {
 
 const ModalSend: React.FC<MadalProps> = ({
   data,
+  buyers,
   visible,
   onClose,
   handleInput,
@@ -159,7 +161,7 @@ const ModalSend: React.FC<MadalProps> = ({
                       <Select
                         label="To"
                         value={buyerEmail}
-                        options={emailList}
+                        options={buyers}
                         onChange={(e)=>{handleInput('buyerEmail',e)}} 
                       />
                       <Field

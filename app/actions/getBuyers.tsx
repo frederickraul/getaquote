@@ -18,6 +18,8 @@ export default async function getBuyers(
     const safeItems = items.map((item) => ({
       ...item,
       createdAt: item.createdAt.toISOString(),
+      value: item.email,
+      label: item.email
       
     }));
 

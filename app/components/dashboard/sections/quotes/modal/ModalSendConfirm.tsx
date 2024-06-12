@@ -15,6 +15,7 @@ import { sellTypeList } from "@/app/const/sellType";
 
 interface ModalProps {
   data: any;
+  buyers:any;
   visible: boolean;
   onClose: () => void;
   handleInput: (field:string, value:any) => void;
@@ -23,6 +24,7 @@ interface ModalProps {
 
 const ModalSendConfirm: React.FC<ModalProps> = ({
   data,
+  buyers,
   visible,
   onClose,
   handleInput,
@@ -152,7 +154,7 @@ const ModalSendConfirm: React.FC<ModalProps> = ({
                       <Select
                         label="To"
                         value={buyerEmail}
-                        options={emailList}
+                        options={buyers}
                         onChange={(e)=>{handleInput('buyerEmail',e)}} 
                       />
                       <Field

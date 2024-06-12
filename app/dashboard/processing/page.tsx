@@ -1,4 +1,5 @@
 export const dynamic = 'auto'
+import getBuyers from '@/app/actions/getBuyers';
 import getQuotes from '@/app/actions/getQuotes';
 import getQuotesByStatus from '@/app/actions/getQuotesByStatus';
 import { QuotesView } from '@/app/components/dashboard/sections/quotes/view';
@@ -8,6 +9,7 @@ import { TfiReload } from 'react-icons/tfi';
 
 const Page = async () => {
   const quotes = await getQuotesByStatus("processing");
+  const buyers = await getBuyers();
 
 
   const header = (
@@ -17,7 +19,7 @@ const Page = async () => {
     </div>
   );
   return (
-    <QuotesView fieldOrder headerStyles='bg-blue-400' header={header} data={quotes}/>   
+    <QuotesView fieldOrder headerStyles='bg-blue-400' header={header} data={quotes} buyers={buyers}/>   
   )
 }
 

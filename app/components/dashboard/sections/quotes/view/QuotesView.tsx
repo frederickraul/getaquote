@@ -49,6 +49,7 @@ interface ListingCardProps {
   header:any;
   headerStyles?:any;
   data: any;
+  buyers?: any;
 }
 
 const QuotesPage: React.FC<ListingCardProps> = ({
@@ -56,7 +57,10 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   header,
   headerStyles,
   data,
+  buyers,
 }) => {
+
+  console.log(buyers);
 
   let tableHeader = [
     { id: 'OrderNo', label: 'Order' },
@@ -99,6 +103,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
       setNotFound(true);
       return;
     }
+
     const dataFiltered = applyFilter({
       inputData: data,
       comparator: getComparator(null, null),
@@ -110,7 +115,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
     setNotFound(notFound);
   
     
-  }, [filterName]);
+  }, [filterName,data]);
 
 
 
@@ -173,7 +178,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
 
 
   const handleSendClick = (event:any, data:any) => {
-    setSelectedRow({...data,['status']: 'processing',['buyer']: emailList[0], ['subject']:`Zeus Lead Quote`, ['pickedUp']:'?', ['droppedOff']:'?',['sign']:'Zeus'});
+    setSelectedRow({...data,['status']: 'processing',['buyer']: buyers[0], ['subject']:`Zeus Lead Quote`, ['pickedUp']:'?', ['droppedOff']:'?',['sign']:'Zeus'});
     setisSendVisible(true);
   };
 
@@ -309,7 +314,8 @@ useEffect(() => {
       setisLoading(false);
 
     })
-  }, [router,selected]);
+  }, [router,selected,data]);
+
 
   const onSendEmail = useCallback(() => {
     if(selectedRow.buyer.value === ''){
@@ -319,7 +325,25 @@ useEffect(() => {
     setisSendVisible(false);
     setisLoading(true);
     axios.post(`/api/email/send/`, {data:selectedRow})
-    .then(() => {
+    .then((response) => {
+      console.log(response.data?.statusCode);
+      const statusCode = response.data?.statusCode;
+      const message = response.data?.message;
+      if(statusCode == 403){
+        toast.error(message, {
+          duration: 5000,
+          position: 'top-center',
+        
+          // Change colors of success/error/loading icon
+          iconTheme: {
+            primary: '#ff0000',
+            secondary: '#fff',
+          },  
+        });
+
+        return;
+      }
+      
       axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'processing',buyerName:'', buyerEmail:selectedRow?.buyerEmail}).then(()=>{
         router.refresh();
       });
@@ -480,14 +504,18 @@ const handleOrderSubmit = useCallback(() => {
          data={selectedRow} 
          handleInput={handleInputChange} 
          handleSubmit={onSendEmail} 
-         onClose={handleSendClose}/>
+         onClose={handleSendClose}
+         buyers={buyers}
+         />
 
       <ModalSendConfirm
          visible={isSendConfirmVisible} 
          data={selectedRow} 
          handleInput={handleInputChange} 
          handleSubmit={onSendEmailConfirm} 
-         onClose={handleSendConfirmClose}/>
+         onClose={handleSendConfirmClose}
+         buyers={buyers}
+         />
 
 
       <Stack className='my-5' direction="row" alignItems="center" justifyContent="space-between" >

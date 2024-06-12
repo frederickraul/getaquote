@@ -12,20 +12,19 @@ datasource db {
 }
 
 model User {
-  id                  String @id @default(auto()) @map("_id") @db.ObjectId
-  name                String?
-  email               String?   @unique
-  emailVerified       DateTime?
-  image               String?
-  hashedPassword      String?
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  favoriteListingsIds String[] @db.ObjectId
-  favoriteProductsIds String[] @db.ObjectId
-  ratingListingsIds   String[] @db.ObjectId
-  ratingProductsIds   String[] @db.ObjectId
-
-  accounts Account[]
+  id                      String @id @default(auto()) @map("_id") @db.ObjectId
+  name                    String?
+  email                   String?   @unique
+  emailVerified           DateTime?
+  image                   String?
+  hashedPassword          String?
+  isActive                Boolean?
+  emailToken              String?
+  isAdmin                 Boolean?
+  emailResetPassword      String?
+  passwordResetTokenExpires DateTime?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
  
 
   senderNotifications     Notification[] @relation("sender")
@@ -33,24 +32,6 @@ model User {
   // recipientMessage        Message[] @relation("recipient")
 }
 
-model Account {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String   @db.ObjectId
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.String
-  access_token       String?  @db.String
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.String
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
 
 
 model Notification {

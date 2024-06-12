@@ -55,6 +55,8 @@ export async function POST(
     return NextResponse.json(null);
   }
 
+  console.log(buyerEmail);
+  
   const resend = new Resend(process.env.RESEND_API_KEY);
 
     const { data, error } = await resend.emails.send({
