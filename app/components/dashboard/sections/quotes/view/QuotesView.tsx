@@ -182,57 +182,6 @@ const QuotesPage: React.FC<ListingCardProps> = ({
     setisSendVisible(true);
   };
 
-  const handleSMSClick = useCallback(() => {
-    // // if(selectedRow.buyer.value === ''){
-    // //   return
-    // // }
-
-    setisLoading(true);
-    axios.post(`/api/sms/send/`, {data:selectedRow})
-    .then((response) => {
-    //   console.log(response.data?.statusCode);
-    //   const statusCode = response.data?.statusCode;
-    //   const message = response.data?.message;
-    //   if(statusCode == 403){
-    //     toast.error(message, {
-    //       duration: 5000,
-    //       position: 'top-center',
-        
-    //       // Change colors of success/error/loading icon
-    //       iconTheme: {
-    //         primary: '#ff0000',
-    //         secondary: '#fff',
-    //       },  
-    //     });
-
-    //     return;
-    //   }
-      
-    //   axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'processing',buyerName:'', buyerEmail:selectedRow?.buyerEmail}).then(()=>{
-    //     router.refresh();
-    //   });
-      toast.success('SMS sended!!!', {
-        duration: 4000,
-        position: 'top-center',
-      
-        // Change colors of success/error/loading icon
-        iconTheme: {
-          primary: '#E4A11B',
-          secondary: '#fff',
-        },  
-      });
-      
-    router.refresh();
-      
-    })
-    .catch((error) => {
-      toast.error(error?.response?.data?.error)
-    })
-    .finally(() => {
-      setisLoading(false);
-
-    })
-  }, [router,selectedRow]);
 
   const handleSendConfirmClick = (event:any, data:any) => {
     setSelectedRow({...data,['status']: 'accepted',['subject']:`Zeus! Ready #${data?.noOrder}`, ['sign']:'Zeus'});
@@ -639,7 +588,6 @@ const handleOrderSubmit = useCallback(() => {
           handleDeleteClick={handleDeleteClick}
           handleOrderClick={handleOrderClick}
           handleSendClick={handleSendClick}
-          handleSMSClick={handleSMSClick}
           handleSendConfirmClick={handleSendConfirmClick}
           data={quotes}
           headerStyles={headerStyles}
