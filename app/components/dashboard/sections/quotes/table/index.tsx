@@ -26,6 +26,7 @@ interface QuoteTableProps {
   handleDeleteClick:(event:any,value2:any)=>void;
   handleOrderClick:(event:any,value2:any)=>void;
   handleSendClick:(event:any,value2:any)=>void;
+  handleSMSClick:(event:any,value2:any)=>void;
   handleSendConfirmClick:(event:any,value2:any)=>void;
   onBatchDelete:()=>void;
   onBatchChangeStatus:(status:string)=>void;
@@ -44,6 +45,7 @@ const QuoteTable: React.FC<QuoteTableProps> = ({
   handleDeleteClick,
   handleOrderClick,
   handleSendClick,
+  handleSMSClick,
   handleSendConfirmClick,
   onBatchDelete,
   onBatchChangeStatus,
@@ -137,6 +139,7 @@ const QuoteTable: React.FC<QuoteTableProps> = ({
                   handleOrderClick={(event) => handleOrderClick(event, row)}
                   handleEmailClick={(event) => handleSendClick(event, row)}
                   handleSendConfirmClick={(event) => handleSendConfirmClick(event, row)}
+                  handleSMSClick={(event) => handleSMSClick(event, row)}
                 />
               ))}
 

@@ -49,6 +49,7 @@ const ModalDetails: React.FC<ListingCardProps> = ({
     noOrder,
     buyerName,
     buyerEmail,
+    address,
   } = data;
 
   const pathname = usePathName();
@@ -82,6 +83,11 @@ const ModalDetails: React.FC<ListingCardProps> = ({
       <Item label="Zeus Price:"  value={`$${price2}`} />
       <Item label="Buyer Name:" value={buyerName} />
       <Item label="Buyer Email:" value={buyerEmail} />
+      <hr className="my-3"/>
+      <Item label="Address:" value={address} />
+      <Item label="City:" value={city} />
+      <Item label="State:" value={state} />
+      <Item label="Zip:" value={zip} />
     </>
 
   );

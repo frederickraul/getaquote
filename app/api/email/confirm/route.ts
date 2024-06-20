@@ -5,6 +5,7 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Resend } from 'resend';
+import { EmailSender } from '@/app/const/emails';
 
 
 interface IParams {
@@ -61,7 +62,7 @@ export async function POST(
   const resend = new Resend(process.env.RESEND_API_KEY);
 
     const { data, error } = await resend.emails.send({
-      from: 'The Quote Form <cashforcars@microcaf.online>',
+      from: `The Quote Form <${EmailSender}>`,
       to: [`${buyerEmail}`],
       subject: `${subject}`,
       html: `

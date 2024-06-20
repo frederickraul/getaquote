@@ -35,7 +35,8 @@ const ModalOrder: React.FC<ModalProps> = ({
     noOrder,
     price,
     sellType,
-    price2
+    price2,
+    address,
   } = data;
 
 
@@ -69,7 +70,20 @@ const ModalOrder: React.FC<ModalProps> = ({
                         required
                         onChange={(e)=>{handleInput('price',e)}} 
                       />
-      <Field required onChange={(value)=>{handleInput('price2', value)}} label="Zeus Price:" value={price2 || ""} price />
+                      <Field 
+                        label="Zeus Price:" 
+                        value={price2 || ""} 
+                        price 
+                        required 
+                        onChange={(value)=>{handleInput('price2', value)}} 
+                      />
+
+                      <Field 
+                        label="Address:" 
+                        value={address || ""} 
+                        required 
+                        onChange={(value)=>{handleInput('address', value)}} 
+                      />
       <span className="text-red-500 font-bold text-right w-full">{error && 'All fields are required'}</span>
       </Box>
     </>

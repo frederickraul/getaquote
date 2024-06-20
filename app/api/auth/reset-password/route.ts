@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Resend } from 'resend';
+import { EmailSender } from '@/app/const/emails';
 
 
 interface IParams {
@@ -48,11 +49,11 @@ const user = await prisma.user.findUnique({
 
     
     const resend = new Resend(process.env.RESEND_API_KEY);
-    // const resetPasswordUrl = `http://localhost:3000/auth/reset-password/${encodeURIComponent(passwordResetToken)}`;
-    const resetPasswordUrl = `https://getaquote.vercel.app/auth/reset-password/${encodeURIComponent(passwordResetToken)}`;
+    const resetPasswordUrl = `http://localhost:3000/auth/reset-password/${encodeURIComponent(passwordResetToken)}`;
+    // const resetPasswordUrl = `https://getaquote.vercel.app/auth/reset-password/${encodeURIComponent(passwordResetToken)}`;
 
     const { data, error } = await resend.emails.send({
-      from: 'The Quote Form <cashforcars@microcaf.online>',
+      from: `The Quote Form <${EmailSender}>`,
       to: [email],
       subject: `Password Reset Request`,
       html: `We received a request to reset your password for our app. Please click on the following link to reset your password: <a href="${resetPasswordUrl}">Reset Password</a>. If you did not request a password reset, please ignore this email.`,

@@ -25,6 +25,7 @@ interface IParams {
       price,
       price2,
       sellType,
+      address,
     } = body;
 
   
@@ -44,7 +45,8 @@ interface IParams {
        noOrder,
        sellType,
        price,
-       price2
+       price2,
+       address
       }
     })
   

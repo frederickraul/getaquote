@@ -1,11 +1,12 @@
 // app\(front)\reset-password\[token]\route.ts
 import { randomBytes } from 'crypto';
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 
 import { NextRequest } from 'next/server';
 
 import prisma from '@/app/libs/prismadb';
 import { Resend } from 'resend';
+import { EmailSender } from '@/app/const/emails';
 
 export const GET = async (request: NextRequest) => {
   const token = request.nextUrl.pathname.split('/').pop();
@@ -36,7 +37,7 @@ export const GET = async (request: NextRequest) => {
     const newPassword = generateSecurePassword();
 
     // Hash the new password before saving it to the database
-    const hashedPassword = await bcrypt.hash(newPassword, 12);
+    const hashedPassword = await bcryptjs.hash(newPassword, 12);
 
     const updatedUser = await prisma.user.update({
       where: {id: user.id},
@@ -58,7 +59,7 @@ export const GET = async (request: NextRequest) => {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const { data, error } = await resend.emails.send({
-      from: 'The Quote Form <cashforcars@microcaf.online>',
+      from: `The Quote Form <${EmailSender}>`,
       to: [`${user.email}`],
       subject: `Your New Password`,
       html: `Your password has been reset. Here is your new password: <strong>${newPassword}</strong>. It is recommended to change this password after logging in.`,

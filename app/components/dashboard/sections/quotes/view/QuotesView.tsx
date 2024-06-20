@@ -82,7 +82,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   const [isConfirmVisible, setisConfirmVisible] = useState(false);
   const [isSendConfirmVisible, setisSendConfirmVisible] = useState(false);
   
-  const [selectedRow, setSelectedRow] = useState({id:'',price:'',price2:'',status:'',noOrder:'',buyerEmail:'',sellType: '',buyer:{label:'',name:'',value:''}});
+  const [selectedRow, setSelectedRow] = useState({id:'',price:'',price2:'',status:'',noOrder:'',buyerEmail:'',sellType: '',address:'',buyer:{label:'',name:'',value:''}});
   const [deleteRowId, setdeleteRowId] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [noOrderError, setnoOrderError] = useState(false);
@@ -181,6 +181,58 @@ const QuotesPage: React.FC<ListingCardProps> = ({
     setSelectedRow({...data,['status']: 'processing',['buyer']: buyers[0], ['subject']:`Zeus Lead Quote`, ['pickedUp']:'?', ['droppedOff']:'?',['sign']:'Zeus'});
     setisSendVisible(true);
   };
+
+  const handleSMSClick = useCallback(() => {
+    // // if(selectedRow.buyer.value === ''){
+    // //   return
+    // // }
+
+    setisLoading(true);
+    axios.post(`/api/sms/send/`, {data:selectedRow})
+    .then((response) => {
+    //   console.log(response.data?.statusCode);
+    //   const statusCode = response.data?.statusCode;
+    //   const message = response.data?.message;
+    //   if(statusCode == 403){
+    //     toast.error(message, {
+    //       duration: 5000,
+    //       position: 'top-center',
+        
+    //       // Change colors of success/error/loading icon
+    //       iconTheme: {
+    //         primary: '#ff0000',
+    //         secondary: '#fff',
+    //       },  
+    //     });
+
+    //     return;
+    //   }
+      
+    //   axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'processing',buyerName:'', buyerEmail:selectedRow?.buyerEmail}).then(()=>{
+    //     router.refresh();
+    //   });
+      toast.success('SMS sended!!!', {
+        duration: 4000,
+        position: 'top-center',
+      
+        // Change colors of success/error/loading icon
+        iconTheme: {
+          primary: '#E4A11B',
+          secondary: '#fff',
+        },  
+      });
+      
+    router.refresh();
+      
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.error)
+    })
+    .finally(() => {
+      setisLoading(false);
+
+    })
+  }, [router,selectedRow]);
 
   const handleSendConfirmClick = (event:any, data:any) => {
     setSelectedRow({...data,['status']: 'accepted',['subject']:`Zeus! Ready #${data?.noOrder}`, ['sign']:'Zeus'});
@@ -395,7 +447,24 @@ useEffect(() => {
     setisSendConfirmVisible(false);
     setisLoading(true);
     axios.post(`/api/email/confirm/`, {data:selectedRow})
-    .then(() => {
+    .then((response) => {
+      console.log(response.data?.statusCode);
+      const statusCode = response.data?.statusCode;
+      const message = response.data?.message;
+      if(statusCode == 403){
+        toast.error(message, {
+          duration: 5000,
+          position: 'top-center',
+        
+          // Change colors of success/error/loading icon
+          iconTheme: {
+            primary: '#ff0000',
+            secondary: '#fff',
+          },  
+        });
+
+        return;
+      }
       axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'accepted'}).then(()=>{
         router.refresh();
       });
@@ -426,12 +495,17 @@ useEffect(() => {
 const handleOrderSubmit = useCallback(() => {
   setnoOrderError(false);
 
-  if(selectedRow.noOrder === null || selectedRow.sellType === null || selectedRow.price === null || selectedRow.price2 === null){
+  if(selectedRow.noOrder === null || selectedRow.sellType === null || selectedRow.price === null || selectedRow.price2 === null || selectedRow.address === null){
     setnoOrderError(true);
     return;
   }
 
-  if(selectedRow.noOrder === "" || selectedRow.price === "" || selectedRow.price2 === ""){
+  if(selectedRow.noOrder === undefined || selectedRow.price === undefined || selectedRow.price2 === undefined || selectedRow.address === undefined ){
+    setnoOrderError(true);
+    return;
+  }
+
+  if(selectedRow.noOrder === "" || selectedRow.price === "" || selectedRow.price2 === "" || selectedRow.address === "" ){
     setnoOrderError(true);
     return;
   }
@@ -565,6 +639,7 @@ const handleOrderSubmit = useCallback(() => {
           handleDeleteClick={handleDeleteClick}
           handleOrderClick={handleOrderClick}
           handleSendClick={handleSendClick}
+          handleSMSClick={handleSMSClick}
           handleSendConfirmClick={handleSendConfirmClick}
           data={quotes}
           headerStyles={headerStyles}

@@ -1,9 +1,12 @@
 
 'use client';
 
-import { Button, Tooltip } from "@mui/material";
+import { Button, Icon, Tooltip } from "@mui/material";
+import { useState } from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { FcInfo } from "react-icons/fc";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+//import {Icon} from 'react-icons-kit';
 
 
 interface InputProps{
@@ -42,6 +45,21 @@ const InputUnregistered: React.FC<InputProps> = ({
   infoMessage,
 
 }) => {
+
+  const [isHidden, setIsHidden] = useState(true);
+  const [status, setStatus] = useState(type || 'text');
+
+  const handleToggle = () => {
+    if (status==='password'){
+      setStatus('text');
+      setIsHidden(false);
+    } else {
+      setStatus('password');
+      setIsHidden(true);
+    }
+ }
+
+
   return (
     <>
     <div className="w-full relative">
@@ -57,14 +75,16 @@ const InputUnregistered: React.FC<InputProps> = ({
 
       
     </div>
-      <input
+    <div className="relative">
+    <input
+        autoComplete="off"
         value={value}
         onChange={(value) => onChange(value)}
         checked={checked}
         disabled={disabled}
         readOnly={readonly}
         placeholder={placeholder}
-        type={type}
+        type={status}
         className={`
         input 
         peer
@@ -87,7 +107,15 @@ const InputUnregistered: React.FC<InputProps> = ({
         
         `}
         />
-    
+      {
+        type =="password" &&
+        <span className="absolute right-3 top-3" onClick={handleToggle}>
+        <div className="">
+            {isHidden ?  <IoIosEyeOff size={20}/> :  <IoIosEye size={20}/>}
+        </div>
+      </span>
+      }
+    </div>
     </div>
     </>
   )

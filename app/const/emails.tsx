@@ -1,3 +1,5 @@
+export const EmailSender = "Zeus@thequoteform.com";
+
 
 export const emailList = [
     { value: "chrisc1186@gmail.com", label: "chrisc1186@gmail.com", name:"Chris Sanchez"},

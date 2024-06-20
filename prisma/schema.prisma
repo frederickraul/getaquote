@@ -81,6 +81,7 @@ model Car {
   city                    String
   state                   String
   zip                     String
+  address                 String?
   phone                   String
   formattedPhone          String?
   phone2                  String?

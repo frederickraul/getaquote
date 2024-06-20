@@ -12,21 +12,26 @@ import IconButton from '@mui/material/IconButton';
 import { account } from '../../../_mock/account';
 import { signOut } from 'next-auth/react';
 import { SafeUser } from '@/app/types';
+import Iconify from '../../../components/iconify';
+import { useRouter } from 'next/navigation';
 
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
-    icon: 'eva:home-fill',
-  },
-  {
     label: 'Profile',
     icon: 'eva:person-fill',
+    url: 'profile'
   },
   {
     label: 'Settings',
     icon: 'eva:settings-2-fill',
+    url:'',
+    submenu:[
+      { label: 'Change Password',
+        icon: 'material-symbols:lock-reset',
+        url: 'settings/changepassword'}
+      ]
   },
 ];
 
@@ -34,14 +39,13 @@ const MENU_OPTIONS = [
 
 interface AccountProps {
   currentUser?: SafeUser | null;
-
-
-
 }
 
 const AccountPopover: React.FC<AccountProps> = ({
   currentUser }) => {
   const [open, setOpen] = useState(null);
+
+  const router = useRouter();
 
   const handleOpen = (event:any) => {
     setOpen(event.currentTarget);
@@ -102,9 +106,31 @@ const AccountPopover: React.FC<AccountProps> = ({
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         {MENU_OPTIONS.map((option) => (
-          <MenuItem key={option.label} onClick={handleClose}>
-            {option.label}
+          <div className='group' key={option.label}>
+
+          <MenuItem  onClick={()=>{handleClose(); router.push(option.url);}}>
+            <Iconify icon={option.icon} />
+            <span className='mx-2'> {option.label}</span>
+            {option?.submenu && <Iconify icon='fe:arrow-right'/>}
           </MenuItem>
+
+               {option.submenu && option.submenu.map((menu) => (           
+            <div key={menu.label}  className='
+                opacity-0 
+                h-0 
+                group-hover:opacity-100 
+                group-hover:h-10 
+                ease-in-out duration-500
+                text-neutral-600
+                '>
+                 <MenuItem onClick={()=>{handleClose(); router.push(menu.url);}}>
+                  <Iconify icon={menu.icon} />
+                <span className='mx-2'> {menu.label}</span>
+                </MenuItem>
+            </div>
+                ) 
+                )}
+          </div>
         ))}
 
         <Divider sx={{ borderStyle: 'dashed', m: 0 }} />

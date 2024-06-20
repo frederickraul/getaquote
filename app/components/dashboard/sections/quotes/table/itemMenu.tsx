@@ -11,6 +11,7 @@ interface MenuProps {
     handleSendConfirmClick:(e:any)=>void;
     handleEditClick:(e:any)=>void;
     handleDeleteClick:(e:any)=>void;
+    handleSMSClick:(e:any)=>void;
 
    
   }
@@ -23,6 +24,7 @@ interface MenuProps {
     handleSendConfirmClick,
     handleEditClick,
     handleDeleteClick,
+    handleSMSClick,
   }) => {
 
     const pathname = usePathname();
@@ -49,13 +51,14 @@ interface MenuProps {
         </MenuItem>
         }
           { pathname === '/dashboard/new' &&
-        <MenuItem onClick={(e)=>{
+         <MenuItem onClick={(e)=>{
           handleCloseMenu();
           handleEmailClick(e);
         }}>
           <Iconify icon="eva:email-fill" sx={{ mr: 2 }} />
           Send
         </MenuItem>
+       
         }
           { pathname === '/dashboard/processing' &&
           <MenuItem onClick={(e)=>{

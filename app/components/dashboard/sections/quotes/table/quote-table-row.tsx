@@ -32,6 +32,7 @@ interface RowProps {
   handleOrderClick:(value:any)=>void;
   handleEmailClick:(value:any)=>void;
   handleSendConfirmClick:(value:any)=>void;
+  handleSMSClick:(value:any)=>void;
   
 }
 
@@ -46,6 +47,7 @@ const UserTableRow: React.FC<RowProps> = ({
   handleOrderClick,
   handleEmailClick,
   handleSendConfirmClick,
+  handleSMSClick,
 }) => {
 
   const pathname = usePathName();
@@ -100,6 +102,7 @@ const UserTableRow: React.FC<RowProps> = ({
         handleEmailClick={handleEmailClick}
         handleSendConfirmClick={handleSendConfirmClick}
         handleOrderClick={handleOrderClick}
+        handleSMSClick={handleSMSClick}
       
       />
       </TableRow>
