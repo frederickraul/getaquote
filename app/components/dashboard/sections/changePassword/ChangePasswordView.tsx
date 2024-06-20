@@ -92,9 +92,9 @@ const ChangePasswordView: React.FC<ElementProps> = ({
                     p-5
                     md:p-10
                     '>
-                    <div className='md:w-6/12 grid h-full' >
+                    <div className='md:w-6/12 h-full' >
                     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                        <div className='flex flex-col w-full'>
+                        <div className='flex flex-col w-full mb-5'>
 
                         <InputUnregistered
                             label="Old Password"
@@ -115,7 +115,7 @@ const ChangePasswordView: React.FC<ElementProps> = ({
                             onChange={(value) => { handleInputChange('newPassword', value) }}
                             />
                         
-                      <div className='flex flex-col w-full'>
+                      <div className='flex flex-col w-full mt-5 mb-10'>
 
                         <InputUnregistered
                         label="New Password Confirm"

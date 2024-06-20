@@ -49,8 +49,8 @@ const user = await prisma.user.findUnique({
 
     
     const resend = new Resend(process.env.RESEND_API_KEY);
-    const resetPasswordUrl = `http://localhost:3000/auth/reset-password/${encodeURIComponent(passwordResetToken)}`;
-    // const resetPasswordUrl = `https://getaquote.vercel.app/auth/reset-password/${encodeURIComponent(passwordResetToken)}`;
+    // const resetPasswordUrl = `http://localhost:3000/auth/reset-password/${encodeURIComponent(passwordResetToken)}`;
+    const resetPasswordUrl = `https://getaquote.vercel.app/auth/reset-password/${encodeURIComponent(passwordResetToken)}`;
 
     const { data, error } = await resend.emails.send({
       from: `The Quote Form <${EmailSender}>`,

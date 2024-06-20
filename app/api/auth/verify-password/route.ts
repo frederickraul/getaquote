@@ -20,7 +20,6 @@ export async function POST(
 
   const body = await request.json();
 
-  console.log(body);
   const {
     email,
     oldPassword,
@@ -41,7 +40,10 @@ try{
 
   console.log("isOk:", isOk);
   if (!isOk) {
-    return null;
+    return new Response(JSON.stringify({ message: 'Verify password.' }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
       // Hash the new password before saving it to the database
