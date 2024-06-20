@@ -41,7 +41,7 @@ try{
   console.log("isOk:", isOk);
   if (!isOk) {
     return new Response(JSON.stringify({ message: 'Verify password.' }), {
-      status: 200,
+      status: 400,
       headers: { 'Content-Type': 'application/json' },
     });
   }

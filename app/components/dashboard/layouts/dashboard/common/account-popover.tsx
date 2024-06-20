@@ -21,7 +21,7 @@ const MENU_OPTIONS = [
   {
     label: 'Profile',
     icon: 'eva:person-fill',
-    url: 'profile'
+    url: '/dashboard/profile'
   },
   {
     label: 'Settings',
@@ -30,7 +30,7 @@ const MENU_OPTIONS = [
     submenu:[
       { label: 'Change Password',
         icon: 'material-symbols:lock-reset',
-        url: 'settings/changepassword'}
+        url: '/dashboard/settings/changepassword'}
       ]
   },
 ];
