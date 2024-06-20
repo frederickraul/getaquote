@@ -11,7 +11,6 @@ interface MenuProps {
     handleSendConfirmClick:(e:any)=>void;
     handleEditClick:(e:any)=>void;
     handleDeleteClick:(e:any)=>void;
-    handleSMSClick:(e:any)=>void;
 
    
   }
@@ -24,7 +23,6 @@ interface MenuProps {
     handleSendConfirmClick,
     handleEditClick,
     handleDeleteClick,
-    handleSMSClick,
   }) => {
 
     const pathname = usePathname();
