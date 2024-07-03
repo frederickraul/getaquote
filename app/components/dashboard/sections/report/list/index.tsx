@@ -54,7 +54,17 @@ const BuyerList: React.FC<RowProps> = ({
   };
 
 
-
+  let tableHeader = [
+    { id: 'email', label: 'Email' },
+    { id: 'ref', label: 'Ref#' },
+    { id: 'vehicle', label: 'Vehicle' },
+    { id: 'vin', label: 'Vin Number' },
+    { id: 'address', label: 'Address' },
+    { id: 'phone', label: 'Phone' },
+    { id: 'commision', label: 'Commision' },
+    { id: 'updatedAt', label: 'Date' },
+   
+  ];
 
 
 
@@ -85,7 +95,7 @@ const BuyerList: React.FC<RowProps> = ({
                   disableRipple 
                   checked={checked} 
                   onChange={(event) => {handleCheckboxClick(event, rowId)}} />
-                <a className='text-blue-500 font-bold ml-2' href='#'>{row?.name}</a>
+                <a className='text-blue-500 font-bold ml-2' href='#'>{row?.email}</a>
               </div>
 
               <div className='
@@ -108,8 +118,10 @@ const BuyerList: React.FC<RowProps> = ({
             </div>
             <div className='flex flex-col mt-2 gap-1' onClick={()=>{handleRowClick(event, row)}}
 >
-              <span className='text-gray-700'>{row?.email}</span>
-              <span className='font-bold'>{row?.phone} </span>
+              <span className='text-gray-700'>#{row?.noOrder}</span>
+              <span className='font-bold'>{row?.year} {row?.make} {row?.model}</span>
+              <span className='font-bold'>{row?.phone}</span>
+
               <div style={{ height: `${row?.randomHeight}px` }} />
             </div>
           </div>
@@ -121,7 +133,7 @@ const BuyerList: React.FC<RowProps> = ({
   );
 
   if(notFound){
-    return <ListNoData />
+    return <ListNoData query={filterName} />
   }
 
   return (
