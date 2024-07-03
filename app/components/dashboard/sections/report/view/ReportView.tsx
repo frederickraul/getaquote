@@ -400,6 +400,7 @@ const handleAddBuyer = useCallback((data:any) => {
     
       <BuyerList
           notFound = {notFound}
+          filterName={filterName}
           selected={selected}
           setSelected={setSelected}
           onBatchDelete={onBatchDelete}

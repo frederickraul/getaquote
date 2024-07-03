@@ -11,6 +11,7 @@ interface RowProps {
   notFound:boolean;
   fieldOrder?: boolean;
   data: any;
+  filterName?:string;
   selected: any;
   setSelected: (value: any) => void;
   handleCheckboxClick: (event:any,value2:any)=>void;
@@ -27,6 +28,7 @@ interface RowProps {
 
 const BuyerList: React.FC<RowProps> = ({
   notFound,
+  filterName,
   fieldOrder,
   data,
   selected,
@@ -119,7 +121,7 @@ const BuyerList: React.FC<RowProps> = ({
   );
 
   if(notFound){
-    return <ListNoData/>
+    return <ListNoData />
   }
 
   return (

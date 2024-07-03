@@ -3,7 +3,8 @@ import Typography from '@mui/material/Typography';
 
 // ----------------------------------------------------------------------
 
-const ListNoData = () =>(
+export default function ListNoData ({ query }) {
+  return(
     <div className='
             md:hidden
             mx-2
@@ -17,13 +18,16 @@ const ListNoData = () =>(
         '>
        
        <Typography paragraph className='text-lg md:text-2xl py-5 text-center'>
-            There´s not buyers registered
+       No results found for &nbsp;
+            <strong>&quot;{query}&quot;</strong>.
+            <br /> Try a diferent email or using diferent date ranges.
           </Typography>
 
          
       </div>
     </div>
-  );
+  )
+};
 
 
 // TableNoData.propTypes = {
@@ -31,4 +35,3 @@ const ListNoData = () =>(
 // };
 
 
-export default ListNoData;
