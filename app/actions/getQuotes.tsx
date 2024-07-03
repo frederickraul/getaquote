@@ -11,7 +11,7 @@ export default async function getQuotes(
 
 
     const quotes = await prisma.car.findMany({
-      where: query,
+      where: { NOT :{status: 'pending'}},
       orderBy: {
         createdAt: 'desc'
       }

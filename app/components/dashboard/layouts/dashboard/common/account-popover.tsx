@@ -108,7 +108,7 @@ const AccountPopover: React.FC<AccountProps> = ({
         {MENU_OPTIONS.map((option) => (
           <div className='group' key={option.label}>
 
-          <MenuItem  onClick={()=>{handleClose(); router.push(option.url);}}>
+          <MenuItem  onClick={()=>{router.push(option.url);}}>
             <Iconify icon={option.icon} />
             <span className='mx-2'> {option.label}</span>
             {option?.submenu && <Iconify icon='fe:arrow-right'/>}

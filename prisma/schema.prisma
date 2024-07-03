@@ -103,6 +103,7 @@ model Buyer {
   name                    String
   email                   String
   phone                   String? 
+  address                 String? 
   createdAt               DateTime @default(now())  
 }
 

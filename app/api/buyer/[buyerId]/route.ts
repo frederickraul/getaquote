@@ -22,6 +22,7 @@ export async function POST(
   const {
     email,
     name,
+    address,
     phone
   } = body;
 
@@ -41,6 +42,7 @@ export async function POST(
     data: {
     email,
     name,
+    address,
     phone
     }
   })

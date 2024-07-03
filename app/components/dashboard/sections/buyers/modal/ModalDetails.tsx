@@ -22,7 +22,7 @@ const ModalDetails: React.FC<ListingCardProps> = ({
 }) => {
 
   const {
-   name,email,phone
+   name,email,phone,address
   } = data;
 
   const pathname = usePathName();
@@ -42,6 +42,7 @@ const ModalDetails: React.FC<ListingCardProps> = ({
     <>
       <Item label="Email: " value={email} />
       <Item label="Name: " value={name} />
+      <Item label="Address: " value={address} />
       <Item label="Phone: "  value={phone} />
     </>
 

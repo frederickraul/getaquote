@@ -3,7 +3,9 @@ import React from 'react'
 
 interface FieldProps {
     label: string;
+    type?: string;
     value: any;
+    readonly?: boolean;
     required?:boolean;
     price?: boolean;
     onChange: (value:string) => void;
@@ -11,7 +13,9 @@ interface FieldProps {
   
   const Field: React.FC<FieldProps> = ({
     label,
+    type,
     value,
+    readonly,
     price,
     required,
     onChange,
@@ -28,6 +32,8 @@ interface FieldProps {
           </InputLabel>
           <OutlinedInput
             id="outlined-adornment-amount"
+            type={type ? type : 'text'}
+            readOnly={readonly}
             startAdornment={price && <InputAdornment position="start">$</InputAdornment>}
             label={`${label}   (optional)`}
             value={value}

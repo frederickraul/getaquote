@@ -4,6 +4,8 @@ import { FcProcess } from 'react-icons/fc';
 import { IoMail, IoMailOpenOutline, IoShieldCheckmarkOutline } from "react-icons/io5";
 import { FaRegTimesCircle } from 'react-icons/fa';
 import { TfiReload } from "react-icons/tfi";
+import { HiOutlineDocumentReport } from "react-icons/hi";
+
 
 
 
@@ -25,6 +27,13 @@ const navSecondConfig = [
     icon: <IoMailOpenOutline size={24}/>,
     color: '#88888'
   },
+  {
+    title: 'Report',
+    path: '/dashboard/report',
+    icon: <HiOutlineDocumentReport size={24}/>,
+    color: '#88888'
+  },
+  
   
 ];
 

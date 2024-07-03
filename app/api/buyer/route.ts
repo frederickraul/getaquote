@@ -20,6 +20,7 @@ export async function POST(
   const {
     name,
     email,
+    address,
     phone,
    
   } = body?.data;
@@ -36,6 +37,7 @@ export async function POST(
     data: {
     name,
     email,
+    address,
     phone
     }
   })

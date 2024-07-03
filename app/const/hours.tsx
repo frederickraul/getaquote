@@ -164,6 +164,7 @@ export const isOpen =(timeString:string, ClosetimeString:string) => {
 ];
 
 export const formatDate = (value:any) =>{
+
   var dt = new Date(value);
   const joined = (monthNames[dt.getMonth()]) + " " + dt.getDay() + " " + dt.getFullYear();
 

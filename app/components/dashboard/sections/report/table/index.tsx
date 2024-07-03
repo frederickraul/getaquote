@@ -2,8 +2,8 @@
 import { Card, Table, TableBody, TableContainer, TablePagination } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import Scrollbar from '../../../components/scrollbar'
-import UserTableHead from './buyer-table-head'
-import UserTableRow from './buyer-table-row'
+import UserTableHead from './report-table-head'
+import UserTableRow from './report-table-row'
 import TableEmptyRows from './table-empty-rows'
 import { applyFilter, emptyRows, getComparator } from '../../quotes/utils'
 import TableNoData from './table-no-data'
@@ -31,7 +31,7 @@ interface QuoteTableProps {
   onBatchChangeStatus?:(status:string)=>void;
 }
 
-const BuyerTable: React.FC<QuoteTableProps> = ({
+const ReportTable: React.FC<QuoteTableProps> = ({
   page,
   setPage,
   filterName,
@@ -51,11 +51,14 @@ const BuyerTable: React.FC<QuoteTableProps> = ({
 
   let tableHeader = [
     { id: 'email', label: 'Email' },
-    { id: 'Name', label: 'Name' },
+    { id: 'ref', label: 'Ref#' },
+    { id: 'vehicle', label: 'Vehicle' },
+    { id: 'vin', label: 'Vin Number' },
     { id: 'address', label: 'Address' },
     { id: 'phone', label: 'Phone' },
+    { id: 'commision', label: 'Commision' },
+    { id: 'updatedAt', label: 'Date' },
    
-    { id: '' },
   ];
 
 
@@ -93,7 +96,7 @@ const BuyerTable: React.FC<QuoteTableProps> = ({
 
   const handleChangeRowsPerPage = (event:any) => {
     setPage(0);
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 100));
   };
 
 
@@ -144,7 +147,7 @@ const BuyerTable: React.FC<QuoteTableProps> = ({
         </Table>
       </TableContainer>
       </Scrollbar>
-    <TablePagination
+    {/* <TablePagination
       page={page}
       component="div"
       count={data.length}
@@ -152,9 +155,12 @@ const BuyerTable: React.FC<QuoteTableProps> = ({
       onPageChange={handleChangePage}
       rowsPerPageOptions={[5, 10, 25,50,100]}
       onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      /> */}
+      <div className='h-10'>
+
+      </div>
   </>
   )
 }
 
-export default BuyerTable
+export default ReportTable

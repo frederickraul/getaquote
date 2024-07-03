@@ -1,22 +1,13 @@
 'use client'
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 
-import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
-import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
-import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 
-import Label from '../../../components/label';
-import Iconify from '../../../components/iconify';
 import LastSeen from '../view/LastSeen';
 import { usePathName } from '../../../routes/hooks/usePathName';
-import ItemMenu from './itemMenu';
+
 
 
 // ----------------------------------------------------------------------
@@ -67,30 +58,22 @@ const UserTableRow: React.FC<RowProps> = ({
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected} style={{cursor:'pointer'}}>
         <TableCell padding="checkbox">
-          <Checkbox disableRipple checked={selected} onChange={handleClick} />
+          
+          {/* <Checkbox disableRipple checked={selected} onChange={handleClick} /> */}
         </TableCell>
-        <TableCell onClick={handleRowClick}>{data?.email}</TableCell>
-        <TableCell onClick={handleRowClick}>{data?.name}</TableCell>
+        <TableCell onClick={handleRowClick}>{data?.buyerEmail}</TableCell>
+        <TableCell onClick={handleRowClick}>{data?.noOrder}</TableCell>
+        <TableCell onClick={handleRowClick}>{data?.year} {data?.make} {data?.model}</TableCell>
+        <TableCell onClick={handleRowClick}>{data?.vin}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.address}</TableCell>
         <TableCell onClick={handleRowClick} style={{textWrap:'nowrap'}}>
             {data?.phone}
         </TableCell>
+        <TableCell onClick={handleRowClick}>{data?.price2}</TableCell>
+        <TableCell onClick={handleRowClick} style={{textWrap:'nowrap'}}>
+            {<LastSeen date={ data?.createdAt} />}
+          </TableCell>
 
-        <TableCell align="right">
-          <IconButton onClick={handleOpenMenu}>
-            <Iconify icon={"eva:more-vertical-fill"} />
-          </IconButton>
-        </TableCell>
-        <ItemMenu
-        open={open}
-        handleCloseMenu={handleCloseMenu}
-        handleDeleteClick={handleDeleteClick}
-        handleEditClick={handleEditClick}
-        handleEmailClick={handleEmailClick}
-        handleSendConfirmClick={handleSendConfirmClick}
-        handleOrderClick={handleOrderClick}
-      
-      />
       </TableRow>
     </>
   );

@@ -103,7 +103,6 @@ const ModalEdit: React.FC<ListingCardProps> = ({
 
       <Field required onChange={(value)=>{handleInputChange('email', value)}} label="Email:" value={buyer.email ||''} />
       <Field required onChange={(value)=>{handleInputChange('name', value)}} label="Name:" value={buyer.name ||''} />
-      <Field required onChange={(value)=>{handleInputChange('address', value)}} label="Address:" value={buyer.address ||''} />
       <InputPhone required onChange={(value)=>{handleInputChange('phone', value)}} label="Phone:" value={buyer.phone ||''}/>     
       <span className="text-red-500 font-bold text-right w-full">{error && 'All fields are required'}</span>
 

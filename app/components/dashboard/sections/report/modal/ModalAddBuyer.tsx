@@ -79,12 +79,6 @@ const ModalAddBuyer: React.FC<ModalProps> = ({
           onChange={(e) => { handleInput('name', e) }}
         />
 
-        <Field
-          label="Address"
-          value={data.name}
-          onChange={(e) => { handleInput('address', e) }}
-        />
-
         <InputPhone 
           label="Phone"
           value={data.phone}
