@@ -30,7 +30,7 @@ const ModalAddBuyer: React.FC<ModalProps> = ({
 }) => {
 
 
-  const defaultValue = {name:'',email:'',phone:''};
+  const defaultValue = {name:'',email:'',phone:'',address:''};
   const [selectedTab, setSelectedTab] = useState(1);
   const [data, setData] = useState(defaultValue);
   const [error, setError] = useState(false);
@@ -81,7 +81,7 @@ const ModalAddBuyer: React.FC<ModalProps> = ({
 
         <Field
           label="Address"
-          value={data.name}
+          value={data.address}
           onChange={(e) => { handleInput('address', e) }}
         />
 
