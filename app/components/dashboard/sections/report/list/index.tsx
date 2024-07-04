@@ -6,6 +6,7 @@ import { AutoSizer } from "react-virtualized";
 import Iconify from "../../../components/iconify";
 import ItemMenu from "../../quotes/table/itemMenu";
 import ListNoData from "./list-no-data";
+import LastSeen from "../view/LastSeen";
 
 interface RowProps {
   notFound:boolean;
@@ -23,6 +24,7 @@ interface RowProps {
   handleSendConfirmClick:(event:any,value2:any)=>void;
   onBatchDelete?:()=>void;
   onBatchChangeStatus?:(status:string)=>void;
+  
 
 }
 
@@ -51,6 +53,15 @@ const BuyerList: React.FC<RowProps> = ({
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleSelectAllClick = (event:any) => {
+    if (event.target.checked) {
+      const newSelecteds = data.map((n:any) => n.id);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
   };
 
 
@@ -90,12 +101,8 @@ const BuyerList: React.FC<RowProps> = ({
         '>
             <div className='flex flex-row justify-between'>
               <div className='flex items-center z-50'>
-              <Checkbox 
-              className="p-0 m-0"
-                  disableRipple 
-                  checked={checked} 
-                  onChange={(event) => {handleCheckboxClick(event, rowId)}} />
-                <a className='text-blue-500 font-bold ml-2' href='#'>{row?.email}</a>
+              <span className='text-gray-700'>#{row?.noOrder}</span>
+
               </div>
 
               <div className='
@@ -117,10 +124,12 @@ const BuyerList: React.FC<RowProps> = ({
               </div>
             </div>
             <div className='flex flex-col mt-2 gap-1' onClick={()=>{handleRowClick(event, row)}}
->
-              <span className='text-gray-700'>#{row?.noOrder}</span>
+>             <a className='text-blue-500 font-bold' href='#'>{row?.buyerEmail}</a>
+
               <span className='font-bold'>{row?.year} {row?.make} {row?.model}</span>
-              <span className='font-bold'>{row?.phone}</span>
+              <span className=''>{row?.phone}</span>
+              <span className='font-normal'> {<LastSeen date={ row?.createdAt} />}</span>
+              
 
               <div style={{ height: `${row?.randomHeight}px` }} />
             </div>
@@ -138,6 +147,14 @@ const BuyerList: React.FC<RowProps> = ({
 
   return (
     <div className="h-[70vh] md:hidden">
+      <div className="pl-3 sm:pl-5 bg-white">
+      <Checkbox
+            indeterminate={ selected.length > 0 && selected.length < data.length}
+            checked={data.length > 0 && selected.length === data.length}
+            onChange={handleSelectAllClick}
+          />
+          Select all
+      </div>
        <ItemMenu
           open={anchorEl}
           handleCloseMenu={handleClose}

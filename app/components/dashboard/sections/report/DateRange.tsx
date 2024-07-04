@@ -72,13 +72,17 @@ const DateRange: React.FC<AccountProps> = ({
 
   return (
     <>
-        <div className='flex flex-row '  onClick={handleOpen}>
+        <div className='flex flex-row relative'>
           <div className='w-1/2'>
-          <Field required type='date' readonly  label='Since' value={startDateFormated} onChange={(e)=>{}}/>
+          <Field required disabled type='date' label='Since' value={startDateFormated} onChange={()=>{}}/>
           </div>
          <div className='w-1/2 ml-5'>
-         <Field required type='date' readonly  label='To' value={endDateFormated} onChange={(e)=>{}}/>
+         <Field required disabled type='date' label='To' value={endDateFormated} onChange={()=>{}}/>
          </div>
+        <div className='h-[60px] absolute w-full'  onClick={handleOpen}>
+          
+        </div>
+
         </div>
 
       <Popover
@@ -89,10 +93,15 @@ const DateRange: React.FC<AccountProps> = ({
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
        
       >
-      <DateRangePicker
-            ranges={selectionRange}
-            onChange={item=>setSelectionRange([item.selection])}
-          />
+        <div className='scroll-auto h-[390px]'>
+
+        <DateRangePicker
+        className='flex-col-reverse'
+        ranges={selectionRange}
+        onChange={item=>setSelectionRange([item.selection])}
+        />
+        </div>
+     
       </Popover>
     </>
   );

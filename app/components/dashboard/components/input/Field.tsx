@@ -6,6 +6,7 @@ interface FieldProps {
     type?: string;
     value: any;
     readonly?: boolean;
+    disabled?: boolean;
     required?:boolean;
     price?: boolean;
     onChange: (value:string) => void;
@@ -16,6 +17,7 @@ interface FieldProps {
     type,
     value,
     readonly,
+    disabled,
     price,
     required,
     onChange,
@@ -34,6 +36,7 @@ interface FieldProps {
             id="outlined-adornment-amount"
             type={type ? type : 'text'}
             readOnly={readonly}
+            disabled={disabled}
             startAdornment={price && <InputAdornment position="start">$</InputAdornment>}
             label={`${label}   (optional)`}
             value={value}
