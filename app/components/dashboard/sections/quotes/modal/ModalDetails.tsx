@@ -42,6 +42,7 @@ const ModalDetails: React.FC<ListingCardProps> = ({
     zip,
     phone,
     name,
+    lastname,
     engine,
     phone2,
     price,
@@ -115,6 +116,7 @@ const ModalDetails: React.FC<ListingCardProps> = ({
   const contactInformation = (
     <>
       <Item label="Name:" value={name} />
+      <Item label="Lastname:" value={lastname} />
       <Item label="Phone:" value={phone} />
       <Item label="2nd Phone:" value={phone2} />
     </>

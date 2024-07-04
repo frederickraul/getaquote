@@ -348,13 +348,13 @@ useEffect(() => {
       axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'processing',buyerName:'', buyerEmail:selectedRow?.buyerEmail}).then(()=>{
         router.refresh();
       });
-      toast.success('Email sended!!!', {
-        duration: 4000,
+      toast.success('Email Sent to Buyer!!!!', {
+        duration: 8000,
         position: 'top-center',
       
         // Change colors of success/error/loading icon
         iconTheme: {
-          primary: '#E4A11B',
+          primary: '#0BDA51',
           secondary: '#fff',
         },  
       });
@@ -417,13 +417,13 @@ useEffect(() => {
       axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'accepted'}).then(()=>{
         router.refresh();
       });
-      toast.success('Confirm Email sended, quote moved to accepted list!!!', {
+      toast.success('Email Sent to Buyer!!!!', {
         duration: 8000,
         position: 'top-center',
       
         // Change colors of success/error/loading icon
         iconTheme: {
-          primary: '#E4A11B',
+          primary: '#0BDA51',
           secondary: '#fff',
         },  
       });

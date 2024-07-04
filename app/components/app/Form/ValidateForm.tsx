@@ -155,6 +155,7 @@ const validateForm = (step:number, STEPS:any, data:any, errors:any, setErrors:an
       let phone = false;
       let phone2 = false;
       let name = false;
+      let lastname = false;
       if(data.phone === ''){
         phone = true;
         isError++;
@@ -167,7 +168,11 @@ const validateForm = (step:number, STEPS:any, data:any, errors:any, setErrors:an
         name = true;
         isError++;
       }
-      setErrors({ ...errors, ['phone']: phone, ['phone2']: phone2,['name']: name})
+      if(data.lastname === ''){
+        lastname = true;
+        isError++;
+      }
+      setErrors({ ...errors, ['phone']: phone, ['phone2']: phone2,['name']: name,['lastname']: lastname})
     }
 
     return isError;

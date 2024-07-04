@@ -87,6 +87,7 @@ model Car {
   phone2                  String?
   formattedphone2         String?
   name                    String
+  lastname                String?
   engine                  String? 
   noOrder                 String? 
   sellType                String? 

@@ -65,6 +65,7 @@ const defaultValues = {
   phone2: '',
   formattedPhone2: '',
   name: '',
+  lastname:'',
   engine: ''
 
 };
@@ -92,6 +93,7 @@ const defaultErrorValues = {
   phone: false,
   phone2: false,
   name: false,
+  lastname: false,
   engine: false
 };
 
@@ -217,7 +219,8 @@ const QuoteForm: React.FC<ListingCardProps> = ({
         
         const cylindersNo = cylinders[0]?.Value == null ? '' : cylinders[0]?.Value+"-Cyl, ";
         const litersNo = liters[0]?.Value == null ? '' : liters[0]?.Value+" Liters";
-        const engineDetails = cylindersNo+litersNo;
+        // const engineDetails = cylindersNo+litersNo;
+        const engineDetails = cylindersNo;
         setData({
           ...data,
           ['vin']: VIN,
@@ -297,7 +300,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
   }
 
   const onNext = () => {
-    if (step === STEPS.PAIDOFF && data.paidOff.value === 'No.') {
+    if (step === STEPS.PAIDOFF && data.paidOff.value === 'No. I still owe some money for it.') {
       setStep(STEPS.NOPAIDOFFMESSAGE);
     } else {
       setStep((value) => value + 1);
@@ -733,6 +736,15 @@ const QuoteForm: React.FC<ListingCardProps> = ({
 
               value={data.name}
               onChange={(value) => { handleInputChange('name', value) }} />
+
+            <InputUnregistered
+              label="Lastname"
+              disabled={isLoading}
+              required
+              error={errors.lastname}
+
+              value={data.lastname}
+              onChange={(value) => { handleInputChange('lastname', value) }} />
 
 
 

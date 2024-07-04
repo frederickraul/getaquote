@@ -32,8 +32,7 @@ const DashboardLayout: React.FC<ScrollbarProps> = ({
           flexDirection: { xs: 'column', lg: 'row' },
         }}
       >
-        
-        <Nav currentUser={null} openNav={openNav} onCloseNav={() => setOpenNav(false)} />
+        <Nav currentUser={currentUser} openNav={openNav} onCloseNav={() => setOpenNav(false)} />
 
         <Main>{children}</Main>
       </Box>
