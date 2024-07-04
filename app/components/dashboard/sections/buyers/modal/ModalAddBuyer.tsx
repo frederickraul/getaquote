@@ -73,7 +73,7 @@ const ModalAddBuyer: React.FC<ModalProps> = ({
           />
 
         <Field
-          label="Name"
+          label="Business Name (Company Name)"
           value={data.name}
           required
           onChange={(e) => { handleInput('name', e) }}

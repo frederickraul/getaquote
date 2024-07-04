@@ -36,7 +36,7 @@ module.exports = {
 
 const nextConfig = {
   images: {
-    domains:[
+  remotePatterns:[
       'res.cloudinary.com',
       'i.ytimg.com'
     ]

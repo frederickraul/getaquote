@@ -41,7 +41,7 @@ const ModalDetails: React.FC<ListingCardProps> = ({
   const Information = (
     <>
       <Item label="Email: " value={email} />
-      <Item label="Name: " value={name} />
+      <Item label="Business Name: " value={name} />
       <Item label="Address: " value={address} />
       <Item label="Phone: "  value={phone} />
     </>
