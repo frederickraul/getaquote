@@ -201,17 +201,17 @@ const handleSelectChange = (field: string, item: any) => {
 
       <Field onChange={(value)=>{handleInputChange('zip',value)}} 
       required
-      label="Vehicle Location: " 
+      label="Zip: " 
       value={quote.zip || ''} />
 
       <Field onChange={(value)=>{handleInputChange('state',value)}} 
       required
-      label="Vehicle Location: " 
+      label="State: " 
       value={quote.state || ''} />
 
-      <Field onChange={(value)=>{handleInputChange('year',value)}} 
+      <Field onChange={(value)=>{handleInputChange('city',value)}} 
       required
-      label="Vehicle Location: " 
+      label="City: " 
       value={quote.city || ''} />
       </Box>
     </>

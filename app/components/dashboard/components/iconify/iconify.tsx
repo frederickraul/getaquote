@@ -1,4 +1,6 @@
-import PropTypes from 'prop-types';
+
+'use client';
+
 import { Icon } from '@iconify/react';
 
 import Box from '@mui/material/Box';
@@ -23,10 +25,5 @@ const Iconify: React.FC<IconifyProps> = ({
   />
   );
 
-Iconify.propTypes = {
-  icon: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  sx: PropTypes.object,
-  width: PropTypes.number,
-};
 
 export default Iconify;

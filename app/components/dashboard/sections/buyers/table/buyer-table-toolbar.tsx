@@ -12,6 +12,7 @@ import Iconify from '../../../components/iconify';
 import { usePathName } from '../../../routes/hooks/usePathName';
 import FloatingButton from '../../../components/FloatingButton';
 import { FaPlus } from 'react-icons/fa';
+import { IoSearch } from 'react-icons/io5';
 
 // ----------------------------------------------------------------------
 
@@ -70,10 +71,8 @@ const BuyerTableToolbar: React.FC<ToolbarProps> = ({
           placeholder="Search ..."
           startAdornment={
             <InputAdornment position="start">
-              <Iconify
-                icon="eva:search-fill"
-                sx={{ color: 'text.disabled', width: 20, height: 20 }}
-              />
+              <IoSearch size={20}/>
+
             </InputAdornment>
           }
         />

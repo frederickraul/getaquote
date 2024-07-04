@@ -49,6 +49,7 @@ export async function POST(
     buyer,
     subject,
     message,
+    address,
     sign,
     sellType,
     price,
@@ -112,7 +113,7 @@ export async function POST(
         <span>${catalytic}</span>
       <br><br>
         <strong>Vehicle Location: </strong>
-        <span>${city}, ${state} ${zip}</span>
+        <span>${address}</span>
       <br><br>
       <span>${(sign !== "") && sign }</span>
       `,

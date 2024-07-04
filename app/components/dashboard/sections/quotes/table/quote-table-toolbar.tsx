@@ -10,6 +10,12 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import Iconify from '../../../components/iconify';
 import { usePathName } from '../../../routes/hooks/usePathName';
+import { Box } from '@mui/material';
+import { Icon } from '@iconify/react';
+import { FaSearch } from 'react-icons/fa';
+import { IoSearch } from 'react-icons/io5';
+
+
 
 // ----------------------------------------------------------------------
 
@@ -65,10 +71,7 @@ const QuoteTableToolbar: React.FC<ToolbarProps> = ({
           placeholder="Search ..."
           startAdornment={
             <InputAdornment position="start">
-              <Iconify
-                icon="eva:search-fill"
-                sx={{ color: 'text.disabled', width: 20, height: 20 }}
-              />
+              <IoSearch size={20}/>
             </InputAdornment>
           }
         />

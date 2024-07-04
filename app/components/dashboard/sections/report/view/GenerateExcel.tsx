@@ -64,7 +64,7 @@ export const GenerateExcel = async (title?: string, worksheetname?: string, data
     ColorCells(row, 'FFe2efd9',3);
 
     row =  ws.addRow(['Phone: 619-919-6999\r\nEmail: chrisc1186@gmail.com']);
-    row.height = 30;
+    row.height = 40;
     row.alignment= { wrapText:true }
     ColorCells(row, 'B4C6E7',3);
 
