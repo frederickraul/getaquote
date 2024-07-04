@@ -738,7 +738,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               onChange={(value) => { handleInputChange('name', value) }} />
 
             <InputUnregistered
-              label="Lastname"
+              label="Last Name"
               disabled={isLoading}
               required
               error={errors.lastname}

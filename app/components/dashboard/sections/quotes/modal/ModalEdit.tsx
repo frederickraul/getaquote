@@ -221,10 +221,10 @@ const handleSelectChange = (field: string, item: any) => {
   const contactInformation = (
     <>
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-      <Field onChange={(value)=>{handleInput('name',value)}} label="Name:" value={quote.name} />
-      <Field onChange={(value)=>{handleInput('lastname',value)}} label="Lastname:" value={quote.lastname} />
-      <Field onChange={(value)=>{handleInput('phone',value)}} label="Phone:" value={quote.phone} />
-      <Field onChange={(value)=>{handleInput('phone2',value)}} label="2nd Phone:" value={quote.phone2} />
+      <Field required onChange={(value)=>{handleInput('name',value)}} label="Name:" value={quote.name} />
+      <Field required onChange={(value)=>{handleInput('lastname',value)}} label="Last Name:" value={quote.lastname || ""} />
+      <Field required onChange={(value)=>{handleInput('phone',value)}} label="Phone:" value={quote.phone} />
+      <Field required onChange={(value)=>{handleInput('phone2',value)}} label="2nd Phone:" value={quote.phone2} />
       </Box>
     </>
 

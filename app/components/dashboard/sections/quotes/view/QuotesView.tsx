@@ -74,6 +74,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
     { id: '' },
   ];
 
+  const defaultSelectedRow = {id:'',price:'',price2:'',status:'',noOrder:'',buyerEmail:'',sellType: '',address:'',buyer:{label:'',name:'',value:''}};
   const [selected, setSelected] = useState<string[]>([]);
   const [isModalVisible, setisModalVisible] = useState(false);
   const [isEditVisible, setisEditVisible] = useState(false);
@@ -82,7 +83,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   const [isConfirmVisible, setisConfirmVisible] = useState(false);
   const [isSendConfirmVisible, setisSendConfirmVisible] = useState(false);
   
-  const [selectedRow, setSelectedRow] = useState({id:'',price:'',price2:'',status:'',noOrder:'',buyerEmail:'',sellType: '',address:'',buyer:{label:'',name:'',value:''}});
+  const [selectedRow, setSelectedRow] = useState(defaultSelectedRow);
   const [deleteRowId, setdeleteRowId] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [noOrderError, setnoOrderError] = useState(false);
@@ -171,7 +172,6 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   };
 
   const handleEditClick = (event:any, data:any) => {
-    
     setSelectedRow(data);
     setisEditVisible(true);
   };
