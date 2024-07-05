@@ -37,7 +37,7 @@ const Logo: React.FC<LogoProps> = ({
   const router = useRouter();
 
   const logo = (
-    <div className='flex mt-6 items-center justify-center w-full'>
+    <div className='flex mt-6 items-center justify-center w-full h-[33px]'>
       <img alt='' src='/assets/logo.svg' width={200}/>
     </div>
   );
