@@ -122,7 +122,7 @@ const QuoteTable: React.FC<QuoteTableProps> = ({
             headLabel={tableHeader}
             />
           <TableBody>
-            {data
+            {!notFound && data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row:any) => (
                 <UserTableRow

@@ -10,15 +10,12 @@ import IconButton from '@mui/material/IconButton';
 
 import { useResponsive } from '../../hooks/use-responsive';
 
-import { bgBlur } from '../../theme/css';
 
 import Iconify from '../../components/iconify';
 
-import Searchbar from './common/searchbar';
 import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
-import LanguagePopover from './common/language-popover';
-import NotificationsPopover from './common/notifications-popover';
+
 import { SafeUser } from '@/app/types';
 
 // ----------------------------------------------------------------------
@@ -36,11 +33,11 @@ const Header: React.FC<HeaderProps> = ({
 
   const renderContent = (
     <>
-      {!lgUp && (
+      <div className='visible xl:invisible'>
         <IconButton onClick={onOpenNav} sx={{ mr: 1 }}>
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
-      )}
+        </div>
 
       {/* <Searchbar /> */}
 
@@ -55,19 +52,19 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <AppBar
+      className=''
       sx={{
         boxShadow: 'none',
-        height: HEADER.H_MOBILE,
+        //height: HEADER.H_MOBILE,
         zIndex: 1,
        
         backgroundColor: alpha(theme.palette.background.default, 0.8),
         transition: theme.transitions.create(['height'], {
           duration: theme.transitions.duration.shorter,
         }),
-        ...(lgUp && {
-          width: `calc(100% - ${NAV.WIDTH + 1}px)`,
+         // width: `calc(100% - ${NAV.WIDTH + 1}px)`,
           height: HEADER.H_DESKTOP,
-        }),
+       
       }}
     >
       <Toolbar

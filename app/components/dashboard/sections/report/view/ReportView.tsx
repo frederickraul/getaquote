@@ -36,6 +36,7 @@ interface ElementProps {
   headerStyles?:any;
   data: any;
   buyerList:any;
+  businessInfo:any;
 }
 
 const defaultSelectionRange = {
@@ -50,6 +51,7 @@ const ReportPage: React.FC<ElementProps> = ({
   headerStyles,
   data,
   buyerList,
+  businessInfo,
 }) => {
 
   const [selected, setSelected] = useState<string[]>([]);
@@ -344,7 +346,7 @@ const handleAddBuyer = useCallback((data:any) => {
 
   const onExportQuotes= (title?: string, worksheetname?: string) => {
     console.log(quotes);
-   GenerateExcel("Quotes", "QuotesExport", quotes,selectedBuyer, weekLeads);
+   GenerateExcel("Quotes", "QuotesExport", quotes,selectedBuyer, weekLeads, businessInfo);
     
   }
 

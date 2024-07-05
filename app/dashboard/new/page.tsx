@@ -18,10 +18,7 @@ const Page = async () => {
     </div>
   );
 
-  if(!quotes){
-    <QuotesView headerStyles='bg-yellow-500' header={header} data={[{name:'No quote found'}]}/>
 
-  }
   return (
     <QuotesView headerStyles='bg-yellow-500' header={header} data={quotes} buyers={buyers}/>
     

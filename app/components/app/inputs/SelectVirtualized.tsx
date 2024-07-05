@@ -2,7 +2,7 @@
 
 import { IconType } from "react-icons";
 
-import Select from 'react-select-virtualized';
+import Select from 'react-select'
 import '@/app/pages.css'
 
 
@@ -42,7 +42,8 @@ const SelectVirtualized:React.FC<SelectProps> = ({
     </div>
       <Select
         options={options}
-        disabled={disabled}
+        isClearable
+        isDisabled={disabled}
         value={value}
         onChange={onChange}
         className='selectVirtualized'

@@ -150,7 +150,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
   const handleSelectChange = (field: string, value: any) => {
     setData({ ...data, [field]: value });
     if (field == 'make') {
-      console.log(value);
+     
       if (value === null) {
         setSelectedMake(defaultOption);
         setModelList([defaultOption]);
@@ -322,7 +322,16 @@ const QuoteForm: React.FC<ListingCardProps> = ({
 
     axios.post('/api/cars', data)
       .then(() => {
-        toast.success('Quote Created Wait For a Call');
+        toast.success('Quote Created Wait For a Call!!!!', {
+          duration: 8000,
+          position: 'top-center',
+        
+          // Change colors of success/error/loading icon
+          iconTheme: {
+            primary: '#0BDA51',
+            secondary: '#fff',
+          },  
+        });
         router.refresh();
         setStep(STEPS.DONE);
         setData(defaultValues);
@@ -451,7 +460,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
 
             <InputUnregistered
               label='Engine'
-              placeholder='4 Cyl, 1.8 L'
+              placeholder='4 Cyl'
               error={errors.engine}
               value={data.engine}
               required
@@ -750,12 +759,14 @@ const QuoteForm: React.FC<ListingCardProps> = ({
 
             <InputPhone
              label="Phone"
+             required
               error={errors.phone}
               value={data.formattedPhone}
               onChange={(value,value2)=>{handleInputChange('phone',value,value2)}} />
 
             <InputPhone
               label="Alternative Phone"
+              required
               error={errors.phone2}
               value={data.formattedPhone2}
               onChange={(value,value2)=>{handleInputChange('phone2',value,value2)}} />
@@ -809,7 +820,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
               </div>
 
               <div className="font-bold text-2xl">
-                Monday-Friday 9AM - 5PM
+                Monday-Sunday 9AM - 5PM
               </div>
              <a className="mt-5" href="/">
              <Button big label="Return to Main Site" styles="" borderless onClick={()=>{}}/>

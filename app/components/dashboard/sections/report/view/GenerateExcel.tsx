@@ -24,7 +24,7 @@ const ColorCells = (row: any, color: string, lastCell: number) => {
   }
 
 
-export const GenerateExcel = async (title?: string, worksheetname?: string, data?:any[],selectedBuyer?:any, weekLeads?:any) => {
+export const GenerateExcel = async (title?: string, worksheetname?: string, data?:any[],selectedBuyer?:any, weekLeads?:any, bussinesInfo?:any) => {
     let currentDate = new Date();
     const formatedCurrentDate = moment(currentDate).format("MM/DD/YYYY");
     let startDate = moment(weekLeads.startDate).format("MMM D");
@@ -53,17 +53,17 @@ export const GenerateExcel = async (title?: string, worksheetname?: string, data
     
 
     
-    row = ws.addRow(['ZEUS LEAD GENERATION', selectedBuyer?.name, 'Invoice: #']);
+    row = ws.addRow([bussinesInfo?.name, selectedBuyer?.name, 'Invoice: #']);
     ColorCells(row, 'FFe2efd9',3);
 
      
-    row = ws.addRow(['1626 Sweetwater Rd Suite G280', selectedBuyer?.address, `Date: ${formatedCurrentDate}`]);
+    row = ws.addRow([bussinesInfo?.address, selectedBuyer?.address, `Date: ${formatedCurrentDate}`]);
     ColorCells(row, 'B4C6E7',3);
 
-    row =  ws.addRow(['National City, CA 91950', `Phone: ${selectedBuyer?.phone}`, `Week Leads: ${startDate} to ${endDate}`]);
+    row =  ws.addRow([bussinesInfo?.location, `Phone: ${selectedBuyer?.phone}`, `Week Leads: ${startDate} to ${endDate}`]);
     ColorCells(row, 'FFe2efd9',3);
 
-    row =  ws.addRow(['Phone: 619-919-6999\r\nEmail: chrisc1186@gmail.com']);
+    row =  ws.addRow([`Phone: ${bussinesInfo?.phone}\r\nEmail: ${bussinesInfo?.email}`]);
     row.height = 40;
     row.alignment= { wrapText:true }
     ColorCells(row, 'B4C6E7',3);

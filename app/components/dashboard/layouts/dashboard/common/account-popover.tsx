@@ -30,7 +30,12 @@ const MENU_OPTIONS = [
     submenu:[
       { label: 'Change Password',
         icon: 'material-symbols:lock-reset',
-        url: '/dashboard/settings/changepassword'}
+        url: '/dashboard/settings/changepassword'},
+      { 
+        label: 'Business Contact',
+        icon: 'wpf:business-contact',
+        url: '/dashboard/settings/businesscontact'},
+
       ]
   },
 ];

@@ -28,6 +28,7 @@ const SignInModal = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState:{
       errors,
     }
@@ -38,12 +39,23 @@ const SignInModal = () => {
     }
   });
 
+    //For Regular Inputs
+    const setCustomValue = (id: string, value: any) => {
+
+      setValue(id, value, {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+      })
+    }
+
 
   const onSubmit: SubmitHandler<FieldValues> = (data) =>{
+    let lowercaseEmail = (data?.email).toLowerCase();
+    const credentials = {email: lowercaseEmail, password: data.password};
     setIsLoading(true);
-    
     signIn('credentials',{
-      ...data,
+      ...credentials,
       redirect: false
     }).then((callback) =>{
       setIsLoading(false);
@@ -73,6 +85,7 @@ const SignInModal = () => {
         <Input
           id="email"
           label="Email"
+          lowercase
           disabled={isLoading}
           register={register}
           errors={errors}

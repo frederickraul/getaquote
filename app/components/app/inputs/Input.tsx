@@ -11,6 +11,7 @@ interface InputProps{
   type?: string;
   disabled?: boolean;
   small?: boolean;
+  lowercase?: boolean;
   optional?: boolean;
   formatPrice?: boolean;
   formatPercent?: boolean;
@@ -25,6 +26,7 @@ const Input: React.FC<InputProps> = ({
   label,
   placeholder,
   optional,
+  lowercase,
   type,
   disabled,
   small,
@@ -66,6 +68,7 @@ const Input: React.FC<InputProps> = ({
         placeholder={placeholder? placeholder : " "}
         type={type}
         className={`
+          
           peer
           w-full
           font-light

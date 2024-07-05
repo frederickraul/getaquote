@@ -116,13 +116,8 @@ const Nav: React.FC<NavProps> = ({
   );
 
   return (
-    <Box
-      sx={{
-        flexShrink: { lg: 0 },
-        width: { lg: NAV.WIDTH },
-      }}
-    >
-      {upLg ? (
+    <div className='xl:w-[280px] z-10'>
+     <div className='invisible xl:visible'>
         <Box
           sx={{
             height: 1,
@@ -130,10 +125,11 @@ const Nav: React.FC<NavProps> = ({
             width: NAV.WIDTH,
             borderRight: (theme) => `dashed 1px ${theme.palette.divider}`,
           }}
-        >
+          >
           {renderContent}
         </Box>
-      ) : (
+      </div>
+      <div className='visible xl:hidden'>
         <Drawer
           open={openNav}
           onClose={onCloseNav}
@@ -145,8 +141,8 @@ const Nav: React.FC<NavProps> = ({
         >
           {renderContent}
         </Drawer>
-      )}
-    </Box>
+      </div>
+    </div>
   );
 }
 

@@ -5,6 +5,7 @@ interface InputProps{
   label?:string;
   error?:boolean;
   infoMessage?:string;
+  required?:boolean;
   value:any;
   onChange:(value:any,value2?:any)=>void;
 }
@@ -14,6 +15,7 @@ const InputPhone: React.FC<InputProps> = ({
   infoMessage,
   error,
   value,
+  required,
   onChange,
 }) => {
   const [phone, setphone] = useState("");
@@ -53,7 +55,7 @@ const InputPhone: React.FC<InputProps> = ({
       <InputUnregistered
         label={label ? label : "Phone"}
         infoMessage={infoMessage ? infoMessage : ""}
-        required
+        required={required}
         value={value}
         error={error}
         onChange={(e)=>{handleChange(e)}}

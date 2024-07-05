@@ -21,25 +21,19 @@ const Main: React.FC<ScrollbarProps> = ({
   const lgUp = useResponsive('up', 'lg');
 
   return (
-    <Box
+    <div className='flex flex-col flex-grow min-h-1 py-24'
       component="main"
       sx={{
         flexGrow: 1,
         minHeight: 1,
         display: 'flex',
         flexDirection: 'column',
-        py: `${HEADER.H_MOBILE + SPACING}px`,
-        ...(lgUp && {
-          px: 2,
-          py: `${HEADER.H_DESKTOP + SPACING}px`,
-          width: `calc(100% - ${NAV.WIDTH}px)`,
-        }),
         ...sx,
       }}
       {...other}
     >
       {children}
-    </Box>
+    </div>
   );
 }
 

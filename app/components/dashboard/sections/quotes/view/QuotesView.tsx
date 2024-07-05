@@ -60,7 +60,6 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   buyers,
 }) => {
 
-  console.log(buyers);
 
   let tableHeader = [
     { id: 'OrderNo', label: 'Order' },
@@ -90,7 +89,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
 
   const [quotes, setQuotes] = useState(data)
   const [filterName, setFilterName] = useState('');
-  const [notFound, setNotFound] = useState(false);
+  const [notFound, setNotFound] = useState(true);
   const [page, setPage] = useState(0);
 
 
@@ -100,10 +99,11 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   };
 
   useEffect(() => {
-    if(!data){
+    if(data?.length < 1){
       setNotFound(true);
       return;
     }
+    
 
     const dataFiltered = applyFilter({
       inputData: data,
@@ -122,13 +122,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
 
   const router = useRouter();
   
-  useEffect(() => {
-    if(data?.length < 1){
-      setNotFound(true);
-      return;
-    }
-      setQuotes(data);
-  }, [data])
+
 
   const refresh = () =>{
     router.refresh();
@@ -158,8 +152,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
 
 
   const handleRowClick = (event:any, data:any) => {
-    console.log('Row Clicked')
-    console.log(data);
+
     setSelectedRow(data);
     setisModalVisible(true);
   };
@@ -194,7 +187,6 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   };
 
   const handleInputChange = (field: string, value: any) => {
-      console.log(value);
       setSelectedRow({ ...selectedRow, [field]: value });
   }
 
@@ -224,9 +216,7 @@ const handleCheckboxClick = (event:any, id:string) => {
 };
 
 
-useEffect(() => {
-  console.log(selected)
-}, [selected])
+
 
 
   const onDelete = useCallback(() => {

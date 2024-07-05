@@ -14,6 +14,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { yesNo } from "@/app/const/formOptions";
 import { allWheelsOption, catalyticOptions, ownershipOptions, paidOfOptions, vehicleConditionOptions } from "@/app/components/app/Form/const";
+import InputPhone from "../../../components/input/InputPhone";
 
 interface ListingCardProps {
   data: any;
@@ -223,8 +224,8 @@ const handleSelectChange = (field: string, item: any) => {
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
       <Field required onChange={(value)=>{handleInput('name',value)}} label="Name:" value={quote.name} />
       <Field required onChange={(value)=>{handleInput('lastname',value)}} label="Last Name:" value={quote.lastname || ""} />
-      <Field required onChange={(value)=>{handleInput('phone',value)}} label="Phone:" value={quote.phone} />
-      <Field required onChange={(value)=>{handleInput('phone2',value)}} label="2nd Phone:" value={quote.phone2} />
+      <InputPhone required onChange={(value)=>{handleInput('phone',value)}} label="Phone:" value={quote.phone} />
+      <InputPhone required onChange={(value)=>{handleInput('phone2',value)}} label="2nd Phone:" value={quote.phone2} />
       </Box>
     </>
 
