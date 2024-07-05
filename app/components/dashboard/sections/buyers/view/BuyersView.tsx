@@ -17,11 +17,8 @@ import { useRouter } from 'next/navigation';
 import ModalEdit from '../modal/ModalEdit';
 import { Container } from '@mui/material';
 import LoadingContainer from '@/app/components/LoadingContainer';
-import ModalSend from '../modal/ModalSend';
 import { emailList } from '@/app/const/emails';
-import ModalSendConfirm from '../modal/ModalSendConfirm';
 
-import QuoteTableToolbar from '../table/buyer-table-toolbar';
 import ModalAddBuyer from '../modal/ModalAddBuyer';
 import BuyerTable from '../table';
 import BuyerList from '../list';
@@ -135,8 +132,7 @@ const BuyersPage: React.FC<ElementProps> = ({
   }
 
   const handleRowClick = (event:any, data:any) => {
-    console.log('Row Clicked')
-    console.log(data);
+
     setSelectedRow(data);
     setisModalVisible(true);
   };
@@ -167,16 +163,6 @@ const BuyersPage: React.FC<ElementProps> = ({
     setSelectedRow(data);
     setisOrderVisible(true);
   };
-
-  const handleInputChange = (field: string, value: any) => {
-      console.log(value);
-      setSelectedRow({ ...selectedRow, [field]: value });
-  }
-
-  const handleSelectChange = (field: string, item: any) => {
-    const value = item.value;
-    setSelectedRow({ ...selectedRow, [field]: value });
-}
 
 const handleCheckboxClick = (event:any, id:string) => {
 

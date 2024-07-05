@@ -1,6 +1,5 @@
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
-import Moment from 'react-moment';
 import moment from 'moment';
 
 import 'moment-timezone';
@@ -29,12 +28,7 @@ export const GenerateExcel = async (title?: string, worksheetname?: string, data
     const formatedCurrentDate = moment(currentDate).format("MM/DD/YYYY");
     let startDate = moment(weekLeads.startDate).format("MMM D");
     let endDate = moment(weekLeads.endDate).format("MMM D, YYYY");;
-    console.log(weekLeads.endDate);
 
-
-    // const formatedStartDate = month+" "+startDate.getDay();
-
-    // const formatedEndDate = month+" "+endDate.getDay()+","+endDate.getFullYear();
     const wb = new ExcelJS.Workbook();
 
     const ws = wb.addWorksheet();
@@ -92,7 +86,6 @@ export const GenerateExcel = async (title?: string, worksheetname?: string, data
       // Check if the action result contains data and if it's an array
       if (data && Array.isArray(data)) {
         data.map((pro: any, index:number) => {
-            console.log(pro);
           row = ws.addRow([pro.noOrder, pro.year+" "+pro.make+" "+pro.model, pro.vin, pro.address,pro.phone,Number(pro.price2)])
             total+= Number(pro.price2);
             //Cell

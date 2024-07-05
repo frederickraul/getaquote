@@ -1,9 +1,6 @@
 
-import prisma from '@/app/libs/prismadb';
 import { NextResponse } from 'next/server'
-import getCurrentUser from '@/app/actions/getCurrentUser';
 
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { Resend } from 'resend';
 import { EmailSender } from '@/app/const/emails';
 
@@ -56,7 +53,6 @@ export async function POST(
     return NextResponse.json(null);
   }
 
-  console.log(buyerEmail);
   
   const resend = new Resend(process.env.RESEND_API_KEY);
 

@@ -1,4 +1,3 @@
-import getCurrentUser from "@/app/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from '@/app/libs/prismadb';
 
@@ -22,13 +21,7 @@ interface IParams {
     const {
       ids
     } = body;
-
-    console.log(body.ids);
-  
-    ids?.map((element: string) => {
-      console.log(element);
-    });
-  
+   
     const transaction = await prisma.$transaction(
       ids?.map((id:any) =>
         prisma?.car.update({

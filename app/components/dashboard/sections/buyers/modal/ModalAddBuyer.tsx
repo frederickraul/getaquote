@@ -1,18 +1,13 @@
 'use client';
 
-import React, { useCallback, useState } from "react";
-import Item from "../view/Item";
+import React, { useState } from "react";
 import Tabs from "../view/Tabs";
 import { Box } from "@mui/material";
 import Button from "@/app/components/app/Button";
 import { MdOutlineTask } from "react-icons/md";
-import Select from "../view/Select";
-import { sellTypeList } from "@/app/const/sellType";
 import InputPhone from "../../../components/input/InputPhone";
 import Field from "../../../components/input/Field";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+
 
 interface ModalProps {
   visible: boolean;
@@ -42,7 +37,6 @@ const ModalAddBuyer: React.FC<ModalProps> = ({
   }
 
   const handleInput = (field: string, value: any) => {
-    console.log(value);
     setData({ ...data, [field]: value });
 }
 

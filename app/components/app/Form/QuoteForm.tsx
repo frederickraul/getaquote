@@ -212,10 +212,6 @@ const QuoteForm: React.FC<ListingCardProps> = ({
         const liters = vinDetails.filter((item: any) => item.Variable === 'Displacement (L)');
 
         setSelectedMake({ value: make[0].ValueId, label: make[0].Value });
-        console.log(year[0].Value);
-        console.log(model[0].Value);
-        console.log(make[0].Value);
-        // console.log(engine[0]?.Value);
         
         const cylindersNo = cylinders[0]?.Value == null ? '' : cylinders[0]?.Value+"-Cyl, ";
         const litersNo = liters[0]?.Value == null ? '' : liters[0]?.Value+" Liters";

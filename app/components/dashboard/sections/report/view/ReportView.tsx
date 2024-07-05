@@ -124,11 +124,7 @@ const ReportPage: React.FC<ElementProps> = ({
    
     let productDate = product["createdAt"];
     productDate = productDate.substring(0,10);
-    // console.log("-------------");
-    // console.log(startDate);
-    // console.log(productDate);
-    // console.log(endDate);
-    // console.log("-------------");
+    
     return(productDate>= startDate &&
       productDate<= endDate);
   })
@@ -189,8 +185,6 @@ const ReportPage: React.FC<ElementProps> = ({
   }
 
   const handleRowClick = (event:any, data:any) => {
-    console.log('Row Clicked')
-    console.log(data);
     setSelectedRow(data);
     setisModalVisible(true);
   };
@@ -249,7 +243,6 @@ const handleCheckboxClick = (event:any, id:string) => {
     );
   }
   setSelected(newSelected);
-  console.log(selected);
 };
 
 const handleAddBuyer = useCallback((data:any) => {
@@ -345,7 +338,6 @@ const handleAddBuyer = useCallback((data:any) => {
 
 
   const onExportQuotes= (title?: string, worksheetname?: string) => {
-    console.log(quotes);
    GenerateExcel("Quotes", "QuotesExport", quotes,selectedBuyer, weekLeads, businessInfo);
     
   }

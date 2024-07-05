@@ -1,11 +1,11 @@
 'use client'
-import { Card, Table, TableBody, TableContainer, TablePagination } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { Table, TableBody, TableContainer, TablePagination } from '@mui/material'
+import React, { useState } from 'react'
 import Scrollbar from '../../../components/scrollbar'
 import UserTableHead from './quote-table-head'
 import UserTableRow from './quote-table-row'
 import TableEmptyRows from './table-empty-rows'
-import { applyFilter, emptyRows, getComparator } from '../utils'
+import { emptyRows } from '../utils'
 import TableNoData from './table-no-data'
 import { users } from '../../../_mock/user';
 

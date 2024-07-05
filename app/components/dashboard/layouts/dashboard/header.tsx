@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
@@ -13,7 +12,7 @@ import { useResponsive } from '../../hooks/use-responsive';
 
 import Iconify from '../../components/iconify';
 
-import { NAV, HEADER } from './config-layout';
+import { HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
 
 import { SafeUser } from '@/app/types';

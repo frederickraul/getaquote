@@ -1,11 +1,7 @@
 
 import prisma from '@/app/libs/prismadb';
 import { NextResponse } from 'next/server'
-import getCurrentUser from '@/app/actions/getCurrentUser';
 
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { Resend } from 'resend';
-import { EmailSender } from '@/app/const/emails';
 import bcryptjs from 'bcryptjs';
 
 
@@ -38,7 +34,6 @@ try{
   }
   const isOk = await bcryptjs.compare(oldPassword, user.hashedPassword);
 
-  console.log("isOk:", isOk);
   if (!isOk) {
     return new Response(JSON.stringify({ message: 'Verify password.' }), {
       status: 400,

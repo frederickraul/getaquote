@@ -1,6 +1,4 @@
-import prisma from "@/app/libs/prismadb";
 
-import getCurrentUser from "./getCurrentUser";
 import axios from "axios";
 
 export default async function getAllMakes() {
@@ -10,7 +8,6 @@ export default async function getAllMakes() {
     const response = await axios.get('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json');
    if(response){
     const makeList = response.data.Results;
-    // console.log(makeList);
     const safeMakes = makeList.map((make:any) => ({
       value: make.Make_ID,
       label: make.Make_Name,

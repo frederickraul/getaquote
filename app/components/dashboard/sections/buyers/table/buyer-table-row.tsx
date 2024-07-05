@@ -17,6 +17,7 @@ import Iconify from '../../../components/iconify';
 import LastSeen from '../view/LastSeen';
 import { usePathName } from '../../../routes/hooks/usePathName';
 import ItemMenu from './itemMenu';
+import { TbDotsVertical } from 'react-icons/tb';
 
 
 // ----------------------------------------------------------------------
@@ -78,7 +79,7 @@ const UserTableRow: React.FC<RowProps> = ({
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
-            <Iconify icon={"eva:more-vertical-fill"} />
+            <TbDotsVertical/>
           </IconButton>
         </TableCell>
         <ItemMenu

@@ -3,15 +3,13 @@
 import LoadingContainer from '@/app/components/LoadingContainer';
 import { Box, Card, Container, Stack } from '@mui/material';
 import React, { useCallback, useState } from 'react'
-import Field from '../../components/input/Field';
 import InputUnregistered from '@/app/components/app/inputs/InputUnregistered';
 import Button from '@/app/components/app/Button';
 
 import toast from 'react-hot-toast';
 import { SafeUser } from '@/app/types';
-import { signIn } from 'next-auth/react';
-import { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+
 interface ElementProps {
     currentUser?: SafeUser | null;
     fieldOrder?: boolean;
@@ -55,7 +53,6 @@ const ChangePasswordView: React.FC<ElementProps> = ({
             body: JSON.stringify(data),
           });
 
-          console.log(response);
     
           if (!response.ok) {
             setErrors({...errors,['oldPassword']:true});

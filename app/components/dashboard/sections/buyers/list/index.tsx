@@ -51,10 +51,6 @@ const BuyerList: React.FC<RowProps> = ({
     setAnchorEl(null);
   };
 
-  console.log(data);
-
-
-
 
   const Row = React.useCallback(
     ({ index } : {index:any}) => {

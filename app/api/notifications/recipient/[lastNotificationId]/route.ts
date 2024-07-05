@@ -89,8 +89,6 @@ if(!lastNotification){
   return NextResponse.json(JSON.stringify(data));
  }
 
-
- //console.log(lastNotification);
  
  return NextResponse.json(lastNotification);
 

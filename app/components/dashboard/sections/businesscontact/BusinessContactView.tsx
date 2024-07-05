@@ -1,25 +1,16 @@
 'use client';
 
 import LoadingContainer from '@/app/components/LoadingContainer';
-import { Avatar, Box, Card, Container, Stack } from '@mui/material';
+import { Box, Card, Container, Stack } from '@mui/material';
 import React, { useCallback, useState } from 'react'
-import Field from '../../components/input/Field';
 import InputUnregistered from '@/app/components/app/inputs/InputUnregistered';
 import Button from '@/app/components/app/Button';
-
 import toast from 'react-hot-toast';
 import { SafeUser } from '@/app/types';
-import { signIn } from 'next-auth/react';
-import { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { defaultImage } from '@/app/const';
 import Heading from '@/app/components/app/Heading';
-import FloatingButton from '../../components/FloatingButton';
-import { FaEdit } from 'react-icons/fa';
-import { BiEdit, BiEditAlt } from 'react-icons/bi';
-import ImageUpload from '@/app/components/app/inputs/ImageUpload';
-import Modal from '../../components/modal/Modal';
 import InputPhone from '@/app/components/app/inputs/InputPhone';
+
 interface ElementProps {
   currentUser?: SafeUser | null;
   business?:any;

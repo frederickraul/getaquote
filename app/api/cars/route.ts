@@ -1,7 +1,6 @@
 
 import prisma from '@/app/libs/prismadb';
 import { NextResponse } from 'next/server'
-import getCurrentUser from '@/app/actions/getCurrentUser';
 
 interface IParams {
   ids?: string[];
@@ -46,9 +45,6 @@ export async function POST(
    
 
   } = body;
-  console.log(body);
-
-
 
   Object.keys(body).forEach((value: any) => {
     if (!body[value]) {
@@ -108,10 +104,6 @@ export async function DELETE(
   const {
     ids
   } = body;
-
-  ids?.map((element: string) => {
-    console.log(element);
-  });
 
   const quotes = await prisma?.car.deleteMany({
     where: { id: { in: ids } },

@@ -2,15 +2,11 @@
 
 import React, { useState } from "react";
 import Item from "../view/Item";
-import Tabs from "../view/Tabs";
-import { FaCar } from "react-icons/fa";
-import { MdContactPhone, MdEmail } from "react-icons/md";
-import { TfiEmail } from "react-icons/tfi";
+import { MdEmail } from "react-icons/md";
 import Select from "../view/Select";
 import { emailList } from "@/app/const/emails";
 import Button from "@/app/components/app/Button";
 import { BiSend } from "react-icons/bi";
-import { sellTypeList } from "@/app/const/sellType";
 import Field from "../../../components/input/Field";
 
 interface ModalProps {
@@ -66,11 +62,6 @@ const ModalSendConfirm: React.FC<ModalProps> = ({
 
 
   const [selectedTab, setSelectedTab] = useState(1);
-
-  const handleOnChange= (value:any)=>{
-    console.log(value);
-  }
-
   const vehicleDetails = (
     <>
     <Item label="Order:" value={`#${noOrder}`} />

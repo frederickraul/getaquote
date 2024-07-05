@@ -3,21 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import Typography from '@mui/material/Typography';
-import TableContainer from '@mui/material/TableContainer';
-import TablePagination from '@mui/material/TablePagination';
 
-
-import Scrollbar from '../../../components/scrollbar';
-
-import TableNoData from '../table/table-no-data';
-import UserTableRow from '../table/quote-table-row';
-import UserTableHead from '../table/quote-table-head';
-import TableEmptyRows from '../table/table-empty-rows';
-import UserTableToolbar from '../table/quote-table-toolbar';
-import { emptyRows, applyFilter, getComparator } from '../utils';
+import { applyFilter, getComparator } from '../utils';
 import ModalConfirm from '../modal/ModalConfirm';
 import ModalDetails from '../modal/ModalDetails';
 
@@ -31,11 +18,8 @@ import ModalEdit from '../modal/ModalEdit';
 import ModalOrder from '../modal/ModalOrder';
 import { Container } from '@mui/material';
 import LoadingContainer from '@/app/components/LoadingContainer';
-import { usePathName } from '../../../routes/hooks/usePathName';
 import ModalSend from '../modal/ModalSend';
-import { emailList } from '@/app/const/emails';
 import ModalSendConfirm from '../modal/ModalSendConfirm';
-import { sellTypeList } from '@/app/const/sellType';
 import QuoteTable from '../table';
 import QuoteTableToolbar from '../table/quote-table-toolbar';
 import QuoteList from '../list';

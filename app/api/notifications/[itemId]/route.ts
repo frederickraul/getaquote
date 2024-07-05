@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 
 import prisma from '@/app/libs/prismadb';
 import { NextResponse } from 'next/server'
@@ -74,7 +73,6 @@ export async function DELETE(
   ) {
 
     const { itemId } = params;
-    console.log(`id: ${itemId}`)
 
     const currentUser = await getCurrentUser();
     if(!currentUser){

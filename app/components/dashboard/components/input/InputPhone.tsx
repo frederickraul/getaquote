@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Field from "./Field";
 
 interface InputProps{
@@ -24,7 +23,6 @@ const InputPhone: React.FC<InputProps> = ({
     if (!value) return value;
     const currentValue = value.replace(/[^\d]/g, '');
     const cvLength = currentValue.length;
-    console.log(cvLength);
     if (!previousValue || value.length > previousValue.length) {
       if (cvLength < 4) return currentValue;
       if (cvLength < 7) return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;

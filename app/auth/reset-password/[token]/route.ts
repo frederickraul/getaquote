@@ -26,12 +26,6 @@ export const GET = async (request: NextRequest) => {
     },
   });
   
-  console.log(`Token: ${token}`);
-  console.log(`Current Time: ${new Date()}`);
-  console.log(`Token Expiry: ${user?.passwordResetTokenExpires}`);
-  console.log(`Current Time Expiry: ${new Date()}`);
-
-  
   if (user) {
     // If the user is found, generate a new secure password
     const newPassword = generateSecurePassword();

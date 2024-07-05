@@ -1,14 +1,9 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from "react";
-import Item from "../view/Item";
 import Tabs from "../view/Tabs";
 import { Box } from "@mui/material";
 import Button from "@/app/components/app/Button";
-import { FaCar } from "react-icons/fa";
-import { MdContactPhone } from "react-icons/md";
-import Select from "../view/Select";
-import { makeList } from "@/app/const/make";
 import Field from "../../../components/input/Field";
 import { IoMailOpenOutline } from "react-icons/io5";
 import InputPhone from "../../../components/input/InputPhone";
@@ -51,7 +46,6 @@ const ModalEdit: React.FC<ListingCardProps> = ({
   ]
 
   const handleInputChange = (field: string, value: any) => {
-    console.log(value);
     setBuyer({ ...buyer, [field]: value });
 }
 
