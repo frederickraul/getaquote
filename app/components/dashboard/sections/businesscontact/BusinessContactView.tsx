@@ -105,13 +105,10 @@ const BusinessContactView: React.FC<ElementProps> = ({
         </Stack>
         <Card className='
                     bg-white 
-                    h-full
                     p-5
                     md:p-10
                     '>
-          <div className='md:w-6/12 h-full  flex
-                    flex-col
-                    justify-between' >
+          <div className='md:w-6/12 flex flex-col justify-between' >
 
             <div className='mb-5 flex flex-col items-center'>
               <Heading title='Fill with your business information' />
