@@ -98,7 +98,7 @@ const Nav: React.FC<NavProps> = ({
     <Scrollbar
     styles='bg-white'
     >
-      <Logo sx={{ mt: 3, ml: 4 }} />
+      <Logo  />
 
       {renderAccount}
 

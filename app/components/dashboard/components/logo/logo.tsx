@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 
@@ -36,17 +37,9 @@ const Logo: React.FC<LogoProps> = ({
   const router = useRouter();
 
   const logo = (
-    <Box
-      component="img"
-      src='/assets/logo.png'
-      sx={{
-        width: 200,
-        display: 'inline-flex',
-        ...sx,
-      }}
-      {...other}
-    >
-    </Box>
+    <div className='flex mt-6 items-center justify-center w-full'>
+      <Image alt='' src='/assets/logo.png' width={200} height={50}/>
+    </div>
   );
 
   if (disabledLink) {
