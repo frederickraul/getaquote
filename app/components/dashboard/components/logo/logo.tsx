@@ -38,7 +38,7 @@ const Logo: React.FC<LogoProps> = ({
 
   const logo = (
     <div className='flex mt-6 items-center justify-center w-full'>
-      <Image alt='' src='/assets/logo.svg' width={200} height={40}/>
+      <img alt='' src='/assets/logo.svg' width={200}/>
     </div>
   );
 
