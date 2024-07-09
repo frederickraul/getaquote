@@ -68,7 +68,7 @@ const QuoteList: React.FC<RowProps> = ({
           key={index} 
           className={`mx-2 
                       py-1 
-                      ${isLastItem && 'pb-20'}
+                      ${isLastItem && 'pb-32'}
                       `}>
           <div className='
             p-4
