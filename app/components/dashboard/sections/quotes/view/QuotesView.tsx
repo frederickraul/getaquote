@@ -468,7 +468,7 @@ const handleOrderSubmit = useCallback(() => {
 
   return (
     <LoadingContainer isLoading={isLoading}>
-    <Container className='h-[70vh]'>
+    <Container className=''>
       <ModalConfirm 
           visible={isConfirmVisible} 
           onClose={handleConfirmModalClose} 
