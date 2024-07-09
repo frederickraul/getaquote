@@ -56,16 +56,20 @@ const QuoteList: React.FC<RowProps> = ({
 
   const Row = React.useCallback(
     ({ index } : {index:any}) => {
+     const isLastItem = data?.length -1 === index;
+     console.log(isLastItem);
+    
+ 
       const rowId = data[index]?.id;
       const row = data[index];
       const checked =  selected?.indexOf(rowId) !== -1;
       return (
         <div 
           key={index} 
-          className='
-            mx-2
-            py-1 
-          '          >
+          className={`mx-2 
+                      py-1 
+                      ${isLastItem && 'pb-20'}
+                      `}>
           <div className='
             p-4
             border-2
@@ -131,7 +135,7 @@ const QuoteList: React.FC<RowProps> = ({
           handleEmailClick={(event) => handleSendClick(event, row)}
           handleSendConfirmClick={(event) => handleSendConfirmClick(event, row)}
       />
-      <AutoSizer className=''>
+      <AutoSizer>
         {
           ({ width, height }) => {
             return (
@@ -144,10 +148,13 @@ const QuoteList: React.FC<RowProps> = ({
               >
                 {Row}
               </List>
+              
             )
           }
         }
+       
       </AutoSizer>
+     
     </div>
   );
 }
