@@ -25,5 +25,10 @@
 	color: black !important;
 }
 
+.invert {
+    background-color: white;
+    filter: invert(100%);
+  }
+
 
 

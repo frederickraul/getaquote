@@ -1,3 +1,4 @@
+'use client'
 import { alpha } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
@@ -16,16 +17,19 @@ import { HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
 
 import { SafeUser } from '@/app/types';
+import { Button } from '@mui/material';
+import { MdInvertColors } from 'react-icons/md';
 
 // ----------------------------------------------------------------------
 
 interface HeaderProps {
   currentUser?: SafeUser | null;
   onOpenNav: ()=>void;
+  setInvertColor?: ()=>void;
 }
 
 const Header: React.FC<HeaderProps> = ({
-  onOpenNav,currentUser}) => {
+  onOpenNav,currentUser,setInvertColor}) => {
   const theme = useTheme();
 
   const lgUp = useResponsive('up', 'lg');
@@ -44,6 +48,7 @@ const Header: React.FC<HeaderProps> = ({
 
       <Stack direction="row" alignItems="center" spacing={1}>
         {/* <NotificationsPopover /> */}
+        <IconButton className='bg-neutral-100' onClick={setInvertColor}><MdInvertColors className='text-green-400'/></IconButton>
         <AccountPopover currentUser={currentUser} />
       </Stack>
     </>

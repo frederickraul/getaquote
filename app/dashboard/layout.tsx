@@ -19,7 +19,7 @@ export default async function RootLayout({
 
   return (
       <DashboardLayout currentUser={currentUser}>
-        <ToasterProvider/>  
+        <ToasterProvider/>   
               <div>
                 {children}
                 </div>

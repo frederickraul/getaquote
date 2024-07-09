@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Nav from './nav';
@@ -18,10 +18,32 @@ const DashboardLayout: React.FC<ScrollbarProps> = ({
   children,currentUser}) => {
 
   const [openNav, setOpenNav] = useState(false);
+  const [invertColor, setInvertColor] = useState(false);
+
+  const handleInvertColor = () => {
+    setInvertColor(!invertColor);
+    if(invertColor) sessionStorage.setItem('invertColor', 'false');
+    if(!invertColor)sessionStorage.setItem('invertColor', 'true');
+  }
+
+  useLayoutEffect(() => {
+    if (sessionStorage.getItem('invertColor')) {
+      const value = (sessionStorage.getItem('invertColor'));
+      console.log(value);
+      if(value == "true"){
+        setInvertColor(true);
+      }else{
+        setInvertColor(false);
+      }
+    }
+  }, []);
+
+
+
 
   return (
-    <div>
-      <Header currentUser={currentUser}  onOpenNav={() => setOpenNav(true)} />
+    <div className={`${invertColor && 'invert'} h-[100%]`}>
+      <Header setInvertColor={handleInvertColor} currentUser={currentUser}  onOpenNav={() => setOpenNav(true)} />
 
       <Box
         sx={{
