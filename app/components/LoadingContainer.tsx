@@ -16,7 +16,7 @@ const LoadingContainer:React.FC<ContainerProps> = ({
       {isLoading && (
         <Loading/>
       )}
-    <div className="h-fit overflow-hidden">
+    <div className="h-fit overflow-hidden md:overflow-auto">
       {children }
       </div>
       </>

@@ -42,7 +42,7 @@ const DashboardLayout: React.FC<ScrollbarProps> = ({
 
 
   return (
-    <div className={`${invertColor && 'invert'} md:h-[100%] md:max-h-[100%] max-h-screen min-h-screen overflow-hidden `}>
+    <div className={`${invertColor && 'invert'} md:h-[100%] md:max-h-[100%] max-h-screen min-h-screen overflow-hidden md:overflow-auto`}>
       <Header setInvertColor={handleInvertColor} currentUser={currentUser}  onOpenNav={() => setOpenNav(true)} />
 
       <Box
