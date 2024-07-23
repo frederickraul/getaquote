@@ -24,10 +24,7 @@ const DashboardLayout: React.FC<ScrollbarProps> = ({
   const sessionToken = session?.user?.token;
   const token = currentUser?.token;
 
-  if(sessionToken != token){
-    console.log('signOut');
-    signOut();
-  }
+
 
 
   const [openNav, setOpenNav] = useState(false);
@@ -48,7 +45,13 @@ const DashboardLayout: React.FC<ScrollbarProps> = ({
         setInvertColor(false);
       }
     }
+    if(sessionToken != token){
+      console.log('signOut');
+      signOut();
+    }
   }, []);
+
+
 
   return (
     <div className={`${invertColor && 'invert'} md:h-[100%] md:max-h-[100%] max-h-screen min-h-screen overflow-hidden md:overflow-auto`}>

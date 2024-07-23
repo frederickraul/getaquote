@@ -39,7 +39,6 @@ export const GET = async (request: NextRequest) => {
         hashedPassword: hashedPassword,
         emailResetPassword: null,
         passwordResetTokenExpires: undefined,
-        token: ''
       }
     });
 
