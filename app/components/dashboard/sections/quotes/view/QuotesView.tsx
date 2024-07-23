@@ -24,6 +24,7 @@ import QuoteTable from '../table';
 import QuoteTableToolbar from '../table/quote-table-toolbar';
 import QuoteList from '../list';
 
+
 TimeAgo.addLocale(en)
 
 // ----------------------------------------------------------------------
@@ -43,6 +44,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   data,
   buyers,
 }) => {
+
 
 
   let tableHeader = [

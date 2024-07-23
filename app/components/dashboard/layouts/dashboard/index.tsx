@@ -7,15 +7,28 @@ import Nav from './nav';
 import Main from './main';
 import Header from './header';
 import { SafeUser } from '@/app/types';
+import { signOut } from 'next-auth/react';
+
 
 // ----------------------------------------------------------------------
 interface ScrollbarProps{
   currentUser?: SafeUser | null;
+  session?:any;
   children: React.ReactNode;
 }
 
 const DashboardLayout: React.FC<ScrollbarProps> = ({
-  children,currentUser}) => {
+  children,currentUser,session}) => {
+
+
+  const sessionToken = session?.user?.token;
+  const token = currentUser?.token;
+
+  if(sessionToken != token){
+    console.log('signOut');
+    signOut();
+  }
+
 
   const [openNav, setOpenNav] = useState(false);
   const [invertColor, setInvertColor] = useState(false);
@@ -29,7 +42,6 @@ const DashboardLayout: React.FC<ScrollbarProps> = ({
   useLayoutEffect(() => {
     if (sessionStorage.getItem('invertColor')) {
       const value = (sessionStorage.getItem('invertColor'));
-      console.log(value);
       if(value == "true"){
         setInvertColor(true);
       }else{
@@ -37,9 +49,6 @@ const DashboardLayout: React.FC<ScrollbarProps> = ({
       }
     }
   }, []);
-
-
-
 
   return (
     <div className={`${invertColor && 'invert'} md:h-[100%] md:max-h-[100%] max-h-screen min-h-screen overflow-hidden md:overflow-auto`}>
@@ -54,7 +63,10 @@ const DashboardLayout: React.FC<ScrollbarProps> = ({
       >
         <Nav currentUser={currentUser} openNav={openNav} onCloseNav={() => setOpenNav(false)} />
 
-        <Main>{children}</Main>
+        <Main>
+
+          {children}
+          </Main>
       </Box>
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { signIn} from 'next-auth/react';
+import { getSession, signIn} from 'next-auth/react';
 import { useCallback, useState } from "react";
 import { 
   FieldValues,
@@ -57,12 +57,35 @@ const SignInModal = () => {
     signIn('credentials',{
       ...credentials,
       redirect: false
-    }).then((callback) =>{
+    }).then(async(callback) =>{
       setIsLoading(false);
       if(callback?.ok) {
-        toast.success('Logged in');
+        const session = await getSession();
+        const response = await fetch('/api/auth/update-token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({userId:session?.user.id,token:session?.user.token}),
+        });
+
+  
+        if (!response.ok) {
+          toast.success('Something when wrong.', {
+            duration: 5000,
+            position: 'top-center',
+          
+          });
+        }
+  
+        // Show success message and possibly redirect
+        toast.success('Logged in.', {
+          duration: 5000,
+          position: 'top-center',
+        
+        });
+
         router.refresh();
-        loginModal.onClose();
       }
 
       if(callback?.error){

@@ -38,7 +38,8 @@ export const GET = async (request: NextRequest) => {
       data:{
         hashedPassword: hashedPassword,
         emailResetPassword: null,
-        passwordResetTokenExpires: undefined
+        passwordResetTokenExpires: undefined,
+        token: ''
       }
     });
 

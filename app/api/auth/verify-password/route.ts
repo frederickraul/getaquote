@@ -49,7 +49,8 @@ try{
         data:{
           hashedPassword: hashedPassword,
           emailResetPassword: null,
-          passwordResetTokenExpires: undefined
+          passwordResetTokenExpires: undefined,
+          token: ''
         }
       });
 

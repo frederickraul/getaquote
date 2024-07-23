@@ -200,20 +200,7 @@ const handleSelectChange = (field: string, item: any) => {
       label="Catalytic Converter: " 
       value={quote.catalytic || ''} />
 
-      <Field onChange={(value)=>{handleInputChange('zip',value)}} 
-      required
-      label="Zip: " 
-      value={quote.zip || ''} />
-
-      <Field onChange={(value)=>{handleInputChange('state',value)}} 
-      required
-      label="State: " 
-      value={quote.state || ''} />
-
-      <Field onChange={(value)=>{handleInputChange('city',value)}} 
-      required
-      label="City: " 
-      value={quote.city || ''} />
+      
       </Box>
     </>
   );
