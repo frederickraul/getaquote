@@ -45,11 +45,15 @@ const DashboardLayout: React.FC<ScrollbarProps> = ({
         setInvertColor(false);
       }
     }
+  }, []);
+
+  useEffect(() => {
     if(sessionToken != token){
       console.log('signOut');
       signOut();
     }
   }, []);
+  
 
 
 

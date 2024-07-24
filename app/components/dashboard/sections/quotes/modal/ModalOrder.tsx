@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Item from "../view/Item";
 import Tabs from "../view/Tabs";
 import Field from "../../../components/input/Field";
@@ -16,6 +16,7 @@ interface ModalProps {
   visible: boolean;
   onClose: () => void;
   handleInput: (field:string, value:string) => void;
+  handleZip: (value:any) => void;
   handleSelect: (field:string, value:string) => void;
   handleSubmit: () => void;
 
@@ -28,7 +29,8 @@ const ModalOrder: React.FC<ModalProps> = ({
   onClose,
   handleInput,
   handleSubmit,
-  handleSelect
+  handleSelect,
+  handleZip
 }) => {
 
   const {
@@ -42,6 +44,59 @@ const ModalOrder: React.FC<ModalProps> = ({
     city
   } = data;
 
+  const [allZipCodes, setAllZipCodes] = useState([{state_name:'',city:'',zip:''}]);
+  const [lookupHappened, setLookupHappened] = useState(false);
+
+
+
+  useEffect(() => {
+    fetch('/zipCodesUSA.json')
+        .then(response => response.json())
+        .then(result => {
+            const zipCodes = result.map((item:any) => {
+                return item;
+            });
+            setAllZipCodes(zipCodes);
+        });
+}, []);
+
+
+const handleZipChange = (a:string) => {
+  let val = a.replace(/[^\d]/, '');
+
+  if (val.length < 6) {
+    handleZip({state_name:'',city:'',zip:val});
+      
+  }
+  if (val.length < 5 && lookupHappened) {
+    handleZip({state_name:'',city:'',zip:val});
+     setLookupHappened(false);
+ }
+  if (val.length === 5) {
+      const entry = allZipCodes.filter(item => {
+          return item['zip'].toLowerCase().includes(val.toLowerCase())
+      });
+      
+      if (entry.length === 0) {
+
+          handleZip({state_name:'No entry found',city:'No entry found'});
+          setLookupHappened(true);
+          setTimeout(() => { // clear the fields in 2 seconds after showing 'No entry found'
+
+              handleZip({state_name:'',city:'',zip:val});
+          }, 2000);
+      } else if (entry.length >= 1) {
+         
+          setLookupHappened(true);
+          handleZip(entry[0]);
+      } 
+      // else {
+      //     setState('More than one match');
+      //     setCity('More than one match');
+      //     setLookupHappened(true);
+      // }
+  }
+};
 
   const [selectedTab, setSelectedTab] = useState(1);
 
@@ -88,7 +143,7 @@ const ModalOrder: React.FC<ModalProps> = ({
                         onChange={(value)=>{handleInput('address', value)}} 
                       />
 
-<Field onChange={(value)=>{handleInput('zip',value)}} 
+<Field onChange={(value)=>{handleZipChange(value)}} 
       required
       label="Zip: " 
       value={zip || ''} />

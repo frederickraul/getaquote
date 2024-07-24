@@ -59,7 +59,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
     { id: '' },
   ];
 
-  const defaultSelectedRow = {id:'',price:'',price2:'',status:'',noOrder:'',buyerEmail:'',sellType: '',address:'',buyer:{label:'',name:'',value:''}};
+  const defaultSelectedRow = {id:'',price:'',price2:'',status:'',city:'',state:'',zip:'',noOrder:'',buyerEmail:'',sellType: '',address:'',buyer:{label:'',name:'',value:''}};
   const [selected, setSelected] = useState<string[]>([]);
   const [isModalVisible, setisModalVisible] = useState(false);
   const [isEditVisible, setisEditVisible] = useState(false);
@@ -78,6 +78,9 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   const [notFound, setNotFound] = useState(true);
   const [page, setPage] = useState(0);
 
+  const handleZipcodeChange = (value: any) => {
+    setSelectedRow({ ...selectedRow, ['city']: value.city, ['state']: value.state_name, ['zip']: value.zip });
+  }
 
   const handleFilterByName = (event:any) => {
     setPage(0);
@@ -493,6 +496,7 @@ const handleOrderSubmit = useCallback(() => {
         error={noOrderError}
         handleSubmit={handleOrderSubmit} 
         handleInput={handleInputChange} 
+        handleZip={handleZipcodeChange}
         handleSelect={handleSelectChange} 
         visible={isOrderVisible} 
         data={selectedRow} 

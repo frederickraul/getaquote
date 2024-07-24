@@ -26,6 +26,9 @@ interface IParams {
       price2,
       sellType,
       address,
+      city,
+      state,
+      zip
     } = body;
 
   
@@ -46,7 +49,10 @@ interface IParams {
        sellType,
        price,
        price2,
-       address
+       address,
+       city,
+       state,
+       zip,
       }
     })
   
