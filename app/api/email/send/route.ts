@@ -108,7 +108,7 @@ export async function POST(
         <span>${catalytic}</span>
       <br><br>
         <strong>Vehicle Location: </strong>
-        <span>${address}, ${city}, ${state} ${zip}</span>
+        <span>${city}, ${state} ${zip}</span>
       <br><br>
       <span>${(sign !== "") && sign }</span>
       `,
