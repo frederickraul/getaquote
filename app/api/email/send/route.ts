@@ -36,6 +36,7 @@ export async function POST(
     mileage,
     bodyDamageDescription,
     partMissingDescription,
+    address,
     city,
     state,
     zip,
@@ -107,7 +108,7 @@ export async function POST(
         <span>${catalytic}</span>
       <br><br>
         <strong>Vehicle Location: </strong>
-        <span>${city}, ${state} ${zip}</span>
+        <span>${address}, ${city}, ${state} ${zip}</span>
       <br><br>
       <span>${(sign !== "") && sign }</span>
       `,
