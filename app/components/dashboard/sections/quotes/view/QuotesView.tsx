@@ -393,7 +393,7 @@ const handleCheckboxClick = (event:any, id:string) => {
 
         return;
       }
-      axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'accepted'}).then(()=>{
+      axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'accepted',buyerEmail:selectedRow?.buyerEmail}).then(()=>{
         router.refresh();
       });
       toast.success('Email Sent to Buyer!!!!', {

@@ -24,10 +24,6 @@ const DashboardLayout: React.FC<ScrollbarProps> = ({
   const sessionToken = session?.user?.token;
   const token = currentUser?.token;
 
-  console.log(sessionToken);
-  console.log(token);
-
-
   const [openNav, setOpenNav] = useState(false);
   const [invertColor, setInvertColor] = useState(false);
 

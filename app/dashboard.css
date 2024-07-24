@@ -3,6 +3,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+html,
+body,
+:root {
+
+	font-family: "Poppins", sans-serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+	
+}
 
 .text-primary{
 	color: #9cff1e !important;
@@ -18,17 +29,40 @@
 	background-color: #9cff1e;
 }
 
-.input{
+/* .input{
 	font-family: "Poppins", sans-serif !important;
     font-weight: 100 !important;
     font-style: normal !important;
 	color: black !important;
-}
+} */
 
 .invert {
     background-color: white;
     filter: invert(100%);
   }
+
+  .MuiInputBase-input{
+    font-weight: 600;
+  }
+
+  .MuiFormLabel-root{
+    font-weight: 600;
+  }
+
+  .MuiTableCell-root{
+    font-weight: 600;
+  }
+
+  .MuiTypography-root{
+    font-weight: 600;
+  }
+
+
+  .MuiButtonBase-root {
+    font-weight: 600;
+  }
+
+
 
 
 

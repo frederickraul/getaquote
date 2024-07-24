@@ -57,8 +57,7 @@ const QuoteList: React.FC<RowProps> = ({
   const Row = React.useCallback(
     ({ index } : {index:any}) => {
      const isLastItem = data?.length -1 === index;
-     console.log(isLastItem);
-    
+   
  
       const rowId = data[index]?.id;
       const row = data[index];
