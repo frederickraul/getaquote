@@ -113,13 +113,14 @@ const AccountPopover: React.FC<AccountProps> = ({
         {MENU_OPTIONS.map((option) => (
           <div className='group' key={option.label}>
 
-          <MenuItem  onClick={()=>{router.push(option.url);}}>
+          <MenuItem  onClick={()=>{router.push(option.url); router.refresh();}}>
             <Iconify icon={option.icon} />
             <span className='mx-2'> {option.label}</span>
             {option?.submenu && <Iconify icon='fe:arrow-right'/>}
           </MenuItem>
 
-               {option.submenu && option.submenu.map((menu) => (           
+               {option.submenu && option.submenu.map((menu) => (   
+                       
             <div key={menu.label}  className='
                 opacity-0 
                 h-0 
@@ -128,7 +129,7 @@ const AccountPopover: React.FC<AccountProps> = ({
                 ease-in-out duration-500
                 text-neutral-600
                 '>
-                 <MenuItem onClick={()=>{handleClose(); router.push(menu.url);}}>
+                 <MenuItem onClick={()=>{handleClose(); router.push(menu.url);router.refresh();}}>
                   <Iconify icon={menu.icon} />
                 <span className='mx-2'> {menu.label}</span>
                 </MenuItem>

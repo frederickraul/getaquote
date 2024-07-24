@@ -24,7 +24,8 @@ const DashboardLayout: React.FC<ScrollbarProps> = ({
   const sessionToken = session?.user?.token;
   const token = currentUser?.token;
 
-
+  console.log(sessionToken);
+  console.log(token);
 
 
   const [openNav, setOpenNav] = useState(false);
@@ -52,7 +53,7 @@ const DashboardLayout: React.FC<ScrollbarProps> = ({
       console.log('signOut');
       signOut();
     }
-  }, []);
+  }, [currentUser]);
   
 
 
