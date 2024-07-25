@@ -53,7 +53,7 @@ const BuyerList: React.FC<RowProps> = ({
 
 
   const Row = React.useCallback(
-    ({ index } : {index:any}) => {
+    ({ index } : {index:number}) => {
       const rowId = data[index]?.id;
       const row = data[index];
 
@@ -132,7 +132,7 @@ const BuyerList: React.FC<RowProps> = ({
           handleSendConfirmClick={(event) => handleSendConfirmClick(event, row)}
       />
      {data
-              .map((row:any, index:any) => (
+              .map((row:any, index:number) => (
                 <Row key={index} index={index}>
 
                 </Row>
