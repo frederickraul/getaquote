@@ -53,7 +53,7 @@ const BuyerList: React.FC<RowProps> = ({
 
 
   const Row = React.useCallback(
-    (index:any) => {
+    ({index}:{index:any}) => {
       const rowId = data[index]?.id;
       const row = data[index];
 
@@ -75,7 +75,7 @@ const BuyerList: React.FC<RowProps> = ({
             bg-white
         '>
             <div className='flex flex-row justify-between'>
-              <div className='flex items-center z-50'>
+              <div className='flex items-center'>
               <Checkbox 
               className="p-0 m-0"
                   disableRipple 

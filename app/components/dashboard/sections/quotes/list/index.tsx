@@ -68,8 +68,8 @@ const QuoteList: React.FC<RowProps> = ({
 
 
   const Row = React.useCallback(
-    (index:any) => {
-    
+    ({index}:{index:any}) => {
+      console.log(index);
       const rowId = data[index]?.id;
       const row = data[index];
       const checked =  selected?.indexOf(rowId) !== -1;
@@ -78,6 +78,7 @@ const QuoteList: React.FC<RowProps> = ({
           key={index} 
           className={`mx-2 
                       py-1 
+                      z-0
                       `}>
           <div className='
             p-4
@@ -87,7 +88,7 @@ const QuoteList: React.FC<RowProps> = ({
             bg-white
         '>
             <div className='flex flex-row justify-between'>
-              <div className='flex items-center z-50'>
+              <div className='flex items-center'>
                 <div className="-ml-2">
                 <Checkbox 
                   className="p-0 m-0"
@@ -136,7 +137,7 @@ const QuoteList: React.FC<RowProps> = ({
   }
 
   return (
-      <div className="overflow-auto">
+      <div className="overflow-auto md:hidden">
     <Box sx={{height: listSize}}>
 
        <ItemMenu
@@ -149,7 +150,7 @@ const QuoteList: React.FC<RowProps> = ({
           handleSendConfirmClick={(event) => handleSendConfirmClick(event, row)}
           />
       {data
-              .map((row:any, index:number) => (
+              .map((row:any, index:any) => (
                 <div key={index} >
                   <Row index={index}/>
                 </div>
