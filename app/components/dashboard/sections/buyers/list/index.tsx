@@ -53,7 +53,7 @@ const BuyerList: React.FC<RowProps> = ({
 
 
   const Row = React.useCallback(
-    ({ index } : {index:number}) => {
+    (index:any) => {
       const rowId = data[index]?.id;
       const row = data[index];
 
@@ -133,9 +133,10 @@ const BuyerList: React.FC<RowProps> = ({
       />
      {data
               .map((row:any, index:number) => (
-                <Row key={index} index={index}>
+                <div key={index} >
+                  <Row index={index}/>
+                </div>
 
-                </Row>
               ))}
               <div className="h-20"> </div>
     </div>
