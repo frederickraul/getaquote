@@ -1,11 +1,12 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FixedSizeList as List } from "react-window";
-import { Checkbox, IconButton, ListItem } from "@mui/material";
+import { Box, Checkbox, IconButton, ListItem } from "@mui/material";
 import { AutoSizer } from "react-virtualized";
 import Iconify from "../../../components/iconify";
 import ItemMenu from "../../quotes/table/itemMenu";
 import ListNoData from "./list-no-data";
+import { useWindowSize } from "./WindowSize";
 
 interface RowProps {
   notFound:boolean;
@@ -42,7 +43,19 @@ const QuoteList: React.FC<RowProps> = ({
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [row, setRow] = useState();
+  const [screenSize, setScreenSize] = useState<any>();
+  const [listSize, setListSize] = useState<any>(200);
   
+  const screen = useWindowSize();
+
+  useEffect(() => {
+    const listSize = screen?.height - 250;
+    if(listSize > 200){
+      setListSize(`${listSize}px`);
+    }
+    }, [screen])
+    
+    console.log(listSize);
 
   const openMenu = React.useCallback((e:any) => {
     e.stopPropagation();
@@ -56,9 +69,7 @@ const QuoteList: React.FC<RowProps> = ({
 
   const Row = React.useCallback(
     ({ index } : {index:any}) => {
-     const isLastItem = data?.length -1 === index;
-   
- 
+    
       const rowId = data[index]?.id;
       const row = data[index];
       const checked =  selected?.indexOf(rowId) !== -1;
@@ -67,7 +78,6 @@ const QuoteList: React.FC<RowProps> = ({
           key={index} 
           className={`mx-2 
                       py-1 
-                      ${isLastItem && 'pb-32'}
                       `}>
           <div className='
             p-4
@@ -126,7 +136,9 @@ const QuoteList: React.FC<RowProps> = ({
   }
 
   return (
-    <div className="h-[60vh] md:hidden">
+      <div className="overflow-auto">
+    <Box sx={{height: listSize}}>
+
        <ItemMenu
           open={anchorEl}
           handleCloseMenu={handleClose}
@@ -135,7 +147,7 @@ const QuoteList: React.FC<RowProps> = ({
           handleOrderClick={(event) => handleOrderClick(event, row)}
           handleEmailClick={(event) => handleSendClick(event, row)}
           handleSendConfirmClick={(event) => handleSendConfirmClick(event, row)}
-      />
+          />
       {data
               .map((row:any, index:any) => (
                 <Row key={index} index={index}>
@@ -143,7 +155,7 @@ const QuoteList: React.FC<RowProps> = ({
                 </Row>
               ))}
               <div className="h-20"> </div>
-     
+            </Box>
     </div>
   );
 }

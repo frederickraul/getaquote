@@ -534,7 +534,6 @@ const handleOrderSubmit = useCallback(() => {
         filterName={filterName}
         onFilterName={handleFilterByName}
       />
-    <div className='overflow-scroll'>
       <QuoteList
           notFound = {notFound}
           selected={selected}
@@ -551,7 +550,6 @@ const handleOrderSubmit = useCallback(() => {
           data={quotes}
         />
       
-    </div>
      
 <Card className='invisible md:visible'>
 
