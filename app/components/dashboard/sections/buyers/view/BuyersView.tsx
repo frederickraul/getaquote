@@ -319,6 +319,8 @@ const handleAddBuyer = useCallback((data:any) => {
         onFilterName={handleFilterByName}
       />
     
+    <div className='overflow-scroll'>
+
       <BuyerList
           notFound = {notFound}
           selected={selected}
@@ -333,6 +335,7 @@ const handleAddBuyer = useCallback((data:any) => {
           handleSendConfirmClick={handleSendConfirmClick}
           data={buyers}
         />
+        </div>
 
 <Card className='invisible md:visible'>
 

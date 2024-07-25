@@ -473,7 +473,7 @@ const handleOrderSubmit = useCallback(() => {
 
   return (
     <LoadingContainer isLoading={isLoading}>
-    <Container className=''>
+    <Container>
       <ModalConfirm 
           visible={isConfirmVisible} 
           onClose={handleConfirmModalClose} 
@@ -534,7 +534,7 @@ const handleOrderSubmit = useCallback(() => {
         filterName={filterName}
         onFilterName={handleFilterByName}
       />
-    
+    <div className='overflow-scroll'>
       <QuoteList
           notFound = {notFound}
           selected={selected}
@@ -550,7 +550,9 @@ const handleOrderSubmit = useCallback(() => {
           handleSendConfirmClick={handleSendConfirmClick}
           data={quotes}
         />
-
+      
+    </div>
+     
 <Card className='invisible md:visible'>
 
         <QuoteTable

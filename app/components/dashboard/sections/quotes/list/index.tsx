@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import { FixedSizeList as List } from "react-window";
-import { Checkbox, IconButton } from "@mui/material";
+import { Checkbox, IconButton, ListItem } from "@mui/material";
 import { AutoSizer } from "react-virtualized";
 import Iconify from "../../../components/iconify";
 import ItemMenu from "../../quotes/table/itemMenu";
@@ -78,12 +78,14 @@ const QuoteList: React.FC<RowProps> = ({
         '>
             <div className='flex flex-row justify-between'>
               <div className='flex items-center z-50'>
-              <Checkbox 
-              className="p-0 m-0"
+                <div className="-ml-2">
+                <Checkbox 
+                  className="p-0 m-0"
                   disableRipple 
                   checked={checked} 
                   onChange={(event) => {handleCheckboxClick(event, rowId)}} />
-                <a className='text-blue-500 font-bold ml-2' href='#'>#{data[index]?.noOrder ? data[index]?.noOrder : 'N/A'}</a>
+                </div>
+                <a className='text-blue-500 font-bold ml-0' href='#'>#{data[index]?.noOrder ? data[index]?.noOrder : 'N/A'}</a>
               </div>
 
               <div className='
@@ -124,7 +126,7 @@ const QuoteList: React.FC<RowProps> = ({
   }
 
   return (
-    <div className="h-[70vh] md:hidden">
+    <div className="h-[60vh] md:hidden">
        <ItemMenu
           open={anchorEl}
           handleCloseMenu={handleClose}
@@ -134,25 +136,13 @@ const QuoteList: React.FC<RowProps> = ({
           handleEmailClick={(event) => handleSendClick(event, row)}
           handleSendConfirmClick={(event) => handleSendConfirmClick(event, row)}
       />
-      <AutoSizer>
-        {
-          ({ width, height }) => {
-            return (
+      {data
+              .map((row:any, index:any) => (
+                <Row key={index} index={index}>
 
-              <List className=''
-                height={height}
-                width={width}
-                itemSize={120}
-                itemCount={data?.length}
-              >
-                {Row}
-              </List>
-              
-            )
-          }
-        }
-       
-      </AutoSizer>
+                </Row>
+              ))}
+              <div className="h-20"> </div>
      
     </div>
   );

@@ -1,7 +1,7 @@
 'use client'
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { FixedSizeList as List } from "react-window";
-import {  Checkbox, IconButton } from "@mui/material";
+import { Checkbox, IconButton } from "@mui/material";
 import { AutoSizer } from "react-virtualized";
 import Iconify from "../../../components/iconify";
 import ItemMenu from "../../quotes/table/itemMenu";
@@ -20,12 +20,12 @@ interface RowProps {
   handleOrderClick:(event:any,value2:any)=>void;
   handleSendClick:(event:any,value2:any)=>void;
   handleSendConfirmClick:(event:any,value2:any)=>void;
-  onBatchDelete?:()=>void;
-  onBatchChangeStatus?:(status:string)=>void;
+  onBatchDelete:()=>void;
+  onBatchChangeStatus:(status:string)=>void;
 
 }
 
-const BuyerList: React.FC<RowProps> = ({
+const QuoteList: React.FC<RowProps> = ({
   notFound,
   fieldOrder,
   data,
@@ -39,8 +39,10 @@ const BuyerList: React.FC<RowProps> = ({
   handleSendClick,
   handleSendConfirmClick,
 }) => {
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [row, setRow] = useState();
+  
 
   const openMenu = React.useCallback((e:any) => {
     e.stopPropagation();
@@ -54,19 +56,19 @@ const BuyerList: React.FC<RowProps> = ({
 
   const Row = React.useCallback(
     ({ index } : {index:any}) => {
+     const isLastItem = data?.length -1 === index;
+   
+ 
       const rowId = data[index]?.id;
       const row = data[index];
-
       const checked =  selected?.indexOf(rowId) !== -1;
-      if(rowId == undefined) return <div className="h-[''] bg-transparent text-transparent">adsasd<br/>adsasd<br/>adsasd</div>;
-      
       return (
         <div 
           key={index} 
-          className='
-            mx-2
-            py-1 
-          '          >
+          className={`mx-2 
+                      py-1 
+                      ${isLastItem && 'pb-32'}
+                      `}>
           <div className='
             p-4
             border-2
@@ -76,12 +78,14 @@ const BuyerList: React.FC<RowProps> = ({
         '>
             <div className='flex flex-row justify-between'>
               <div className='flex items-center z-50'>
-              <Checkbox 
-              className="p-0 m-0"
+                <div className="-ml-2">
+                <Checkbox 
+                  className="p-0 m-0"
                   disableRipple 
                   checked={checked} 
                   onChange={(event) => {handleCheckboxClick(event, rowId)}} />
-                <a className='text-blue-500 font-bold ml-2' href='#'>{row?.name}</a>
+                </div>
+                <a className='text-blue-500 font-bold ml-0' href='#'>#{data[index]?.noOrder ? data[index]?.noOrder : 'N/A'}</a>
               </div>
 
               <div className='
@@ -91,7 +95,7 @@ const BuyerList: React.FC<RowProps> = ({
                 justify-start                
                 items-start
                 ' 
-                onClick={()=>{handleRowClick(event, row)}}
+                onClick={()=>{handleRowClick(event, data[index])}}
                 >
        
                 <div className='ml-2 relative'>
@@ -102,11 +106,12 @@ const BuyerList: React.FC<RowProps> = ({
                 </div>
               </div>
             </div>
-            <div className='flex flex-col mt-2 gap-1' onClick={()=>{handleRowClick(event, row)}}
+            <div className='flex flex-col mt-2 gap-1' onClick={()=>{handleRowClick(event, data[index])}}
 >
-              <span className='text-gray-700'>{row?.email}</span>
-              <span className='font-bold'>{row?.phone} </span>
-              <div style={{ height: `${row?.randomHeight}px` }} />
+              <span className=''>{data[index]?.year + ' ' +data[index]?.make + ' '+ data[index]?.model}</span>
+              <span className='text-gray-700'>{data[index]?.engine} </span>
+              <span className='font-bold'>{data[index]?.phone} </span>
+              <div style={{ height: `${data[index]?.randomHeight}px` }} />
             </div>
           </div>
          
@@ -131,15 +136,28 @@ const BuyerList: React.FC<RowProps> = ({
           handleEmailClick={(event) => handleSendClick(event, row)}
           handleSendConfirmClick={(event) => handleSendConfirmClick(event, row)}
       />
-     {data
-              .map((row:any, index:any) => (
-                <Row key={index} index={index}>
+      <AutoSizer>
+        {
+          ({ width, height }) => {
+            return (
 
-                </Row>
-              ))}
-              <div className="h-20"> </div>
+              <List className=''
+                height={height}
+                width={width}
+                itemSize={120}
+                itemCount={data?.length}
+              >
+                {Row}
+              </List>
+              
+            )
+          }
+        }
+       
+      </AutoSizer>
+     
     </div>
   );
 }
 
-export default BuyerList;
+export default QuoteList;
