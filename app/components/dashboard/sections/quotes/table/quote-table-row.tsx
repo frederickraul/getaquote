@@ -68,7 +68,11 @@ const UserTableRow: React.FC<RowProps> = ({
             {data?.phone}
           </Typography>
         </TableCell> */}
-        <TableCell onClick={handleRowClick}><LastSeen date={data?.createdAt}/> </TableCell>
+        <TableCell onClick={handleRowClick}>
+          <div className='w-[75px]'>
+          <LastSeen date={data?.createdAt}/> 
+          </div>
+          </TableCell>
 
         {/* <TableCell align="center">{data?.isVerified ? 'Yes' : 'No'}</TableCell>
 

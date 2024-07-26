@@ -16,7 +16,7 @@ const LastSeen: React.FC<ComponentProps> = ({
   const DATE = new Date(date);
 
   return (
-    <div className='flex sm:flex-col text-center'>
+    <div className='flex sm:flex-col items-center'>
       <div>{format(DATE, 'MM/dd/yyyy')}</div>
       <div className='ml-2 sm:ml-0'>{format(DATE, 'h:mm b')}</div>
 
