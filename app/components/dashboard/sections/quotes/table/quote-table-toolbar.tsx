@@ -22,10 +22,11 @@ import { IoSearch } from 'react-icons/io5';
 
 interface ToolbarProps {
   numSelected: any;
-  filterName?:string;
-  onFilterName:(value:any)=>void;
-  onDelete:(value:any)=>void;
-  onChangeStatus:(value:any)=>void;
+  filterName?: string;
+  onFilterName: (value: any) => void;
+  onDelete: (value: any) => void;
+  onChangeStatus: (value: any) => void;
+  onBatchSendEmail: (value:any) => void;
 }
 
 const QuoteTableToolbar: React.FC<ToolbarProps> = ({
@@ -34,6 +35,7 @@ const QuoteTableToolbar: React.FC<ToolbarProps> = ({
   onFilterName,
   onDelete,
   onChangeStatus,
+  onBatchSendEmail
 
 }) => {
 
@@ -41,7 +43,7 @@ const QuoteTableToolbar: React.FC<ToolbarProps> = ({
 
   return (
     <Toolbar
-    className='
+      className='
         bg-white
         rounded-t-lg 
         justify-center 
@@ -71,52 +73,65 @@ const QuoteTableToolbar: React.FC<ToolbarProps> = ({
           placeholder="Search ..."
           startAdornment={
             <InputAdornment position="start">
-              <IoSearch size={20}/>
+              <IoSearch size={20} />
             </InputAdornment>
           }
         />
       )}
 
-{numSelected > 0 && (
-  <div className='flex flex-row w-full sm:w-auto justify-end'>
-    <div className='sm:mr-5 flex flex-row items-center justify-between'>
-        <span className='mr-5 text-neutral-600 '>Move to</span>
-        <div className='flex flex-row'>
+      {numSelected > 0 && (
+        <div className='flex flex-row w-full sm:w-auto  justify-between md:justify-end'>
+          {pathname == '/dashboard/new' &&
+            <div className='sm:mr-5 pr-5 sm:pr-16  flex flex-row items-center justify-between'>
+              <span className='mr-5 text-neutral-600 '>Send</span>
+              <div className='flex flex-row'>
 
-        { pathname == '/dashboard/declined' &&
+                <Tooltip title="Multiple Emails" onClick={() => { onBatchSendEmail({id:0}) }}>
+                  <IconButton>
+                    <Iconify icon="mdi:email-multiple" width={25} />
+                  </IconButton>
+                </Tooltip>
+              </div>
+            </div>
+          }
+          <div className='sm:mr-5 flex flex-row items-center justify-between'>
+            <span className='mr-5 text-neutral-600 '>Move to</span>
+            <div className='flex flex-row'>
 
-        <Tooltip title="New" onClick={()=>{onChangeStatus('pending')}}>
-          <IconButton>
-            <Iconify icon="material-symbols:pending-actions" width={34} />
-          </IconButton>
-        </Tooltip>
-        }
-        { (pathname == '/dashboard/declined' || pathname == '/dashboard/processing') &&
-        <Tooltip title="Accepted" onClick={()=>{onChangeStatus('accepted')}}>
-          <IconButton>
-            <Iconify icon="pepicons-pop:shield-check" width={30} />
-          </IconButton>
-        </Tooltip>
-        }
-        { (pathname == '/dashboard/accepted' || pathname == '/dashboard/processing') &&
-        <Tooltip title="Declined" onClick={()=>{onChangeStatus('declined')}}>
-          <IconButton>
-            <Iconify icon="pepicons-pop:times-circle-filled" width={26} />
-          </IconButton>
-        </Tooltip>
-        }
+              {pathname == '/dashboard/declined' &&
 
-          <Tooltip title="Delete" onClick={onDelete}>
-          <IconButton>
-            <Iconify icon="pepicons-pop:trash" width={28} />
-          </IconButton>
-        </Tooltip>
+                <Tooltip title="Pending" onClick={() => { onChangeStatus('pending') }}>
+                  <IconButton>
+                    <Iconify icon="material-symbols:pending-actions" width={34} />
+                  </IconButton>
+                </Tooltip>
+              }
+              {(pathname == '/dashboard/declined' || pathname == '/dashboard/processing') &&
+                <Tooltip title="Accepted" onClick={() => { onChangeStatus('accepted') }}>
+                  <IconButton>
+                    <Iconify icon="pepicons-pop:shield-check" width={30} />
+                  </IconButton>
+                </Tooltip>
+              }
+              {(pathname == '/dashboard/accepted' || pathname == '/dashboard/processing') &&
+                <Tooltip title="Declined" onClick={() => { onChangeStatus('declined') }}>
+                  <IconButton>
+                    <Iconify icon="pepicons-pop:times-circle-filled" width={26} />
+                  </IconButton>
+                </Tooltip>
+              }
+
+              <Tooltip title="Delete" onClick={onDelete}>
+                <IconButton>
+                  <Iconify icon="pepicons-pop:trash" width={28} />
+                </IconButton>
+              </Tooltip>
+            </div>
           </div>
-    </div>
-       
-        
-       
-  </div>
+
+
+
+        </div>
       )}
     </Toolbar>
   );
@@ -129,4 +144,4 @@ const QuoteTableToolbar: React.FC<ToolbarProps> = ({
 // };
 
 
-export default  QuoteTableToolbar
+export default QuoteTableToolbar

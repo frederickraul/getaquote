@@ -82,7 +82,7 @@ const ReportPage: React.FC<ElementProps> = ({
     const buyer = buyerList.filter((buyer:any)=>{
       return(buyer.email== value);
     });
-    console.log(selectedBuyer);
+   // console.log(selectedBuyer);
     setselectedBuyer(buyer[0]);
     setFilterName(value);
   };

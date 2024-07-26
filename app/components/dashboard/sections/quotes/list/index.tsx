@@ -55,7 +55,7 @@ const QuoteList: React.FC<RowProps> = ({
     }
     }, [screen])
     
-    console.log(listSize);
+    //console.log(listSize);
 
   const openMenu = React.useCallback((e:any) => {
     e.stopPropagation();
@@ -69,7 +69,7 @@ const QuoteList: React.FC<RowProps> = ({
 
   const Row = React.useCallback(
     ({index}:{index:any}) => {
-      console.log(index);
+      //console.log(index);
       const rowId = data[index]?.id;
       const row = data[index];
       const checked =  selected?.indexOf(rowId) !== -1;
