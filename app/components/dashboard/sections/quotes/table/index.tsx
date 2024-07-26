@@ -58,7 +58,7 @@ const QuoteTable: React.FC<QuoteTableProps> = ({
     { id: 'make', label: 'Make' },
     { id: 'model', label: 'Model' },
     { id: 'engine', label: 'Engine' },
-    { id: 'phone', label: 'Phone' },
+    // { id: 'phone', label: 'Phone' },
     { id: 'date', label: 'Date' },
     { id: '' },
   ];

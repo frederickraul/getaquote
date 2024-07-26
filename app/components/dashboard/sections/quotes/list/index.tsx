@@ -120,8 +120,8 @@ const QuoteList: React.FC<RowProps> = ({
             <div className='flex flex-col mt-2 gap-1' onClick={()=>{handleRowClick(event, data[index])}}
 >
               <span className=''>{data[index]?.year + ' ' +data[index]?.make + ' '+ data[index]?.model}</span>
-              <span className='text-gray-700'>{data[index]?.engine} </span>
-              <span className='font-bold'>{data[index]?.phone} </span>
+              {/* <span className='text-gray-700'>{data[index]?.engine} </span> */}
+              {/* <span className='font-bold'>{data[index]?.phone} </span> */}
               <div style={{ height: `${data[index]?.randomHeight}px` }} />
             </div>
           </div>
