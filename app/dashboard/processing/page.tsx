@@ -15,7 +15,7 @@ const Page = async () => {
   const header = (
     <div className='flex flex-row items-center justify-center'>
     <TfiReload className='mr-2' color='#54B4D3'/>
-    Proccesing Quotes
+    Processing Quotes
     </div>
   );
   return (
