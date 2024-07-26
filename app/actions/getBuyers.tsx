@@ -19,7 +19,8 @@ export default async function getBuyers(
       ...item,
       createdAt: item.createdAt.toISOString(),
       value: item.email,
-      label: item.email
+      label: item.email,
+      name: item.name,
       
     }));
 

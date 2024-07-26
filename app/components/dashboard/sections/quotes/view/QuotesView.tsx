@@ -59,7 +59,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
     { id: '' },
   ];
 
-  const defaultSelectedRow = {id:'',price:'',price2:'',status:'',city:'',state:'',zip:'',noOrder:'',buyerEmail:'',sellType: '',address:'',buyer:{label:'',name:'',value:''}};
+  const defaultSelectedRow = {id:'',price:'',price2:'',status:'',city:'',state:'',zip:'',noOrder:'',buyerEmail:'',buyerName:'',sellType: '',address:'',buyer:{label:'',name:'',value:''}};
   const [selected, setSelected] = useState<string[]>([]);
   const [isModalVisible, setisModalVisible] = useState(false);
   const [isEditVisible, setisEditVisible] = useState(false);
@@ -176,6 +176,14 @@ const QuotesPage: React.FC<ListingCardProps> = ({
   };
 
   const handleInputChange = (field: string, value: any) => {
+    if(field == 'buyerEmail'){
+      const result = buyers.filter((buyer:any) => buyer.email == value);
+      const buyerName = result[0].name;
+      setSelectedRow({ ...selectedRow, [field]: value, ['buyerName']: buyerName });
+      return;
+
+    }
+
       setSelectedRow({ ...selectedRow, [field]: value });
   }
 
@@ -298,7 +306,7 @@ const handleCheckboxClick = (event:any, id:string) => {
 
 
   const onSendEmail = useCallback(() => {
-    if(selectedRow.buyer.value === ''){
+    if(selectedRow.buyerEmail === ''){
       return
     }
 
@@ -324,7 +332,7 @@ const handleCheckboxClick = (event:any, id:string) => {
         return;
       }
       
-      axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'processing',buyerName:'', buyerEmail:selectedRow?.buyerEmail}).then(()=>{
+      axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'processing',buyerName:selectedRow?.buyerName, buyerEmail:selectedRow?.buyerEmail}).then(()=>{
         router.refresh();
       });
       toast.success('Email Sent to Buyer!!!!', {
@@ -393,7 +401,7 @@ const handleCheckboxClick = (event:any, id:string) => {
 
         return;
       }
-      axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'accepted',buyerEmail:selectedRow?.buyerEmail}).then(()=>{
+      axios.post(`/api/cars/changestatus/`, {ids: [selectedRow.id], status:'accepted',buyerName:selectedRow?.buyerName, buyerEmail:selectedRow?.buyerEmail}).then(()=>{
         router.refresh();
       });
       toast.success('Email Sent to Buyer!!!!', {
