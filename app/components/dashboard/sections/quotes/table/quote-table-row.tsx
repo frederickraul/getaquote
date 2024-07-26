@@ -63,11 +63,11 @@ const UserTableRow: React.FC<RowProps> = ({
         <TableCell onClick={handleRowClick}>{data?.make}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.model}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.engine}</TableCell>
-        <TableCell onClick={handleRowClick} style={{textWrap:'nowrap'}}>
-          {/* <Typography noWrap className="w-full" fontWeight="fontWeightMedium">
+        {/* <TableCell onClick={handleRowClick} style={{textWrap:'nowrap'}}>
+          <Typography noWrap className="w-full" fontWeight="fontWeightMedium">
             {data?.phone}
-          </Typography> */}
-        </TableCell>
+          </Typography>
+        </TableCell> */}
         <TableCell onClick={handleRowClick}><LastSeen date={data?.createdAt}/> </TableCell>
 
         {/* <TableCell align="center">{data?.isVerified ? 'Yes' : 'No'}</TableCell>
