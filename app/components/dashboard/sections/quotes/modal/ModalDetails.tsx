@@ -95,7 +95,7 @@ const ModalDetails: React.FC<ListingCardProps> = ({
 
   const vehicleDetails = (
     <>
-      <Item label="Vehicle:" value={year + " " + make + " " + model} />
+      <Item label="Vehicle:" value={year + " " + make + " " + model+'.'} />
       <Item label="Engine:" value={engine} />
       <Item label="Ownership Documents:" value={ownershipDocument} />
       <Item label="Is Your Vehicle Paid Off?" value={paidOff} />
@@ -106,9 +106,9 @@ const ModalDetails: React.FC<ListingCardProps> = ({
       <Item label="Any Parts Missing:" value={partMissing + ". " + partMissingDescription} />
       <Item label="Are Your Wheels Aluminum Or Steel?:" value={wheels} />
       <Item label="Does It Have All Wheels:" value={allWheels} />
-      <Item label="Does It Have A Battery:" value={battery} />
+      <Item label="Does It Have A Battery:" value={battery+'.'} />
       <Item label="Catalytic Converter: " value={catalytic} />
-      <Item label="Vehicle Location: " value={city + ", " + state + " " + zip} />
+      <Item label="Vehicle Location: " value={city + ", " + state + " " + zip+'.'} />
     </>
   );
 
