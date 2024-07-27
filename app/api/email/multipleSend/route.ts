@@ -66,7 +66,7 @@ export async function POST(
    const size = transaction.length;
     for (let i = 0; i < size; ++i) { 
     const quote = transaction[i];
-    await waitforme(500); 
+    await waitforme(1000); 
 
     let data = {
           ...quote,
