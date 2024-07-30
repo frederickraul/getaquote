@@ -14,6 +14,8 @@ import { Box } from '@mui/material';
 import { Icon } from '@iconify/react';
 import { FaSearch } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
+import ModalConfirm from '../modal/ModalConfirm';
+import { useState } from 'react';
 
 
 
@@ -24,7 +26,7 @@ interface ToolbarProps {
   numSelected: any;
   filterName?: string;
   onFilterName: (value: any) => void;
-  onDelete: (value: any) => void;
+  onDelete: () => void;
   onChangeStatus: (value: any) => void;
   onBatchSendEmail: (value:any) => void;
 }
@@ -40,6 +42,20 @@ const QuoteTableToolbar: React.FC<ToolbarProps> = ({
 }) => {
 
   const pathname = usePathName();
+  const [isConfirmVisible, setisConfirmVisible] = useState(false);
+
+  const handleConfirmModalClose = () => {
+    setisConfirmVisible(false);
+  }
+
+  const handleClickDelete = () =>{
+    setisConfirmVisible(true);
+  }
+
+  const handleBatchDelete = () => {
+    setisConfirmVisible(false);
+    onDelete();
+  }
 
   return (
     <Toolbar
@@ -121,11 +137,17 @@ const QuoteTableToolbar: React.FC<ToolbarProps> = ({
                 </Tooltip>
               }
 
-              <Tooltip title="Delete" onClick={onDelete}>
+              <Tooltip title="Delete" onClick={handleClickDelete}>
                 <IconButton>
                   <Iconify icon="pepicons-pop:trash" width={28} />
                 </IconButton>
               </Tooltip>
+
+              <ModalConfirm
+                message='Are you sure you want to delete all the selected quotes?'
+                visible={isConfirmVisible}
+                onClose={handleConfirmModalClose}
+                action={handleBatchDelete} />
             </div>
           </div>
 
