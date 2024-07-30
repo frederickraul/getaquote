@@ -78,7 +78,13 @@ export async function POST(
 
       console.log(data);
 
-      sendEmail(data);
+      const result = await sendEmail(data);
+      if(result?.status == "ok"){
+        await prisma?.car.update({
+          where: { id: data.id },
+          data: {status:'processing',buyerName:data.buyerName,buyerEmail: data.buyerEmail},
+        })
+      }
      // console.log('Email: '+ quoteId);
 } 
 console.log("Loop execution finished!)"); 
@@ -160,12 +166,9 @@ const sendEmail = async (quote:any) =>{
     if (error) {
       console.log(error);
       errorCount++;
-      //return NextResponse.json(error);
+      return {status:'error'};
     }else{
-      await prisma?.car.update({
-        where: { id: quote.id },
-        data: {status:'processing',buyerName:quote.buyerName,buyerEmail: quote.buyerEmail},
-      })
+     return {status: 'ok'};
     }
 
   
