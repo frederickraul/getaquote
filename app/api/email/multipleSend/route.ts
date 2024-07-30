@@ -62,7 +62,7 @@ export async function POST(
    const size = quotes.length;
     for (let i = 0; i < size; ++i) { 
     const quoteId = quotes[i];
-    await waitforme(2000); 
+    await waitforme(1000); 
     
     const quote = await prisma?.car.findUnique({
       where: { id: quoteId },
