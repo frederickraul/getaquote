@@ -85,7 +85,7 @@ console.log("Loop execution finished!)");
 
 console.log("Errors:" + errorCount);
 
-  return NextResponse.json(null);
+  return NextResponse.json(quotes);
 }
 
 function waitforme(millisec:number) { 
