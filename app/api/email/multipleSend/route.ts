@@ -7,6 +7,7 @@ import { Resend } from 'resend';
 import { EmailSender } from '@/app/const/emails';
 import axios from 'axios';
 
+let errorCount = 0;
 
 export async function POST(
   request: Request
@@ -26,6 +27,8 @@ export async function POST(
   if(!buyerEmail){
     return NextResponse.json(null);
   }
+
+ 
 
 
 
@@ -54,19 +57,16 @@ export async function POST(
   
   
 
-  const transaction = await prisma.$transaction(
-    quotes?.map((value:any) =>
-      prisma?.car.update({
-        where: { id: value },
-        data: {status:'processing',buyerName:buyerName,buyerEmail: buyerEmail},
-      })
-    )
-  );
+   
 
-   const size = transaction.length;
+   const size = quotes.length;
     for (let i = 0; i < size; ++i) { 
-    const quote = transaction[i];
-    await waitforme(1000); 
+    const quoteId = quotes[i];
+    await waitforme(500); 
+    
+    const quote = await prisma?.car.findUnique({
+      where: { id: quoteId },
+    });
 
     let data = {
           ...quote,
@@ -76,11 +76,14 @@ export async function POST(
         subject:subject
       };
 
+      console.log(data);
+
       sendEmail(data);
-      console.log('Email: '+ data?.id);
+     // console.log('Email: '+ quoteId);
 } 
 console.log("Loop execution finished!)"); 
 
+console.log("Errors:" + errorCount);
 
   return NextResponse.json(null);
 }
@@ -91,9 +94,7 @@ function waitforme(millisec:number) {
   }) 
 } 
 
-async function printy() { 
-  
-} 
+
 
 const sendEmail = async (quote:any) =>{
     const resend = new Resend(process.env.RESEND_API_KEY);
@@ -155,10 +156,18 @@ const sendEmail = async (quote:any) =>{
       `,
     
   });
-  
+    
     if (error) {
-      return NextResponse.json(error);
+      console.log(error);
+      errorCount++;
+      //return NextResponse.json(error);
+    }else{
+      await prisma?.car.update({
+        where: { id: quote.id },
+        data: {status:'processing',buyerName:quote.buyerName,buyerEmail: quote.buyerEmail},
+      })
     }
+
   
 }
 
