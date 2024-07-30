@@ -58,7 +58,9 @@ const UserTableRow: React.FC<RowProps> = ({
         <TableCell padding="checkbox">
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
-        <TableCell onClick={handleRowClick}>{data?.noOrder}</TableCell>
+        <TableCell onClick={handleRowClick}>
+          {pathname == '/dashboard/new' ? data?.city+', '+data?.state + ' '+data?.zip : data?.noOrder}
+         </TableCell> 
         <TableCell onClick={handleRowClick}>{data?.year}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.make}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.model}</TableCell>

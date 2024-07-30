@@ -8,6 +8,7 @@ import TableEmptyRows from './table-empty-rows'
 import { emptyRows } from '../utils'
 import TableNoData from './table-no-data'
 import { users } from '../../../_mock/user';
+import { usePathName } from '../../../routes/hooks/usePathName'
 
 
 interface QuoteTableProps {
@@ -52,8 +53,14 @@ const QuoteTable: React.FC<QuoteTableProps> = ({
   data,
 }) => {
 
+  const pathname = usePathName();
+  let fielName = 'Order';
+  if(pathname == '/dashboard/new'){
+    fielName = 'Location';
+  }
+
   let tableHeader = [
-    { id: 'OrderNo', label: 'Order' },
+    { id: 'OrderNo', label: fielName },
     { id: 'year', label: 'Year' },
     { id: 'make', label: 'Make' },
     { id: 'model', label: 'Model' },
