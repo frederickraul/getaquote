@@ -482,7 +482,7 @@ const QuotesPage: React.FC<ListingCardProps> = ({
           secondary: '#fff',
         },  
       });
-      
+    setSelected([]);
     router.refresh();
       
     })
