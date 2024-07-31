@@ -102,11 +102,11 @@ const ModalDetails: React.FC<ListingCardProps> = ({
       <Item label="Vehicle ID Number: " value={vin} />
       <Item label="Vehicle Mileage: " value={mileage} />
       <Item label="Vehicle Operating Condition:" value={vehicleCondition} />
-      <Item label="Is There Body Damage:" value={bodyDamage + ". " + bodyDamageDescription} />
-      <Item label="Any Parts Missing:" value={partMissing + ". " + partMissingDescription} />
+      <Item label="Is There Body Damage:" value={bodyDamage + " " +bodyDamageDescription} />
+      <Item label="Any Parts Missing:" value={partMissing + " " +partMissingDescription} />
       <Item label="Are Your Wheels Aluminum Or Steel?:" value={wheels} />
       <Item label="Does It Have All Wheels:" value={allWheels} />
-      <Item label="Does It Have A Battery:" value={battery+'.'} />
+      <Item label="Does It Have A Battery:" value={battery} />
       <Item label="Catalytic Converter: " value={catalytic} />
       <Item label="Vehicle Location: " value={city + ", " + state + " " + zip+'.'} />
     </>

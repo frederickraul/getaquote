@@ -13,7 +13,7 @@ import InputPhone from '@/app/components/app/inputs/InputPhone';
 
 interface ElementProps {
   currentUser?: SafeUser | null;
-  business?:any;
+  business?: any;
   fieldOrder?: boolean;
   header: any;
   headerStyles?: any;
@@ -26,8 +26,8 @@ const BusinessContactView: React.FC<ElementProps> = ({
   header,
   headerStyles,
 }) => {
-  const defaultError = { name: false, address: false, location: false, phone:false, email: false  };
-  const defaultData = { name: business?.name, address: business?.address, location: business?.location, phone: business?.phone, email:business?.email};
+  const defaultError = { name: false, address: false, location: false, phone: false, email: false };
+  const defaultData = { name: business?.name, address: business?.address, location: business?.location, phone: business?.phone, email: business?.email };
 
   const router = useRouter();
   const [data, setData] = useState(defaultData);
@@ -40,7 +40,7 @@ const BusinessContactView: React.FC<ElementProps> = ({
   }
 
   const handleInputChange = (field: string, fieldValue: any) => {
-    if(field == 'phone'){
+    if (field == 'phone') {
       setData({ ...data, [field]: fieldValue });
       return;
     }
@@ -118,7 +118,7 @@ const BusinessContactView: React.FC<ElementProps> = ({
                   }
                 </div>
 
-                  {/* Field */}
+                {/* Field */}
                 <div className='flex flex-col w-full mb-5'>
                   <InputUnregistered
                     label="Address"
@@ -150,7 +150,7 @@ const BusinessContactView: React.FC<ElementProps> = ({
                   <InputPhone
                     label="Phone"
                     value={data.phone}
-                    onChange={(value,value2) => { handleInputChange('phone', value) }}
+                    onChange={(value, value2) => { handleInputChange('phone', value) }}
                   />
 
                   {errors.phone &&
@@ -183,7 +183,7 @@ const BusinessContactView: React.FC<ElementProps> = ({
         </Card>
 
       </Container>
-     
+
     </LoadingContainer>
 
 

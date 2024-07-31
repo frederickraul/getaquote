@@ -13,17 +13,19 @@ import { usePathName } from '../../../routes/hooks/usePathName';
 import FloatingButton from '../../../components/FloatingButton';
 import { FaPlus } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
+import ModalConfirm from '../../quotes/modal/ModalConfirm';
+import { useState } from 'react';
 
 // ----------------------------------------------------------------------
 
 
 interface ToolbarProps {
   numSelected: any;
-  filterName?:string;
-  onFilterName:(value:any)=>void;
-  onDelete:(value:any)=>void;
-  onAddModalClick:()=>void;
-  onChangeStatus?:(value:any)=>void;
+  filterName?: string;
+  onFilterName: (value: any) => void;
+  onDelete: (value: any) => void;
+  onAddModalClick: () => void;
+  onChangeStatus?: (value: any) => void;
 }
 
 const BuyerTableToolbar: React.FC<ToolbarProps> = ({
@@ -37,10 +39,24 @@ const BuyerTableToolbar: React.FC<ToolbarProps> = ({
 }) => {
 
   const pathname = usePathName();
+  const [isConfirmVisible, setisConfirmVisible] = useState(false);
+
+  const handleConfirmModalClose = () => {
+    setisConfirmVisible(false);
+  }
+
+  const handleClickDelete = () => {
+    setisConfirmVisible(true);
+  }
+
+  const handleBatchDelete = () => {
+    setisConfirmVisible(false);
+    onDelete("");
+  }
 
   return (
     <Toolbar
-    className='
+      className='
         bg-white
         rounded-t-lg 
         justify-center 
@@ -65,41 +81,44 @@ const BuyerTableToolbar: React.FC<ToolbarProps> = ({
       ) : (
         <div className='flex flex-row justify-between w-full'>
           <OutlinedInput
-          className='w-full md:w-fit'
-          value={filterName}
-          onChange={onFilterName}
-          placeholder="Search ..."
-          startAdornment={
-            <InputAdornment position="start">
-              <IoSearch size={20}/>
+            className='w-full md:w-fit'
+            value={filterName}
+            onChange={onFilterName}
+            placeholder="Search ..."
+            startAdornment={
+              <InputAdornment position="start">
+                <IoSearch size={20} />
 
-            </InputAdornment>
-          }
-        />
+              </InputAdornment>
+            }
+          />
 
-        <div className='relative ml-2 items-center flex flex-col justify-center'>
-        <FloatingButton small color='bg-blue-500' label='' icon={FaPlus} onClick={onAddModalClick}/>
-        </div>
+          <div className='relative ml-2 items-center flex flex-col justify-center'>
+            <FloatingButton small color='bg-blue-500' label='' icon={FaPlus} onClick={onAddModalClick} />
+          </div>
         </div>
       )}
 
-{numSelected > 0 && (
-  <div className='flex flex-row w-full sm:w-auto justify-end'>
-    <div className='sm:mr-5 flex flex-row items-center justify-between'>
-        <span className='mr-5 text-neutral-600 '>Move to</span>
-        <div className='flex flex-row'>
+      {numSelected > 0 && (
+        <div className='flex flex-row w-full sm:w-auto justify-end'>
+          <div className='sm:mr-5 flex flex-row items-center justify-between'>
+            <span className='mr-5 text-neutral-600 '>Move to</span>
+            <div className='flex flex-row'>
 
-          <Tooltip title="Delete" onClick={onDelete}>
-          <IconButton>
-            <Iconify icon="pepicons-pop:trash" width={28} />
-          </IconButton>
-        </Tooltip>
+              <Tooltip title="Delete" onClick={handleClickDelete}>
+                <IconButton>
+                  <Iconify icon="pepicons-pop:trash" width={28} />
+                </IconButton>
+              </Tooltip>
+
+              <ModalConfirm
+                message='Are you sure you want to delete all the selected quotes?'
+                visible={isConfirmVisible}
+                onClose={handleConfirmModalClose}
+                action={handleBatchDelete} />
+            </div>
           </div>
-    </div>
-       
-        
-       
-  </div>
+        </div>
       )}
     </Toolbar>
   );
@@ -112,4 +131,4 @@ const BuyerTableToolbar: React.FC<ToolbarProps> = ({
 // };
 
 
-export default  BuyerTableToolbar
+export default BuyerTableToolbar
