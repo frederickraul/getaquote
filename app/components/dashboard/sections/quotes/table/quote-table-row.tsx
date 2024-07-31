@@ -70,19 +70,12 @@ const UserTableRow: React.FC<RowProps> = ({
             {data?.phone}
           </Typography>
         </TableCell> */}
-        <TableCell onClick={handleRowClick}>
+        <TableCell className='pr-0 mr-0' onClick={handleRowClick}>
           <div className='w-[75px]'>
           <LastSeen date={data?.createdAt}/> 
           </div>
           </TableCell>
-
-        {/* <TableCell align="center">{data?.isVerified ? 'Yes' : 'No'}</TableCell>
-
-        <TableCell>
-          <Label color={(data?.status === 'banned' && 'error') || 'success'}>{data?.status}</Label>
-        </TableCell> */}
-
-        <TableCell align="right">
+        <TableCell className='w-0 p-0 ml-0'>
           <IconButton onClick={handleOpenMenu}>
             <TbDotsVertical/>
           </IconButton>

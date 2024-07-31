@@ -73,11 +73,11 @@ const UserTableRow: React.FC<RowProps> = ({
         <TableCell onClick={handleRowClick}>{data?.email}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.name}</TableCell>
         <TableCell onClick={handleRowClick}>{data?.address}</TableCell>
-        <TableCell onClick={handleRowClick} style={{textWrap:'nowrap'}}>
+        <TableCell className='pr-0 mr-0'  onClick={handleRowClick} style={{textWrap:'nowrap'}}>
             {data?.phone}
         </TableCell>
 
-        <TableCell align="right">
+        <TableCell className='w-0 p-0 ml-0'>
           <IconButton onClick={handleOpenMenu}>
             <TbDotsVertical/>
           </IconButton>

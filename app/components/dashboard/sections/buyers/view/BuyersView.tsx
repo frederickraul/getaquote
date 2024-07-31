@@ -319,7 +319,7 @@ const handleAddBuyer = useCallback((data:any) => {
         onFilterName={handleFilterByName}
       />
     
-    <div className='overflow-scroll'>
+    <div>
 
       <BuyerList
           notFound = {notFound}
