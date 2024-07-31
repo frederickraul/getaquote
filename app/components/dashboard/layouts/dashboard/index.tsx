@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
+import '@/app/dashboard.css';
 import Nav from './nav';
 import Main from './main';
 import Header from './header';

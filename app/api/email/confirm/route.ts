@@ -95,10 +95,10 @@ export async function POST(
             <span>${vehicleCondition}</span>
       <br><br>
             <strong>Is There Body Damage: </strong>
-            <span>${bodyDamage}. ${bodyDamageDescription}</span>
+            <span>${bodyDamage} ${bodyDamageDescription}</span>
       <br><br>
             <strong>Any Parts Missing: </strong>
-            <span>${partMissing}. ${partMissingDescription}</span>
+            <span>${partMissing} ${partMissingDescription}</span>
       <br><br>
             <strong>Are Your Wheels Aluminum Or Steel?: </strong>
             <span>${wheels}</span>
@@ -107,7 +107,7 @@ export async function POST(
         <span>${allWheels}</span>
       <br><br>
         <strong>Does It Have A Battery: </strong>
-        <span>${battery}.</span>
+        <span>${battery}</span>
       <br><br>
         <strong>Catalytic Converter: </strong>
         <span>${catalytic}</span>

@@ -74,6 +74,8 @@ const ModalEdit: React.FC<ListingCardProps> = ({
 
 
   const handleInputChange = (field: string, value: any) => {
+    console.log(value);
+    return;
     setquote({ ...quote, [field]: value });
 }
 

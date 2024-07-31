@@ -1,5 +1,5 @@
 import DashboardLayout from "../components/dashboard/layouts/dashboard";
-import '@/app/dashboard.css';
+
 import ToasterProvider from "../providers/ToasterProvider";
 import getCurrentUser from "../actions/getCurrentUser";
 import { redirect } from "next/navigation";

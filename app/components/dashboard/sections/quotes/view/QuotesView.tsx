@@ -545,10 +545,6 @@ const QuotesPage: React.FC<ListingCardProps> = ({
       })
   }, [router, selectedRow]);
 
-
-
-
-
   return (
     <LoadingContainer isLoading={isLoading}>
       <Container>

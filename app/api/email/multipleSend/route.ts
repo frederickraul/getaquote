@@ -138,10 +138,10 @@ const sendEmail = async (quote:any) =>{
             <span>${quote.vehicleCondition}</span>
       <br><br>
             <strong>Is There Body Damage: </strong>
-            <span>${quote.bodyDamage}. ${quote.bodyDamageDescription}</span>
+            <span>${quote.bodyDamage} ${quote.bodyDamageDescription}</span>
       <br><br>
             <strong>Any Parts Missing: </strong>
-            <span>${quote.partMissing}. ${quote.partMissingDescription}</span>
+            <span>${quote.partMissing} ${quote.partMissingDescription}</span>
       <br><br>
             <strong>Are Your Wheels Aluminum Or Steel?: </strong>
             <span>${quote.wheels}</span>
@@ -150,7 +150,7 @@ const sendEmail = async (quote:any) =>{
         <span>${quote.allWheels}</span>
       <br><br>
         <strong>Does It Have A Battery: </strong>
-        <span>${quote.battery}.</span>
+        <span>${quote.battery}</span>
       <br><br>
         <strong>Catalytic Converter: </strong>
         <span>${quote.catalytic}</span>
