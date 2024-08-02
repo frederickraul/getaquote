@@ -176,6 +176,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
   }
 
   useEffect(() => {
+    if(selectedMake.value == '') return;
     getModelList();
   }, [selectedMake]);
 
@@ -261,7 +262,7 @@ const QuoteForm: React.FC<ListingCardProps> = ({
 
   function validateVin(vin: string) {
     return validate(vin);
-
+  }
 
     // source: https://en.wikipedia.org/wiki/Vehicle_identification_number#Example_Code
     // ---------------------------------------------------------------------------------
@@ -275,15 +276,18 @@ const QuoteForm: React.FC<ListingCardProps> = ({
       var sum = 0;
       for (var i = 0; i < 17; ++i)
         sum += transliterate(vin[i]) * map.indexOf(weights[i]);
+      console.log(map[sum % 11]);
       return map[sum % 11];
     }
 
     function validate(vin: string) {
+     
       if (vin.length !== 17) return false;
-      return get_check_digit(vin) === vin[8];
+      return true;
+      // return get_check_digit(vin) === vin[8];
     }
     // ---------------------------------------------------------------------------------
-  }
+  
 
 
 

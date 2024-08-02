@@ -38,30 +38,33 @@ body,
 
 .invert {
     background-color: white;
-    filter: invert(100%);
+    filter: invert(100%) !important;
   }
 
   .MuiInputBase-input{
-    font-weight: 600;
+    font-weight: 600 !important;
   }
 
   .MuiFormLabel-root{
-    font-weight: 600;
+    font-weight: 600 !important;
   }
 
   .MuiTableCell-root{
-    font-weight: 600;
+    font-weight: 600 !important;
   }
 
   .MuiTypography-root{
-    font-weight: 600;
+    font-weight: 600 !important;
   }
 
 
   .MuiButtonBase-root {
-    font-weight: 600;
+    font-weight: 600 !important;
   }
 
+  /* .Mui-selected{
+      background-color: rgba(25, 118, 210, 0.12) !important;
+  }   */
 
 
 
